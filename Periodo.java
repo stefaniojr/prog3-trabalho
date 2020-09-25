@@ -7,6 +7,10 @@ public class Periodo {
     this.semestre = semestreRecebido;
   }
 
+  public String obterRefPeriodo(){
+    return obterAno() + "/" + obterSemestre();
+  }
+
   public int obterAno(){
     return ano;
   }

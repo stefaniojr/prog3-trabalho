@@ -9,6 +9,10 @@ public class Docente {
     this.site = siteRecebido;
   }
 
+  public String obterRefDocente(){
+    return obterLoginDocente();
+  }
+
   public String obterLoginDocente(){
     return login;
   }
@@ -20,4 +24,5 @@ public class Docente {
   public String obterSiteDocente(){
     return site;
   }
+
 }

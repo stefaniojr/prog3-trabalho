@@ -7,6 +7,10 @@ public class Estudante {
     this.nome = nomeRecebido;
   }
 
+  public int obterRefEstudante(){
+    return obterMatriculaEstudante();
+  }
+
   public int obterMatriculaEstudante(){
     return matricula;
   }
@@ -14,5 +18,5 @@ public class Estudante {
   public String obterNomeEstudante(){
     return nome;
   }
-
+  
 }
