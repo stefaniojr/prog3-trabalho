@@ -80,34 +80,29 @@ public class Main {
             System.out.println("2 - VOLTAR AO MENU PRINCIPAL\n");
             System.out.print("Digite uma opcao: ");
             opcaoSelecionadaFuncionalidade = in.nextInt();
+            in.nextLine();
 
             if (opcaoSelecionadaFuncionalidade == 1) {
 
-              Scanner inputLogin = new Scanner(System.in);
-              Scanner inputNome = new Scanner(System.in);
-              Scanner inputSite = new Scanner(System.in);
-
               System.out.print("Digite o nome do docente: ");
-              String nome = inputNome.nextLine();
-
+              String nome = in.nextLine();
               System.out.print("Digite o login do docente: ");
-              String login = inputLogin.nextLine();
+              String login = in.nextLine();
+              String semSite = "Docente sem site.";
 
+              System.out.print("O docente possui site? (S/N): ");
+              char possuiSite = in.next().charAt(0);
+              in.nextLine();
 
-              // System.out.print("O docente possui site? (S/N): ");
-              // char possuiSite = in.next().charAt(0);
+              if (possuiSite == 'S'){
+                System.out.print("Digite o site do docente: ");
+                String comSite = in.nextLine();
+                docentes.add(new Docente(login, nome, comSite));
+              } else {
+                docentes.add(new Docente(login, nome, semSite));
+              }
 
-              // if (possuiSite == 'S'){
-              //   String site = in.nextLine();
-              // } else {
-                String site = "Docente sem site.";
-              // }
-              docentes.add(new Docente(login, nome, site));
-              inputLogin.close();
-              inputNome.close();
-              inputSite.close();
             }
-
 
           }while(opcaoSelecionadaFuncionalidade!=2);
 

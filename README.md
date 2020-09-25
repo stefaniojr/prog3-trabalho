@@ -1,1 +1,2 @@
-# prog3-trabalho
+# Como compilar:
+
