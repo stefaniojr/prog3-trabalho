@@ -1,14 +1,18 @@
-class Estudante {
-  public int Matricula;
+public class Estudante {
+  public int matricula;
   public String nome;
 
-  int retornaMatricula(){
-    return this.Matricula;
-  }
-}
-
-  public recebeEstudante(String nomeRecebido, int matriculaRecebida){
-    this.nome = nomeRecebido;
+  public Estudante(int matriculaRecebida, String nomeRecebido){
     this.matricula = matriculaRecebida;
+    this.nome = nomeRecebido;
   }
+
+  public int obterMatriculaEstudante(){
+    return matricula;
+  }
+
+  public String obterNomeEstudante(){
+    return nome;
+  }
+
 }

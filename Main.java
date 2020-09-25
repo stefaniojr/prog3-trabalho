@@ -10,6 +10,8 @@ public class Main {
       List<Periodo> periodos = new ArrayList<>();
       List<Docente> docentes = new ArrayList<>();
 
+      List<Estudante> estudantes = new ArrayList<>();
+
       do{
         System.out.println("\n*************************************************************");
         System.out.println("BEM-VINDX AO PARADE-UFES. DIGITE UMA OPCAO PARA CONTINUAR:");
@@ -112,9 +114,42 @@ public class Main {
         //
         // }
         //
-        // if(opcaoSelecionada == 4){
-        //
-        // }
+        if(opcaoSelecionada == 4){
+          do {
+
+            System.out.print("\n**********************");
+            System.out.println("\nEstudantes cadastrados:");
+
+            if (estudantes.size() == 0){
+              System.out.println("Nao ha estudantes cadastrados!\n");
+            } else {
+              for (Estudante estudante : estudantes) {
+                  int matricula = estudante.obterMatriculaEstudante();
+                  String nome = estudante.obterNomeEstudante();
+                  System.out.println("- Matricula: " + matricula + " | Estudante: " + nome);
+              }
+              System.out.print("\n");
+            }
+            System.out.println("1 - CADASTRAR NOVO ESTUDANTE");
+            System.out.println("2 - VOLTAR AO MENU PRINCIPAL\n");
+            System.out.print("Digite uma opcao: ");
+            opcaoSelecionadaFuncionalidade = in.nextInt();
+            in.nextLine();
+
+            if (opcaoSelecionadaFuncionalidade == 1) {
+
+              System.out.print("Digite o numero de matricula do estudante: ");
+              int matricula = in.nextInt();
+              in.nextLine();
+              System.out.print("Digite o nome do estudante: ");
+              String nome = in.nextLine();
+
+              estudantes.add(new Estudante(matricula, nome));
+
+            }
+
+          }while(opcaoSelecionadaFuncionalidade!=2);
+        }
         //
         // if(opcaoSelecionada == 5){
         //
