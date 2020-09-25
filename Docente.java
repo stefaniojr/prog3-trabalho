@@ -1,11 +1,23 @@
 public class Docente {
-  private String nome;
   private String login;
+  private String nome;
   private String site;
 
-  public recebeDocente(String nomeRecebido, String loginRecebido, String siteRecebido){
+  public Docente(String loginRecebido, String nomeRecebido, String siteRecebido){
+    this.login = loginRecebido;
     this.nome = nomeRecebido;
-    this.login = periodoRecebido;
     this.site = siteRecebido;
+  }
+
+  public String obterLoginDocente(){
+    return login;
+  }
+
+  public String obterNomeDocente(){
+    return nome;
+  }
+
+  public String obterSiteDocente(){
+    return site;
   }
 }
