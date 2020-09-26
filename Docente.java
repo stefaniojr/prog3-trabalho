@@ -3,10 +3,10 @@ public class Docente {
   private String nome;
   private String site;
 
-  public Docente(String loginRecebido, String nomeRecebido, String siteRecebido){
-    this.login = loginRecebido;
-    this.nome = nomeRecebido;
-    this.site = siteRecebido;
+  public Docente(String login, String nome, String site){
+    this.login = login;
+    this.nome = nome;
+    this.site = site;
   }
 
   public String obterRefDocente(){

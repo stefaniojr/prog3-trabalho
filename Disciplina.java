@@ -1,14 +1,18 @@
+import java.util.*;
+
 public class Disciplina {
   private String codigo;
   private String nome;
   private String periodo;
   private String docenteResponsavel;
 
-  public Disciplina (String codigoRecebido, String nomeRecebido, String periodoRecebido, String docenteResponsavelRecebido){
-    this.codigo = codigoRecebido;
-    this.nome = nomeRecebido;
-    this.periodo = periodoRecebido;
-    this.docenteResponsavel = docenteResponsavelRecebido;
+  ArrayList<Integer> alunos = new ArrayList<>();
+
+  public Disciplina (String codigo, String nome, String periodo, String docenteResponsavel){
+    this.codigo = codigo;
+    this.nome = nome;
+    this.periodo = periodo;
+    this.docenteResponsavel = docenteResponsavel;
   }
 
   public String obterRefDisciplina(){
@@ -31,6 +35,18 @@ public class Disciplina {
     return docenteResponsavel;
   }
 
-  
+  public void receberAluno(int aluno){
+    alunos.add(aluno);
+  }
+
+  public void exibirAlunos(){
+    for (int i=0; i < alunos.size(); i++){
+      System.out.println("- " + alunos.get(i));
+    }
+
+    if (alunos.size() == 0){
+      System.out.println("Disciplina sem estudantes matriculados! :(\n");
+    }
+  }
 
 }

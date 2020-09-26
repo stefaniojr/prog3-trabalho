@@ -184,11 +184,47 @@ public class Main {
 
         } while (opcaoSelecionadaFuncionalidade != 2);
       }
-      //
-      // if(opcaoSelecionada == 5){
-      //
-      // }
-      //
+      
+      if(opcaoSelecionada == 5){
+        do {
+
+          System.out.println("\n**********************");
+    
+          System.out.println("1 - MATRICULAR ESTUDANTE EM DISCIPLINA");
+          System.out.println("2 - VOLTAR AO MENU PRINCIPAL\n");
+          System.out.print("Digite uma opcao: ");
+          opcaoSelecionadaFuncionalidade = in.nextInt();
+          in.nextLine();
+
+          if (opcaoSelecionadaFuncionalidade == 1) {
+
+            System.out.print("Digite a referencia do estudante (numero de matricula): ");
+            int matricula = in.nextInt();
+            in.nextLine();
+
+            for (Estudante estudante : estudantes) {
+              if(estudante.obterRefEstudante() == matricula ){
+                
+                Estudante estudanteEncontrado = estudante;
+                System.out.println("Estudante encontrado!" );
+                System.out.println(estudante.obterNomeEstudante() + " esta cadastrado nas seguintes disciplinas:" );
+                estudante.exibirDisciplinasDoEstudante();
+
+                System.out.print("Digite a disciplina em que deseja cadastrar o referido estudante (codigo-periodo): ");
+                String disciplinaCodigo = in.nextLine();
+                estudanteEncontrado.matricularEmDisciplina(disciplinaCodigo);
+
+                System.out.println("O estudante " + estudante.obterNomeEstudante() + " foi cadastrado na disciplina " + disciplinaCodigo + ".");
+          
+                break;
+              }
+            }
+
+          }
+
+        } while (opcaoSelecionadaFuncionalidade != 2);
+      }
+      
       // if(opcaoSelecionada == 6){
       //
       // }

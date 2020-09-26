@@ -2,9 +2,9 @@ public class Periodo {
   private int ano;
   private char semestre;
 
-  public Periodo(int anoRecebido, char semestreRecebido){
-    this.ano = anoRecebido;
-    this.semestre = semestreRecebido;
+  public Periodo(int ano, char semestre){
+    this.ano = ano;
+    this.semestre = semestre;
   }
 
   public String obterRefPeriodo(){
