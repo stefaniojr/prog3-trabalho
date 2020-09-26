@@ -6,6 +6,7 @@ public class Main {
     int opcaoSelecionadaFuncionalidade;
 
     Scanner in = new Scanner(System.in);
+    in.useLocale(Locale.US);
     ArrayList<Periodo> periodos = new ArrayList<>();
     ArrayList<Docente> docentes = new ArrayList<>();
     ArrayList<Disciplina> disciplinas = new ArrayList<>();
@@ -81,7 +82,7 @@ public class Main {
 
             System.out.print("Digite o nome do docente: ");
             String nome = in.nextLine();
-            System.out.print("Digite o login do docente: ");
+            System.out.print("Digite o login institucional do docente: ");
             String login = in.nextLine();
             String semSite = "Docente sem site.";
 
@@ -211,7 +212,7 @@ public class Main {
 
           if (opcaoSelecionadaFuncionalidade == 1) {
 
-            System.out.print("Digite a referencia do estudante (numero de matricula): ");
+            System.out.print("Digite o numero de matricula do estudante: ");
             int matricula = in.nextInt();
             in.nextLine();
 
@@ -288,9 +289,51 @@ public class Main {
         } while (opcaoSelecionadaFuncionalidade != 2);
       }
 
-      // if(opcaoSelecionada == 7){
-      //
-      // }
+      if(opcaoSelecionada == 7){
+        do {
+
+          System.out.println("\n**********************");
+
+          System.out.println("1 - AVALIAR ATIVIDADE EM DISCIPLINA");
+          System.out.println("2 - VOLTAR AO MENU PRINCIPAL\n");
+          System.out.print("Digite uma opcao: ");
+          opcaoSelecionadaFuncionalidade = in.nextInt();
+          in.nextLine();
+
+          if (opcaoSelecionadaFuncionalidade == 1) {
+            System.out.print("Digite o numero de matricula do estudante: ");
+            int matricula = in.nextInt();
+            in.nextLine();
+            Estudante estudanteAvaliador = null;
+
+            for (Estudante estudante: estudantes){
+              if(estudante.obterRef() == matricula){
+                estudanteAvaliador = estudante;
+              }
+            }
+
+            System.out.print("Digite a disciplina em que o estudante deseja avaliar a atividade (codigo-periodo): ");
+            String disciplinaRef = in.nextLine();
+
+            for (Disciplina disciplina: disciplinas){
+              if(disciplina.obterRef().equals(disciplinaRef)){
+                System.out.print("Digite o codigo da atividade: ");
+                int numeroAtividade = in.nextInt();
+                in.nextLine();
+                Atividade atividade = disciplina.obterAtividade(numeroAtividade);
+
+                System.out.print("Nota que o estudante deseja atribuir à atividade: ");
+                float notaAtividade = in.nextFloat();
+                in.nextLine();
+
+                atividade.avaliarAtividade(estudanteAvaliador, notaAtividade);
+              }
+            }
+            
+          }
+
+        } while (opcaoSelecionadaFuncionalidade != 2);
+      }
 
       else if (opcaoSelecionada == 8) {
         System.out.println("Saindo do programa...");

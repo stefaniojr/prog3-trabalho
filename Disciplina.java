@@ -68,9 +68,19 @@ public class Disciplina {
       System.out.println(this.obterNome() + " tem as seguintes atividades:");
       for (Atividade atividade : atividades) {
         System.out.println("Codigo: " + atividade.numero + " | Atividade: " + atividade.nome + " | Sicronismo: " + atividade.sincronismo);
+        atividade.obterAvaliacoes();
       }
       System.out.print("\n");
     }
+  }
+
+  public Atividade obterAtividade(int numeroAtividade){
+    for(Atividade atividade: atividades){
+      if(atividade.obterRef() == numeroAtividade){
+        return atividade;
+      }
+    }
+    return null;
   }
   
 }
