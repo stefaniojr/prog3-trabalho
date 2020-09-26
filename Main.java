@@ -143,11 +143,9 @@ public class Main {
             String docenteRef = in.nextLine();
 
             for (Periodo periodo : periodos) {
-              if (periodo.obterRef() == periodoRef) {
-                System.out.print("entrei1!");
+              if (periodo.obterRef().equals(periodoRef)) {
                 for (Docente docente : docentes) {
-                  if (docente.obterRef() == docenteRef) {
-                    System.out.print("entrei2!");
+                  if (docente.obterRef().equals(docenteRef)) {
                     if (disciplinas.add(new Disciplina(codigo, nome, periodo, docente))){
                       periodo.adicionarDisciplina(codigo + "-" + periodoRef);
                       docente.adicionarDisciplina(codigo + "-" + periodoRef);
@@ -272,7 +270,7 @@ public class Main {
             String disciplinaRef = in.nextLine();
 
             for (Disciplina disciplina : disciplinas) {
-              if (disciplina.obterRef() == disciplinaRef) {
+              if (disciplina.obterRef().equals(disciplinaRef)) {
                   disciplina.adicionarAtividade(nome, sincronismo);
                   break;
               }

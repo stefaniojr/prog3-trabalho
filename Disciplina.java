@@ -18,7 +18,7 @@ public class Disciplina {
   }
 
   public String obterRef(){
-    return codigo + "-" + periodo;
+    return codigo + "-" + periodo.obterRef();
   }
   
   public String obterCodigo() {
