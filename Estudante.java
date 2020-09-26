@@ -11,7 +11,7 @@ public class Estudante {
     this.nome = nome;
   }
 
-  public int obterRefEstudante(){
+  public int obterRef(){
     return obterMatriculaEstudante();
   }
 
@@ -23,8 +23,8 @@ public class Estudante {
     return nome;
   }
 
-  public void matricularEmDisciplina(String disciplinaCodigo){
-    disciplinas.add(disciplinaCodigo);
+  public void adicionarDisciplina(String disciplina){
+    disciplinas.add(disciplina);
   }
 
   public void exibirDisciplinasDoEstudante(){

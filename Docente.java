@@ -1,7 +1,11 @@
+import java.util.*;
+
 public class Docente {
   private String login;
   private String nome;
   private String site;
+
+  ArrayList<String> disciplinas = new ArrayList<>();
 
   public Docente(String login, String nome, String site){
     this.login = login;
@@ -9,20 +13,24 @@ public class Docente {
     this.site = site;
   }
 
-  public String obterRefDocente(){
-    return obterLoginDocente();
+  public String obterRef(){
+    return obterLogin();
   }
 
-  public String obterLoginDocente(){
+  public String obterLogin(){
     return login;
   }
 
-  public String obterNomeDocente(){
+  public String obterNome(){
     return nome;
   }
 
-  public String obterSiteDocente(){
+  public String obterSite(){
     return site;
+  }
+
+  public void adicionarDisciplina(String disciplina){
+    disciplinas.add(disciplina);
   }
 
 }

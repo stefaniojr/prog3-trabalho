@@ -3,36 +3,38 @@ import java.util.*;
 public class Disciplina {
   private String codigo;
   private String nome;
-  private String periodo;
-  private String docenteResponsavel;
+  private Periodo periodo;
+  private Docente docente;
 
   ArrayList<Integer> alunos = new ArrayList<>();
+  ArrayList<Atividade> atividades = new ArrayList<>();
+  int numeroAtividade = 1;
 
-  public Disciplina (String codigo, String nome, String periodo, String docenteResponsavel){
+  public Disciplina (String codigo, String nome, Periodo periodo, Docente docente){
     this.codigo = codigo;
     this.nome = nome;
     this.periodo = periodo;
-    this.docenteResponsavel = docenteResponsavel;
+    this.docente = docente;
   }
 
-  public String obterRefDisciplina(){
+  public String obterRef(){
     return codigo + "-" + periodo;
   }
   
-  public String obterCodigoDisciplina() {
+  public String obterCodigo() {
     return codigo;
   }
 
-  public String obterNomeDisciplina() {
+  public String obterNome() {
     return nome;
   }
 
-  public String obterPeriodoDisciplina() {
+  public Periodo obterPeriodo() {
     return periodo;
   }
 
-  public String obterDocenteResponsavelDisciplina(){
-    return docenteResponsavel;
+  public Docente obterDocente(){
+    return docente;
   }
 
   public void receberAluno(int aluno){
@@ -49,4 +51,12 @@ public class Disciplina {
     }
   }
 
+  public boolean adicionarAtividade(String nome, String sincronismo){
+    if (atividades.add(new Atividade(nome, sincronismo, this.obterRef() , this.numeroAtividade))){
+      this.numeroAtividade = this.numeroAtividade + 1;
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

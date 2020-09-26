@@ -6,10 +6,10 @@ public class Main {
     int opcaoSelecionadaFuncionalidade;
 
     Scanner in = new Scanner(System.in);
-    List<Periodo> periodos = new ArrayList<>();
-    List<Docente> docentes = new ArrayList<>();
-    List<Disciplina> disciplinas = new ArrayList<>();
-    List<Estudante> estudantes = new ArrayList<>();
+    ArrayList<Periodo> periodos = new ArrayList<>();
+    ArrayList<Docente> docentes = new ArrayList<>();
+    ArrayList<Disciplina> disciplinas = new ArrayList<>();
+    ArrayList<Estudante> estudantes = new ArrayList<>();
 
     do {
       System.out.println("\n*************************************************************");
@@ -68,9 +68,9 @@ public class Main {
             System.out.println("Nao ha docentes cadastrados!\n");
           } else {
             for (Docente docente : docentes) {
-              String login = docente.obterLoginDocente();
-              String nome = docente.obterNomeDocente();
-              String site = docente.obterSiteDocente();
+              String login = docente.obterLogin();
+              String nome = docente.obterNome();
+              String site = docente.obterSite();
               System.out.println("- Docente: " + nome + " | Login: " + login + " | Site: " + site);
             }
             System.out.print("\n");
@@ -117,10 +117,11 @@ public class Main {
             System.out.println("Nao ha disciplinas cadastradas!\n");
           } else {
             for (Disciplina disciplina : disciplinas) {
-              String codigoPeriodo = disciplina.obterRefDisciplina();
-              String nome = disciplina.obterNomeDisciplina();
-              String docenteResponsavel = disciplina.obterDocenteResponsavelDisciplina();
-              System.out.println(codigoPeriodo + " | Disciplina: " + nome + " | Docente responsavel: " + docenteResponsavel);
+              String codigoPeriodo = disciplina.obterRef();
+              String nome = disciplina.obterNome();
+              String docente = disciplina.obterDocente().obterNome();
+              System.out
+                  .println(codigoPeriodo + " | Disciplina: " + nome + " | Docente responsavel: " + docente);
             }
             System.out.print("\n");
           }
@@ -137,11 +138,29 @@ public class Main {
             System.out.print("Digite o nome da disciplina: ");
             String nome = in.nextLine();
             System.out.print("Digite o período em que será ministrada a disciplina (Ex: 2020/E, 2018/1, etc.): ");
-            String periodo = in.nextLine();
-            System.out.print("Digite o login institucional do docente responsavel (Ex: nome.sobrenome): ");
-            String docenteResponsavel = in.nextLine();
+            String periodoRef = in.nextLine();
+            System.out.print(periodoRef + "Digite o login institucional do docente responsavel (Ex: nome.sobrenome): ");
+            String docenteRef = in.nextLine();
 
-            disciplinas.add(new Disciplina(codigo, nome, periodo, docenteResponsavel));
+            for (Periodo periodo : periodos) {
+              if (periodo.obterRef() == periodoRef) {
+                System.out.print("entrei1!");
+                for (Docente docente : docentes) {
+                  if (docente.obterRef() == docenteRef) {
+                    System.out.print("entrei2!");
+                    if (disciplinas.add(new Disciplina(codigo, nome, periodo, docente))){
+                      periodo.adicionarDisciplina(codigo + "-" + periodoRef);
+                      docente.adicionarDisciplina(codigo + "-" + periodoRef);
+                      System.out.println("\nDisciplina cadastrada com sucesso!");
+                    } else {
+                      System.out.println("\nNao foi possivel cadastrar a disciplina!");
+                    }
+                    break;
+                  }
+                }
+                break;
+              }
+            }
 
           }
 
@@ -184,12 +203,12 @@ public class Main {
 
         } while (opcaoSelecionadaFuncionalidade != 2);
       }
-      
-      if(opcaoSelecionada == 5){
+
+      if (opcaoSelecionada == 5) {
         do {
 
           System.out.println("\n**********************");
-    
+
           System.out.println("1 - MATRICULAR ESTUDANTE EM DISCIPLINA");
           System.out.println("2 - VOLTAR AO MENU PRINCIPAL\n");
           System.out.print("Digite uma opcao: ");
@@ -203,19 +222,20 @@ public class Main {
             in.nextLine();
 
             for (Estudante estudante : estudantes) {
-              if(estudante.obterRefEstudante() == matricula ){
-                
+              if (estudante.obterRef() == matricula) {
+
                 Estudante estudanteEncontrado = estudante;
-                System.out.println("Estudante encontrado!" );
-                System.out.println(estudante.obterNomeEstudante() + " esta cadastrado nas seguintes disciplinas:" );
+                System.out.println("Estudante encontrado!");
+                System.out.println(estudante.obterNomeEstudante() + " esta cadastrado nas seguintes disciplinas:");
                 estudante.exibirDisciplinasDoEstudante();
 
                 System.out.print("Digite a disciplina em que deseja cadastrar o referido estudante (codigo-periodo): ");
                 String disciplinaCodigo = in.nextLine();
-                estudanteEncontrado.matricularEmDisciplina(disciplinaCodigo);
+                estudanteEncontrado.adicionarDisciplina(disciplinaCodigo);
 
-                System.out.println("O estudante " + estudante.obterNomeEstudante() + " foi cadastrado na disciplina " + disciplinaCodigo + ".");
-          
+                System.out.println("O estudante " + estudante.obterNomeEstudante() + " foi cadastrado na disciplina "
+                    + disciplinaCodigo + ".");
+
                 break;
               }
             }
@@ -224,11 +244,44 @@ public class Main {
 
         } while (opcaoSelecionadaFuncionalidade != 2);
       }
-      
-      // if(opcaoSelecionada == 6){
-      //
-      // }
-      //
+
+      if (opcaoSelecionada == 6) {
+        do {
+
+          System.out.println("\n**********************");
+
+          System.out.println("1 - CADASTRAR ATIVIDADE EM DISCIPLINA");
+          System.out.println("2 - VOLTAR AO MENU PRINCIPAL\n");
+          System.out.print("Digite uma opcao: ");
+          opcaoSelecionadaFuncionalidade = in.nextInt();
+          in.nextLine();
+
+          if (opcaoSelecionadaFuncionalidade == 1) {
+
+            System.out.print("Digite o nome da atividade: ");
+            String nome = in.nextLine();
+
+            System.out.print("Digite o sincronismo da atividade (sincrona ou assincrona): ");
+            String sincronismo = in.nextLine();
+
+            if (sincronismo != "sincrona"){
+              sincronismo = "assincrona";
+            }
+
+            System.out.print("Digite a disciplina em que deseja cadastrar a atividade (codigo-periodo): ");
+            String disciplinaRef = in.nextLine();
+
+            for (Disciplina disciplina : disciplinas) {
+              if (disciplina.obterRef() == disciplinaRef) {
+                  disciplina.adicionarAtividade(nome, sincronismo);
+                  break;
+              }
+            }
+          }
+
+        } while (opcaoSelecionadaFuncionalidade != 2);
+      }
+
       // if(opcaoSelecionada == 7){
       //
       // }

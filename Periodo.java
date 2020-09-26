@@ -1,13 +1,17 @@
+import java.util.*;
+
 public class Periodo {
   private int ano;
   private char semestre;
+
+  ArrayList<String> disciplinas = new ArrayList<>();
 
   public Periodo(int ano, char semestre){
     this.ano = ano;
     this.semestre = semestre;
   }
 
-  public String obterRefPeriodo(){
+  public String obterRef(){
     return obterAno() + "/" + obterSemestre();
   }
 
@@ -17,6 +21,10 @@ public class Periodo {
 
   public char obterSemestre(){
     return semestre;
+  }
+
+  public void adicionarDisciplina(String disciplina){
+    disciplinas.add(disciplina);
   }
 
 }
