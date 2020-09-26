@@ -6,7 +6,7 @@ public class Disciplina {
   private Periodo periodo;
   private Docente docente;
 
-  ArrayList<Integer> alunos = new ArrayList<>();
+  ArrayList<Estudante> estudantes = new ArrayList<>();
   ArrayList<Atividade> atividades = new ArrayList<>();
   int numeroAtividade = 1;
 
@@ -37,17 +37,18 @@ public class Disciplina {
     return docente;
   }
 
-  public void receberAluno(int aluno){
-    alunos.add(aluno);
+  public void adicionarEstudante(Estudante estudante){
+    estudantes.add(estudante);
   }
 
-  public void exibirAlunos(){
-    for (int i=0; i < alunos.size(); i++){
-      System.out.println("- " + alunos.get(i));
-    }
-
-    if (alunos.size() == 0){
+  public void exibirEstudantes(){
+    if (estudantes.size() == 0) {
       System.out.println("Disciplina sem estudantes matriculados! :(\n");
+    } else {
+      System.out.println(this.obterNome() + " possui os seguintes estudantes matriculados:");
+      for (Estudante estudante : estudantes) {
+        System.out.println(" - " + estudante.obterNome());
+      }
     }
   }
 
@@ -59,4 +60,17 @@ public class Disciplina {
       return false;
     }
   }
+
+  public void obterAtividades(){
+    if (atividades.size() == 0) {
+      System.out.println("Nao ha atividades cadastradas para essa disciplina!\n");
+    } else {
+      System.out.println(this.obterNome() + " tem as seguintes atividades:");
+      for (Atividade atividade : atividades) {
+        System.out.println("Codigo: " + atividade.numero + " | Atividade: " + atividade.nome + " | Sicronismo: " + atividade.sincronismo);
+      }
+      System.out.print("\n");
+    }
+  }
+  
 }

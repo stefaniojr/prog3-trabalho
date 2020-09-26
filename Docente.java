@@ -5,7 +5,7 @@ public class Docente {
   private String nome;
   private String site;
 
-  ArrayList<String> disciplinas = new ArrayList<>();
+  ArrayList<Disciplina> disciplinas = new ArrayList<>();
 
   public Docente(String login, String nome, String site){
     this.login = login;
@@ -29,7 +29,7 @@ public class Docente {
     return site;
   }
 
-  public void adicionarDisciplina(String disciplina){
+  public void adicionarDisciplina(Disciplina disciplina){
     disciplinas.add(disciplina);
   }
 

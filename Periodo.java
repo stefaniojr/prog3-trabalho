@@ -4,7 +4,7 @@ public class Periodo {
   private int ano;
   private char semestre;
 
-  ArrayList<String> disciplinas = new ArrayList<>();
+  ArrayList<Disciplina> disciplinas = new ArrayList<>();
 
   public Periodo(int ano, char semestre){
     this.ano = ano;
@@ -23,7 +23,7 @@ public class Periodo {
     return semestre;
   }
 
-  public void adicionarDisciplina(String disciplina){
+  public void adicionarDisciplina(Disciplina disciplina){
     disciplinas.add(disciplina);
   }
 
