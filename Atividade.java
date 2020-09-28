@@ -29,7 +29,7 @@ public class Atividade {
         } else {
           System.out.println("Atividade de codigo " + this.obterRef() + " tem as seguintes avaliacoes:");
           for (Avaliacao avaliacao : avaliacoes) {
-            System.out.println("- Estudante " + avaliacao.obterAvaliador().obterNome() + " avaliaou essa atividade com nota " + avaliacao.obterNota() + ".");
+            System.out.println("- Estudante " + avaliacao.obterAvaliador().obterNome() + " avaliou essa atividade com nota " + avaliacao.obterNota() + ".");
           }
           System.out.print("\n");
         }
