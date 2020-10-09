@@ -1,8 +1,8 @@
 public class Escrita {
 
-    public void showMenu(){
+    public void mostrarMenu(){
         System.out.println("\n*************************************************************");
-        System.out.println("BEM-VINDX AO PARADE-UFES. DIGITE UMA OPCAO PARA CONTINUAR:");
+        System.out.println("OTRUS EARTE SYSTEM v0.0.2 - DIGITE UMA OPCAO PARA CONTINUAR:");
         System.out.println("*************************************************************\n");
         System.out.println("1 - CADASTRAR PERIODO");
         System.out.println("2 - CADASTRAR DOCENTE");
@@ -20,6 +20,13 @@ public class Escrita {
     }
 
     /**Submenu messages */
+    public void mostrarSubMenu(Escrita escrever, String isso){
+        this.showAsterisks();
+        this.cadastrar(isso);
+        this.voltarMenu();
+        this.digiteOpcao();
+    }
+
     public void cadastrar(String isso){
         System.out.println("1 - CADASTRAR NOVO(A) " + isso);
     }
