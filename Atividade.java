@@ -8,6 +8,8 @@ public class Atividade {
 
     ArrayList<Avaliacao> avaliacoes = new ArrayList<>();
 
+    Escrita escrever = new Escrita();
+
     public Atividade(String nome, String sincronismo, String disciplinaRef, int numero) {
         this.nome = nome;
         this.sincronismo = sincronismo;
@@ -25,13 +27,13 @@ public class Atividade {
 
     public void obterAvaliacoes(){
         if (avaliacoes.size() == 0) {
-          System.out.println("Essa atividade ainda nao foi avaliada! :(\n");
+          escrever.naoHa("avaliacoes");
         } else {
-          System.out.println("Atividade de codigo " + this.obterRef() + " tem as seguintes avaliacoes:");
+          escrever.cadastrados("Avaliacoes");
           for (Avaliacao avaliacao : avaliacoes) {
-            System.out.println("- Estudante " + avaliacao.obterAvaliador().obterNome() + " avaliou essa atividade com nota " + avaliacao.obterNota() + ".");
+            escrever.avaliacaoCadastrada(avaliacao.obterAvaliador().obterNome(), avaliacao.obterNota());
           }
-          System.out.print("\n");
+          
         }
       }
 

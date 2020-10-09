@@ -5,10 +5,12 @@ public class Estudante {
   private String nome;
 
   ArrayList<Disciplina> disciplinas = new ArrayList<>();
+  Escrita escrever = new Escrita();
 
   public Estudante(int matricula, String nome){
     this.matricula = matricula;
     this.nome = nome;
+    
   }
 
   public int obterRef(){
@@ -29,11 +31,11 @@ public class Estudante {
 
   public void exibirDisciplinas(){
     if (disciplinas.size() == 0) {
-      System.out.println("Nao ha disciplinas cadastradas para esse estudante!\n");
+      escrever.naoHa("disciplinas");
     } else {
-      System.out.println(this.obterNome() + " esta cadastrado nas seguintes disciplinas:");
+      escrever.cadastrados("Disciplinas");
       for (Disciplina disciplina : disciplinas) {
-        System.out.println(disciplina.obterRef() + " | Disciplina: " + disciplina.obterNome() + " | Docente responsavel: " + disciplina.obterDocente().obterNome());
+        escrever.disciplinaCadastrada(disciplina.obterRef(), disciplina.obterNome(), disciplina.obterDocente().obterNome());
       }
     }
   }

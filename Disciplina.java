@@ -6,6 +6,8 @@ public class Disciplina {
   private Periodo periodo;
   private Docente docente;
 
+  Escrita escrever = new Escrita();
+
   ArrayList<Estudante> estudantes = new ArrayList<>();
   ArrayList<Atividade> atividades = new ArrayList<>();
   int numeroAtividade = 1;
@@ -43,11 +45,11 @@ public class Disciplina {
 
   public void exibirEstudantes(){
     if (estudantes.size() == 0) {
-      System.out.println("Disciplina sem estudantes matriculados! :(\n");
+      escrever.naoHa("estudantes");
     } else {
-      System.out.println(this.obterNome() + " possui os seguintes estudantes matriculados:");
+      escrever.cadastrados("Estudantes");
       for (Estudante estudante : estudantes) {
-        System.out.println(" - " + estudante.obterNome());
+        escrever.estudanteCadastrado(estudante.obterRef(), estudante.obterNome());
       }
     }
   }
@@ -63,14 +65,13 @@ public class Disciplina {
 
   public void obterAtividades(){
     if (atividades.size() == 0) {
-      System.out.println("Nao ha atividades cadastradas para essa disciplina!\n");
+      escrever.naoHa("atividades");
     } else {
-      System.out.println(this.obterNome() + " tem as seguintes atividades:");
+      escrever.cadastrados("Atividades");
       for (Atividade atividade : atividades) {
-        System.out.println("Codigo: " + atividade.numero + " | Atividade: " + atividade.nome + " | Sicronismo: " + atividade.sincronismo);
+        escrever.atividadeCadastrada(atividade.numero, atividade.nome, atividade.sincronismo);
         atividade.obterAvaliacoes();
       }
-      System.out.print("\n");
     }
   }
 
