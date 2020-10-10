@@ -8,18 +8,19 @@ public class Menu {
         escrever.mostrarMenu();
     }
 
-    public void subMenu1(Leitura ler, ArrayList<Periodo> periodos) {
+    public void subMenu1(Leitura ler, Map<String, Periodo> periodos) {
         int opcao;
 
         do {
 
             if (periodos.size() == 0) {
-                escrever.naoHa("periodos");
+                escrever.notFound("periodos");
             } else {
-                escrever.cadastrados("Periodos");
-                for (Periodo periodo : periodos) {
-                    escrever.periodoCadastrado(periodo.obterRef());
+                escrever.titleRelatorio("Periodos");
+                for (String chave : periodos.keySet()) {
+                    escrever.showSomething(chave);
                 }
+
             }
 
             escrever.mostrarSubMenu(escrever, "PERIODO");
@@ -29,7 +30,7 @@ public class Menu {
                 escrever.digiteAno();
                 int ano = ler.inteiro();
                 char semestre = ler.caract();
-                periodos.add(new Periodo(ano, semestre));
+                periodos.put(ano + "/" + semestre, new Periodo(ano, semestre));
             }
 
         } while (opcao != 2);
@@ -38,19 +39,18 @@ public class Menu {
 
     }
 
-    public void subMenu2(Leitura ler, ArrayList<Docente> docentes) {
+    public void subMenu2(Leitura ler, Map<String, Docente> docentes) {
         int opcao;
 
         do {
 
             if (docentes.size() == 0) {
-                escrever.naoHa("docentes");
+                escrever.notFound("docentes");
             } else {
-                escrever.cadastrados("Docentes");
-                for (Docente docente : docentes) {
-                    escrever.docenteCadastrado(docente.obterNome(), docente.obterRef(), docente.obterSite());
+                escrever.titleRelatorio("Docentes");
+                for (String chave : docentes.keySet()) {
+                    escrever.showSomething(chave);
                 }
-
             }
 
             escrever.mostrarSubMenu(escrever, "DOCENTE");
@@ -75,9 +75,9 @@ public class Menu {
                 if (possuiSite == 'S') {
                     escrever.digiteSite("docente");
                     String comSite = ler.cadeiaCaract();
-                    docentes.add(new Docente(login, nome, comSite));
+                    docentes.put(login, new Docente(login, nome, comSite));
                 } else {
-                    docentes.add(new Docente(login, nome, semSite));
+                    docentes.put(login, new Docente(login, nome, semSite));
                 }
 
             }
@@ -87,22 +87,19 @@ public class Menu {
         return;
     }
 
-    public void subMenu3(Leitura ler, ArrayList<Periodo> periodos, ArrayList<Docente> docentes,
-            ArrayList<Disciplina> disciplinas) {
+    public void subMenu3(Leitura ler, Map<String, Periodo> periodos, Map<String, Docente> docentes,
+            Map<String, Disciplina> disciplinas) {
         int opcao;
         do {
 
             if (disciplinas.size() == 0) {
-                escrever.naoHa("disciplinas");
+                escrever.notFound("disciplinas");
 
             } else {
-                escrever.cadastrados("Disciplinas");
-                for (Disciplina disciplina : disciplinas) {
-                    escrever.disciplinaCadastrada(disciplina.obterRef(), disciplina.obterNome(),
-                            disciplina.obterDocente().obterNome());
-
+                escrever.titleRelatorio("Disciplinas");
+                for (String chave : disciplinas.keySet()) {
+                    escrever.showSomething(chave);
                 }
-
             }
 
             escrever.mostrarSubMenu(escrever, "DISCIPLINA");
@@ -120,27 +117,14 @@ public class Menu {
                 escrever.digiteRef("docente");
                 String docenteRef = ler.cadeiaCaract();
 
-                for (Periodo periodo : periodos) {
-                    if (periodo.obterRef().equals(periodoRef)) {
-                        for (Docente docente : docentes) {
-                            if (docente.obterRef().equals(docenteRef)) {
-                                if (disciplinas.add(new Disciplina(codigo, nome, periodo, docente))) {
-                                    for (Disciplina disciplina : disciplinas) {
-                                        if (disciplina.obterRef().equals(codigo + periodo.obterRef())) {
-                                            periodo.adicionarDisciplina(disciplina);
-                                            docente.adicionarDisciplina(disciplina);
-                                        }
-                                    }
-                                    escrever.sucess("Disciplina");
-                                } else {
-                                    escrever.error("disciplina");
-                                }
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
+                Periodo periodo = periodos.get(periodoRef);
+                Docente docente = docentes.get(docenteRef);
+
+                Disciplina disciplina = disciplinas.put(codigo + "-" + periodoRef,
+                        new Disciplina(codigo, nome, periodo, docente));
+
+                periodo.adicionarDisciplina(disciplina);
+                docente.adicionarDisciplina(disciplina);
 
             }
 
@@ -149,17 +133,17 @@ public class Menu {
         return;
     }
 
-    public void subMenu4(Leitura ler, ArrayList<Estudante> estudantes) {
+    public void subMenu4(Leitura ler, Map<Integer, Estudante> estudantes) {
         int opcao;
 
         do {
 
             if (estudantes.size() == 0) {
-                escrever.naoHa("estudantes");
+                escrever.notFound("estudantes");
             } else {
-                escrever.cadastrados("Estudantes");
-                for (Estudante estudante : estudantes) {
-                    escrever.estudanteCadastrado(estudante.obterMatricula(), estudante.obterNome());
+                escrever.titleRelatorio("Estudantes");
+                for (Integer chave : estudantes.keySet()) {
+                    escrever.showSomething(Integer.toString(chave));
                 }
             }
 
@@ -175,7 +159,7 @@ public class Menu {
                 escrever.digiteNome("estudante");
                 String nome = ler.cadeiaCaract();
 
-                estudantes.add(new Estudante(matricula, nome));
+                estudantes.put(matricula, new Estudante(matricula, nome));
 
             }
 
@@ -184,7 +168,7 @@ public class Menu {
         return;
     }
 
-    public void subMenu5(Leitura ler, ArrayList<Disciplina> disciplinas, ArrayList<Estudante> estudantes) {
+    public void subMenu5(Leitura ler, Map<String, Disciplina> disciplinas, Map<Integer, Estudante> estudantes) {
         int opcao;
 
         do {
@@ -197,31 +181,20 @@ public class Menu {
             if (opcao == 1) {
 
                 escrever.digiteRef("estudante");
-                int matricula = ler.inteiro();
+                int estudanteRef = ler.inteiro();
                 ler.cadeiaCaract();
 
-                for (Estudante estudante : estudantes) {
-                    if (estudante.obterRef() == matricula) {
+                Estudante estudante = estudantes.get(estudanteRef);
 
-                        Estudante estudanteEncontrado = estudante;
-                        escrever.encontrado("Estudante");
+                estudante.exibirDisciplinas();
 
-                        estudanteEncontrado.exibirDisciplinas();
+                escrever.digiteRef("disciplina");
+                String disciplinaRef = ler.cadeiaCaract();
 
-                        escrever.digiteRef("disciplina");
-                        String disciplinaRef = ler.cadeiaCaract();
+                Disciplina disciplina = disciplinas.get(disciplinaRef);
 
-                        for (Disciplina disciplina : disciplinas) {
-                            if (disciplina.obterRef().equals(disciplinaRef)) {
-                                estudanteEncontrado.adicionarDisciplina(disciplina);
-                                disciplina.adicionarEstudante(estudanteEncontrado);
-                                escrever.sucess("Estudante");
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
+                estudante.adicionarDisciplina(disciplina);
+                disciplina.adicionarEstudante(estudante);
 
             }
 
@@ -230,7 +203,7 @@ public class Menu {
         return;
     }
 
-    public void subMenu6(Leitura ler, ArrayList<Disciplina> disciplinas) {
+    public void subMenu6(Leitura ler, Map<String, Disciplina> disciplinas) {
         int opcao;
 
         do {
@@ -255,19 +228,9 @@ public class Menu {
                 escrever.digiteRef("disciplina");
                 String disciplinaRef = ler.cadeiaCaract();
 
-                for (Disciplina disciplina : disciplinas) {
-                    if (disciplina.obterRef().equals(disciplinaRef)) {
+                Disciplina disciplina = disciplinas.get(disciplinaRef);
 
-                        if (disciplina.adicionarAtividade(nome, sincronismo)) {
-                            escrever.sucess("Atividade");
-                        } else {
-                            escrever.error("atividade");
-                        }
-
-                        break;
-                    }
-
-                }
+                disciplina.adicionarAtividade(nome, sincronismo);
             }
 
         } while (opcao != 2);
@@ -275,7 +238,7 @@ public class Menu {
         return;
     }
 
-    public void subMenu7(Leitura ler, ArrayList<Disciplina> disciplinas, ArrayList<Estudante> estudantes) {
+    public void subMenu7(Leitura ler, Map<String, Disciplina> disciplinas, Map<Integer, Estudante> estudantes) {
         int opcao;
 
         do {
@@ -286,32 +249,27 @@ public class Menu {
 
             if (opcao == 1) {
                 escrever.digiteRef("estudante");
-                int matricula = ler.inteiro();
+                int estudanteRef = ler.inteiro();
                 ler.cadeiaCaract();
-                Estudante estudanteAvaliador = null;
 
-                for (Estudante estudante : estudantes) {
-                    if (estudante.obterRef() == matricula) {
-                        estudanteAvaliador = estudante;
-                    }
-                }
+                Estudante estudante = estudantes.get(estudanteRef);
 
                 escrever.digiteRef("disciplina");
                 String disciplinaRef = ler.cadeiaCaract();
 
-                for (Disciplina disciplina : disciplinas) {
-                    if (disciplina.obterRef().equals(disciplinaRef)) {
-                        escrever.digiteRef("ativididade");
-                        int numeroAtividade = ler.inteiro();
-                        ler.cadeiaCaract();
-                        Atividade atividade = disciplina.obterAtividade(numeroAtividade);
-                        escrever.digiteNota("estudante");
-                        float notaAtividade = ler.flutuante();
-                        ler.cadeiaCaract();
+                Disciplina disciplina = disciplinas.get(disciplinaRef);
 
-                        atividade.avaliarAtividade(estudanteAvaliador, notaAtividade);
-                    }
-                }
+                escrever.digiteRef("ativididade");
+                int numeroAtividade = ler.inteiro();
+                ler.cadeiaCaract();
+
+                Atividade atividade = disciplina.obterAtividade(numeroAtividade);
+
+                escrever.digiteNota("estudante");
+                float notaAtividade = ler.flutuante();
+                ler.cadeiaCaract();
+
+                atividade.avaliarAtividade(estudante, notaAtividade);
 
             }
 

@@ -4,10 +4,10 @@ public class Main {
   public static void main(String[] args) throws Exception {
     int opcaoSelecionada;
 
-    ArrayList<Periodo> periodos = new ArrayList<>();
-    ArrayList<Docente> docentes = new ArrayList<>();
-    ArrayList<Disciplina> disciplinas = new ArrayList<>();
-    ArrayList<Estudante> estudantes = new ArrayList<>();
+    Map<String, Periodo> periodos = new HashMap<>();
+    Map<String, Docente> docentes = new HashMap<>();
+    Map<String, Disciplina> disciplinas = new HashMap<>();
+    Map<Integer, Estudante> estudantes = new HashMap<>();
 
     Menu menu = new Menu();
 

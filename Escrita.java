@@ -41,16 +41,16 @@ public class Escrita {
     /**Fim submenu messages */
 
     /**Relatorios messages */
-    public void naoHa(String isso){
+    public void notFound(String isso){
         System.out.println("Nao ha " + isso +  " cadastrados(as)! :(");
     }
 
-    public void cadastrados(String isso){
+    public void titleRelatorio(String isso){
         System.out.println(isso + " cadastrados(as):");
     }
 
-    public void periodoCadastrado(String ref){
-        System.out.println("- " + ref);
+    public void showSomething(String something){
+        System.out.println(something);
     }
 
     public void docenteCadastrado(String nome, String ref, String site){

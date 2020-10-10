@@ -8,21 +8,22 @@ public class Disciplina {
 
   Escrita escrever = new Escrita();
 
-  ArrayList<Estudante> estudantes = new ArrayList<>();
-  ArrayList<Atividade> atividades = new ArrayList<>();
+  Map<Integer, Estudante> estudantes = new HashMap<>();
+  Map<Integer, Atividade> atividades = new HashMap<>();
+
   int numeroAtividade = 1;
 
-  public Disciplina (String codigo, String nome, Periodo periodo, Docente docente){
+  public Disciplina(String codigo, String nome, Periodo periodo, Docente docente) {
     this.codigo = codigo;
     this.nome = nome;
     this.periodo = periodo;
     this.docente = docente;
   }
 
-  public String obterRef(){
+  public String obterRef() {
     return codigo + "-" + periodo.obterRef();
   }
-  
+
   public String obterCodigo() {
     return codigo;
   }
@@ -35,53 +36,52 @@ public class Disciplina {
     return periodo;
   }
 
-  public Docente obterDocente(){
+  public Docente obterDocente() {
     return docente;
   }
 
-  public void adicionarEstudante(Estudante estudante){
-    estudantes.add(estudante);
+  public void adicionarEstudante(Estudante estudante) {
+    estudantes.put(estudante.obterRef(), estudante);
   }
 
-  public void exibirEstudantes(){
+  public void exibirEstudantes() {
     if (estudantes.size() == 0) {
-      escrever.naoHa("estudantes");
+      escrever.notFound("estudantes");
     } else {
-      escrever.cadastrados("Estudantes");
-      for (Estudante estudante : estudantes) {
-        escrever.estudanteCadastrado(estudante.obterRef(), estudante.obterNome());
+      escrever.titleRelatorio("Estudantes");
+      for (Integer chave : estudantes.keySet()) {
+        escrever.showSomething(Integer.toString(chave));
       }
     }
   }
 
-  public boolean adicionarAtividade(String nome, String sincronismo){
-    if (atividades.add(new Atividade(nome, sincronismo, this.obterRef() , this.numeroAtividade))){
-      this.numeroAtividade = this.numeroAtividade + 1;
-      return true;
-    } else {
-      return false;
-    }
+  public boolean adicionarAtividade(String nome, String sincronismo) {
+    
+    atividades.put(this.numeroAtividade, new Atividade(nome, sincronismo, this, this.numeroAtividade));
+    this.numeroAtividade = this.numeroAtividade + 1;
+    
+    return true;
+    
   }
 
-  public void obterAtividades(){
+  public void obterAtividades() {
     if (atividades.size() == 0) {
-      escrever.naoHa("atividades");
+      escrever.notFound("atividades");
     } else {
-      escrever.cadastrados("Atividades");
-      for (Atividade atividade : atividades) {
-        escrever.atividadeCadastrada(atividade.numero, atividade.nome, atividade.sincronismo);
-        atividade.obterAvaliacoes();
+      escrever.titleRelatorio("Atividades");
+      for (Integer chave : atividades.keySet()) {
+        escrever.showSomething(Integer.toString(chave));
+        escrever.showSomething(atividades.get(chave).obterNome());
+        escrever.showSomething(atividades.get(chave).obterSincronismo());
+        escrever.showAsterisks();
       }
     }
   }
 
-  public Atividade obterAtividade(int numeroAtividade){
-    for(Atividade atividade: atividades){
-      if(atividade.obterRef() == numeroAtividade){
-        return atividade;
-      }
-    }
-    return null;
+  public Atividade obterAtividade(int numeroAtividade) {
+    
+    return atividades.get(numeroAtividade);
+
   }
-  
+
 }

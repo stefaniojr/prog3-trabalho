@@ -4,7 +4,7 @@ public class Periodo {
   private int ano;
   private char semestre;
 
-  ArrayList<Disciplina> disciplinas = new ArrayList<>();
+  Map<String, Disciplina> disciplinas = new HashMap<>();
 
   public Periodo(int ano, char semestre){
     this.ano = ano;
@@ -24,7 +24,7 @@ public class Periodo {
   }
 
   public void adicionarDisciplina(Disciplina disciplina){
-    disciplinas.add(disciplina);
+    disciplinas.put(disciplina.obterRef(), disciplina);
   }
 
 }

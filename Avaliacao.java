@@ -11,6 +11,10 @@ public class Avaliacao {
         return estudante;
     }
 
+    public Estudante obterRef(){
+        return obterAvaliador();
+    }
+
     public float obterNota(){
         return nota;
     }

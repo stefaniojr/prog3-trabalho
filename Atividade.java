@@ -1,41 +1,53 @@
 import java.util.*;
 
 public class Atividade {
-    String nome;
-    String sincronismo;
-    String disciplinaRef;
-    int numero;
+  String nome;
+  String sincronismo;
+  Disciplina disciplina;
+  int numero;
 
-    ArrayList<Avaliacao> avaliacoes = new ArrayList<>();
+  Map<Estudante, Avaliacao> avaliacoes = new HashMap<>();
 
-    Escrita escrever = new Escrita();
+  Escrita escrever = new Escrita();
 
-    public Atividade(String nome, String sincronismo, String disciplinaRef, int numero) {
-        this.nome = nome;
-        this.sincronismo = sincronismo;
-        this.disciplinaRef = disciplinaRef;
-        this.numero = numero;
-    }
+  public Atividade(String nome, String sincronismo, Disciplina disciplina, int numero) {
+    this.nome = nome;
+    this.sincronismo = sincronismo;
+    this.disciplina = disciplina;
+    this.numero = numero;
+  }
 
-    public int obterRef() {
-        return numero;
-    }
+  public int obterRef() {
+    return numero;
+  }
 
-    public void avaliarAtividade(Estudante estudante, float nota){
-        avaliacoes.add(new Avaliacao(estudante, nota));
-    }
+  public String obterNome(){
+    return this.nome;
+  }
 
-    public void obterAvaliacoes(){
-        if (avaliacoes.size() == 0) {
-          escrever.naoHa("avaliacoes");
-        } else {
-          escrever.cadastrados("Avaliacoes");
-          for (Avaliacao avaliacao : avaliacoes) {
-            escrever.avaliacaoCadastrada(avaliacao.obterAvaliador().obterNome(), avaliacao.obterNota());
-          }
-          
-        }
+  public String obterSincronismo(){
+    return this.sincronismo;
+  }
+
+  public Disciplina obterDisciplina(){
+    return this.disciplina;
+  }
+
+  public void avaliarAtividade(Estudante estudante, float nota) {
+    avaliacoes.put(estudante, new Avaliacao(estudante, nota));
+  }
+
+  public void obterAvaliacoes() {
+    if (avaliacoes.size() == 0) {
+      escrever.notFound("avaliacoes");
+    } else {
+      escrever.titleRelatorio("Avaliacoes");
+      for (Estudante chave : avaliacoes.keySet()) {
+        escrever.showSomething(chave.obterNome());
+        escrever.showSomething(Float.toString(avaliacoes.get(chave).obterNota()));
+        escrever.showAsterisks();
       }
-
+    }
+  }
 
 }

@@ -5,7 +5,7 @@ public class Docente {
   private String nome;
   private String site;
 
-  ArrayList<Disciplina> disciplinas = new ArrayList<>();
+  Map<String, Disciplina> disciplinas = new HashMap<>();
 
   public Docente(String login, String nome, String site){
     this.login = login;
@@ -30,7 +30,7 @@ public class Docente {
   }
 
   public void adicionarDisciplina(Disciplina disciplina){
-    disciplinas.add(disciplina);
+    disciplinas.put(disciplina.obterRef(), disciplina);
   }
 
 }
