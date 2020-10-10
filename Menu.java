@@ -3,6 +3,8 @@ import java.util.*;
 public class Menu {
 
     Escrita escrever = new Escrita();
+    Relatorio relatorio = new Relatorio();
+    Cadastro cadastro = new Cadastro();
 
     public void menuPrincipal() {
         escrever.mostrarMenu();
@@ -13,27 +15,19 @@ public class Menu {
 
         do {
 
-            if (periodos.size() == 0) {
-                escrever.notFound("periodos");
-            } else {
-                escrever.titleRelatorio("Periodos");
-                for (String chave : periodos.keySet()) {
-                    escrever.showSomething(chave);
-                }
-
-            }
-
             escrever.mostrarSubMenu(escrever, "PERIODO");
+
             opcao = ler.inteiro();
 
             if (opcao == 1) {
-                escrever.digiteAno();
-                int ano = ler.inteiro();
-                char semestre = ler.caract();
-                periodos.put(ano + "/" + semestre, new Periodo(ano, semestre));
+                cadastro.periodo(ler, periodos);
             }
 
-        } while (opcao != 2);
+            else if (opcao == 2) {
+                relatorio.periodosCadastrados(escrever, periodos);
+            }
+
+        } while (opcao != 3);
 
         return;
 
@@ -44,45 +38,20 @@ public class Menu {
 
         do {
 
-            if (docentes.size() == 0) {
-                escrever.notFound("docentes");
-            } else {
-                escrever.titleRelatorio("Docentes");
-                for (String chave : docentes.keySet()) {
-                    escrever.showSomething(chave);
-                }
-            }
-
             escrever.mostrarSubMenu(escrever, "DOCENTE");
+
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
             if (opcao == 1) {
-
-                escrever.digiteNome("docente");
-
-                String nome = ler.cadeiaCaract();
-                escrever.digiteLogin();
-
-                String login = ler.cadeiaCaract();
-                String semSite = "Docente sem site.";
-
-                escrever.possuiSite();
-
-                char possuiSite = ler.caract();
-                ler.cadeiaCaract();
-
-                if (possuiSite == 'S') {
-                    escrever.digiteSite("docente");
-                    String comSite = ler.cadeiaCaract();
-                    docentes.put(login, new Docente(login, nome, comSite));
-                } else {
-                    docentes.put(login, new Docente(login, nome, semSite));
-                }
-
+                cadastro.docente(ler, docentes);
             }
 
-        } while (opcao != 2);
+            else if (opcao == 2) {
+                relatorio.docentesCadastrados(escrever, docentes);
+            }
+
+        } while (opcao != 3);
 
         return;
     }
@@ -92,43 +61,20 @@ public class Menu {
         int opcao;
         do {
 
-            if (disciplinas.size() == 0) {
-                escrever.notFound("disciplinas");
-
-            } else {
-                escrever.titleRelatorio("Disciplinas");
-                for (String chave : disciplinas.keySet()) {
-                    escrever.showSomething(chave);
-                }
-            }
-
             escrever.mostrarSubMenu(escrever, "DISCIPLINA");
+
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
             if (opcao == 1) {
-
-                escrever.digiteCodigoDisciplina();
-                String codigo = ler.cadeiaCaract();
-                escrever.digiteNome("disciplina");
-                String nome = ler.cadeiaCaract();
-                escrever.digitePeriodo();
-                String periodoRef = ler.cadeiaCaract();
-                escrever.digiteRef("docente");
-                String docenteRef = ler.cadeiaCaract();
-
-                Periodo periodo = periodos.get(periodoRef);
-                Docente docente = docentes.get(docenteRef);
-
-                Disciplina disciplina = disciplinas.put(codigo + "-" + periodoRef,
-                        new Disciplina(codigo, nome, periodo, docente));
-
-                periodo.adicionarDisciplina(disciplina);
-                docente.adicionarDisciplina(disciplina);
-
+                cadastro.disciplina(ler, periodos, docentes, disciplinas);
             }
 
-        } while (opcao != 2);
+            else if (opcao == 2) {
+                relatorio.disciplinasCadastradas(escrever, disciplinas);
+            }
+
+        } while (opcao != 3);
 
         return;
     }
@@ -138,32 +84,19 @@ public class Menu {
 
         do {
 
-            if (estudantes.size() == 0) {
-                escrever.notFound("estudantes");
-            } else {
-                escrever.titleRelatorio("Estudantes");
-                for (Integer chave : estudantes.keySet()) {
-                    escrever.showSomething(Integer.toString(chave));
-                }
-            }
-
             escrever.mostrarSubMenu(escrever, "ESTUDANTE");
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
             if (opcao == 1) {
-
-                escrever.digiteMatricula();
-                int matricula = ler.inteiro();
-                ler.cadeiaCaract();
-                escrever.digiteNome("estudante");
-                String nome = ler.cadeiaCaract();
-
-                estudantes.put(matricula, new Estudante(matricula, nome));
-
+                cadastro.estudante(ler, estudantes);
             }
 
-        } while (opcao != 2);
+            else if (opcao == 2) {
+                relatorio.estudantesCadastrados(escrever, estudantes);
+            }
+
+        } while (opcao != 3);
 
         return;
     }
@@ -179,26 +112,13 @@ public class Menu {
             ler.cadeiaCaract();
 
             if (opcao == 1) {
-
-                escrever.digiteRef("estudante");
-                int estudanteRef = ler.inteiro();
-                ler.cadeiaCaract();
-
-                Estudante estudante = estudantes.get(estudanteRef);
-
-                estudante.exibirDisciplinas();
-
-                escrever.digiteRef("disciplina");
-                String disciplinaRef = ler.cadeiaCaract();
-
-                Disciplina disciplina = disciplinas.get(disciplinaRef);
-
-                estudante.adicionarDisciplina(disciplina);
-                disciplina.adicionarEstudante(estudante);
-
+                cadastro.estudanteEmDisciplina(ler, disciplinas, estudantes);
             }
 
-        } while (opcao != 2);
+            else if (opcao == 2) {
+                relatorio.turmasFormadas(escrever, disciplinas, estudantes);
+            }
+        } while (opcao != 3);
 
         return;
     }
@@ -214,26 +134,16 @@ public class Menu {
             ler.cadeiaCaract();
 
             if (opcao == 1) {
-
-                escrever.digiteNome("atividade");
-                String nome = ler.cadeiaCaract();
-
-                escrever.digiteSincronismo();
-                String sincronismo = ler.cadeiaCaract();
-
-                if (!(sincronismo.equals("sincrona"))) {
-                    sincronismo = "assincrona";
-                }
-
-                escrever.digiteRef("disciplina");
-                String disciplinaRef = ler.cadeiaCaract();
-
-                Disciplina disciplina = disciplinas.get(disciplinaRef);
-
-                disciplina.adicionarAtividade(nome, sincronismo);
+                cadastro.atividadeEmDisciplina(ler, disciplinas);                
             }
 
-        } while (opcao != 2);
+            else if (opcao == 2) {
+                escrever.digiteRef("disciplina");
+                String disciplinaRef = ler.cadeiaCaract();
+                disciplinas.get(disciplinaRef).exibirAtividades();
+            }
+
+        } while (opcao != 3);
 
         return;
     }
@@ -248,32 +158,20 @@ public class Menu {
             ler.cadeiaCaract();
 
             if (opcao == 1) {
-                escrever.digiteRef("estudante");
-                int estudanteRef = ler.inteiro();
-                ler.cadeiaCaract();
-
-                Estudante estudante = estudantes.get(estudanteRef);
-
-                escrever.digiteRef("disciplina");
-                String disciplinaRef = ler.cadeiaCaract();
-
-                Disciplina disciplina = disciplinas.get(disciplinaRef);
-
-                escrever.digiteRef("ativididade");
-                int numeroAtividade = ler.inteiro();
-                ler.cadeiaCaract();
-
-                Atividade atividade = disciplina.obterAtividade(numeroAtividade);
-
-                escrever.digiteNota("estudante");
-                float notaAtividade = ler.flutuante();
-                ler.cadeiaCaract();
-
-                atividade.avaliarAtividade(estudante, notaAtividade);
-
+                cadastro.avaliacaoEmAtividade(ler, disciplinas, estudantes);
             }
 
-        } while (opcao != 2);
+            else if (opcao == 2) {
+                escrever.digiteRef("disciplina");
+                String disciplinaRef = ler.cadeiaCaract();
+                escrever.digiteRef("atividade");
+                int atividadeRef = ler.inteiro();
+                ler.cadeiaCaract();
+                Atividade atividade = disciplinas.get(disciplinaRef).obterAtividade(atividadeRef);
+                atividade.exibirAvaliacoes();
+            }
+
+        } while (opcao != 3);
 
         return;
     }

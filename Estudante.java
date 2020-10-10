@@ -6,6 +6,7 @@ public class Estudante {
 
   Map<String, Disciplina> disciplinas = new HashMap<>();
   Escrita escrever = new Escrita();
+  Relatorio relatorio = new Relatorio();
 
   public Estudante(int matricula, String nome){
     this.matricula = matricula;
@@ -29,17 +30,9 @@ public class Estudante {
   }
 
   public void exibirDisciplinas(){
-    if (disciplinas.size() == 0) {
-      escrever.notFound("disciplinas");
-    } else {
-      escrever.titleRelatorio("Disciplinas");
-      for (String chave : disciplinas.keySet()) {
-        escrever.showSomething(chave);
-        escrever.showSomething(disciplinas.get(chave).obterNome());
-        escrever.showSomething(disciplinas.get(chave).obterDocente().obterNome());
-        escrever.showAsterisks();
-      }
-    }
+
+    relatorio.disciplinasCadastradas(escrever, disciplinas);
+    
   }
 
 }

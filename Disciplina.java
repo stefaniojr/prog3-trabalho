@@ -7,6 +7,7 @@ public class Disciplina {
   private Docente docente;
 
   Escrita escrever = new Escrita();
+  Relatorio relatorio = new Relatorio();
 
   Map<Integer, Estudante> estudantes = new HashMap<>();
   Map<Integer, Atividade> atividades = new HashMap<>();
@@ -40,19 +41,13 @@ public class Disciplina {
     return docente;
   }
 
-  public void adicionarEstudante(Estudante estudante) {
-    estudantes.put(estudante.obterRef(), estudante);
+  public Atividade obterAtividade(int numeroAtividade) {
+    return atividades.get(numeroAtividade);
   }
 
-  public void exibirEstudantes() {
-    if (estudantes.size() == 0) {
-      escrever.notFound("estudantes");
-    } else {
-      escrever.titleRelatorio("Estudantes");
-      for (Integer chave : estudantes.keySet()) {
-        escrever.showSomething(Integer.toString(chave));
-      }
-    }
+
+  public void adicionarEstudante(Estudante estudante) {
+    estudantes.put(estudante.obterRef(), estudante);
   }
 
   public boolean adicionarAtividade(String nome, String sincronismo) {
@@ -64,24 +59,14 @@ public class Disciplina {
     
   }
 
-  public void obterAtividades() {
-    if (atividades.size() == 0) {
-      escrever.notFound("atividades");
-    } else {
-      escrever.titleRelatorio("Atividades");
-      for (Integer chave : atividades.keySet()) {
-        escrever.showSomething(Integer.toString(chave));
-        escrever.showSomething(atividades.get(chave).obterNome());
-        escrever.showSomething(atividades.get(chave).obterSincronismo());
-        escrever.showAsterisks();
-      }
-    }
+  public void exibirAtividades() {
+    relatorio.atividadesCadastradas(escrever, atividades);
+  }
+  
+  public void exibirEstudantes() {
+    relatorio.estudantesCadastrados(escrever, estudantes);
   }
 
-  public Atividade obterAtividade(int numeroAtividade) {
-    
-    return atividades.get(numeroAtividade);
-
-  }
+  
 
 }

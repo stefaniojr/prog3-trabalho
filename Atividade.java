@@ -6,7 +6,8 @@ public class Atividade {
   Disciplina disciplina;
   int numero;
 
-  Map<Estudante, Avaliacao> avaliacoes = new HashMap<>();
+  List<Avaliacao> avaliacoes = new ArrayList<>();
+  Relatorio relatorio = new Relatorio();
 
   Escrita escrever = new Escrita();
 
@@ -34,20 +35,11 @@ public class Atividade {
   }
 
   public void avaliarAtividade(Estudante estudante, float nota) {
-    avaliacoes.put(estudante, new Avaliacao(estudante, nota));
+    avaliacoes.add(new Avaliacao(estudante, nota));;
   }
 
-  public void obterAvaliacoes() {
-    if (avaliacoes.size() == 0) {
-      escrever.notFound("avaliacoes");
-    } else {
-      escrever.titleRelatorio("Avaliacoes");
-      for (Estudante chave : avaliacoes.keySet()) {
-        escrever.showSomething(chave.obterNome());
-        escrever.showSomething(Float.toString(avaliacoes.get(chave).obterNota()));
-        escrever.showAsterisks();
-      }
-    }
+  public void exibirAvaliacoes() {
+    relatorio.avaliacoesCadastradas(escrever, avaliacoes);
   }
 
 }

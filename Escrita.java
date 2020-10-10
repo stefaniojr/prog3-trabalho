@@ -20,19 +20,24 @@ public class Escrita {
     }
 
     /**Submenu messages */
-    public void mostrarSubMenu(Escrita escrever, String isso){
+    public void mostrarSubMenu(Escrita escrever, String disso){
         this.showAsterisks();
-        this.cadastrar(isso);
-        this.voltarMenu();
+        this.option1SubMenu(disso);
+        this.option2SubMenu();
+        this.option3SubMenu();
         this.digiteOpcao();
     }
 
-    public void cadastrar(String isso){
+    public void option1SubMenu(String isso){
         System.out.println("1 - CADASTRAR NOVO(A) " + isso);
     }
 
-    public void voltarMenu(){
-        System.out.println("2 - VOLTAR AO MENU PRINCIPAL");
+    public void option2SubMenu(){
+        System.out.println("2 - GERAR RELATORIOS");
+    }
+
+    public void option3SubMenu(){
+        System.out.println("3 - VOLTAR AO MENU PRINCIPAL");
     }
 
     public void digiteOpcao(){

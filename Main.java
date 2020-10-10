@@ -14,6 +14,7 @@ public class Main {
     /** Para escrita e leitura */
     Escrita escrever = new Escrita();
     Leitura ler = new Leitura();
+    
     ler.iniciarLeitura();
 
     do {
