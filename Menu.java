@@ -3,7 +3,7 @@ import java.util.*;
 public class Menu {
 
     Escrita escrever = new Escrita();
-    Relatorio relatorio = new Relatorio();
+    Info info = new Info();
     Cadastro cadastro = new Cadastro();
 
     public void menuPrincipal() {
@@ -24,7 +24,7 @@ public class Menu {
             }
 
             else if (opcao == 2) {
-                relatorio.periodosCadastrados(escrever, periodos);
+                info.periodosCadastrados(escrever, periodos);
             }
 
         } while (opcao != 3);
@@ -48,7 +48,7 @@ public class Menu {
             }
 
             else if (opcao == 2) {
-                relatorio.docentesCadastrados(escrever, docentes);
+                info.docentesCadastrados(escrever, docentes);
             }
 
         } while (opcao != 3);
@@ -71,7 +71,7 @@ public class Menu {
             }
 
             else if (opcao == 2) {
-                relatorio.disciplinasCadastradas(escrever, disciplinas);
+                info.disciplinasCadastradas(escrever, disciplinas);
             }
 
         } while (opcao != 3);
@@ -93,7 +93,7 @@ public class Menu {
             }
 
             else if (opcao == 2) {
-                relatorio.estudantesCadastrados(escrever, estudantes);
+                info.estudantesCadastrados(escrever, estudantes);
             }
 
         } while (opcao != 3);
@@ -116,7 +116,7 @@ public class Menu {
             }
 
             else if (opcao == 2) {
-                relatorio.turmasFormadas(escrever, disciplinas, estudantes);
+                info.turmasFormadas(escrever, disciplinas, estudantes);
             }
         } while (opcao != 3);
 

@@ -7,7 +7,7 @@ public class Disciplina {
   private Docente docente;
 
   Escrita escrever = new Escrita();
-  Relatorio relatorio = new Relatorio();
+  Info info = new Info();
 
   Map<Integer, Estudante> estudantes = new HashMap<>();
   Map<Integer, Atividade> atividades = new HashMap<>();
@@ -50,21 +50,40 @@ public class Disciplina {
     estudantes.put(estudante.obterRef(), estudante);
   }
 
-  public boolean adicionarAtividade(String nome, String sincronismo) {
+  public void adicionarAula(String nome, String sincronismo, Disciplina disciplina, String data) {
     
-    atividades.put(this.numeroAtividade, new Atividade(nome, sincronismo, this, this.numeroAtividade));
+    atividades.put(this.numeroAtividade, new Aula(nome, sincronismo, this, this.numeroAtividade, data));
     this.numeroAtividade = this.numeroAtividade + 1;
     
-    return true;
+  }
+
+  public void adicionarEstudo(String nome, String sincronismo, Disciplina disciplina, Map<String, String> conteudos) {
+    
+    atividades.put(this.numeroAtividade, new Estudo(nome, sincronismo, this, this.numeroAtividade, conteudos));
+    this.numeroAtividade = this.numeroAtividade + 1;
+    
+  }
+
+  public void adicionarTrabalho(String nome, String sincronismo, Disciplina disciplina, String prazo, int nIntegrantes, int cargaHoraria) {
+    
+    atividades.put(this.numeroAtividade, new Trabalho(nome, sincronismo, this, this.numeroAtividade, prazo, nIntegrantes, cargaHoraria));
+    this.numeroAtividade = this.numeroAtividade + 1;
+    
+  }
+
+  public void adicionarProva(String nome, String sincronismo, Disciplina disciplina, String data, List<String> conteudos) {
+    
+    atividades.put(this.numeroAtividade, new Prova(nome, sincronismo, this, this.numeroAtividade, data, conteudos));
+    this.numeroAtividade = this.numeroAtividade + 1;
     
   }
 
   public void exibirAtividades() {
-    relatorio.atividadesCadastradas(escrever, atividades);
+    info.atividadesCadastradas(escrever, atividades);
   }
   
   public void exibirEstudantes() {
-    relatorio.estudantesCadastrados(escrever, estudantes);
+    info.estudantesCadastrados(escrever, estudantes);
   }
 
   

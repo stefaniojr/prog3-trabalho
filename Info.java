@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Relatorio {
+public class Info {
 
     public void periodosCadastrados(Escrita escrever, Map<String, Periodo> periodos) {
         if (periodos.size() == 0) {

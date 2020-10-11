@@ -1,7 +1,8 @@
+import java.text.ParseException;
 import java.util.*;
 
 public class Main {
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception, ParseException {
     int opcaoSelecionada;
 
     Map<String, Periodo> periodos = new HashMap<>();

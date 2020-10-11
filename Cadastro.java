@@ -84,19 +84,71 @@ public class Cadastro {
         escrever.digiteNome("atividade");
         String nome = ler.cadeiaCaract();
 
-        escrever.digiteSincronismo();
-        String sincronismo = ler.cadeiaCaract();
-
-        if (!(sincronismo.equals("sincrona"))) {
-            sincronismo = "assincrona";
-        }
-
+        escrever.digiteTipo();
+        int tipo = ler.inteiro();
+        ler.cadeiaCaract();
         escrever.digiteRef("disciplina");
         String disciplinaRef = ler.cadeiaCaract();
-
         Disciplina disciplina = disciplinas.get(disciplinaRef);
 
-        disciplina.adicionarAtividade(nome, sincronismo);
+        if (tipo == 1){
+            escrever.digiteDataComHora();
+            String data = ler.cadeiaCaract();
+            disciplina.adicionarAula(nome, "sincrona", disciplina, data);
+        } else if (tipo == 2){
+            Map<String, String> conteudos = new HashMap<>();
+            String url;
+            String conteudo;
+
+            do{
+                escrever.instrucoesAdicionarConteudoAEstudar();
+                
+                escrever.digiteConteudo();
+                conteudo = ler.cadeiaCaract();
+                
+                if (conteudo.equals("0")){
+                    break;
+                }
+                
+                escrever.digiteURL();
+                url = ler.cadeiaCaract();
+    
+                conteudos.put(url, conteudo);
+            }while(true);
+            
+            disciplina.adicionarEstudo(nome, "assincrona", disciplina, conteudos);
+
+        } else if (tipo == 3){
+            escrever.digiteData();
+            String prazo = ler.cadeiaCaract();
+            escrever.digiteIntegrantes();
+            int nIntegrantes = ler.inteiro();
+            ler.cadeiaCaract();
+            escrever.digiteCargaHoraria();
+            int cargaHoraria = ler.inteiro();
+            ler.cadeiaCaract();
+
+            disciplina.adicionarTrabalho(nome, "assincrona", disciplina, prazo, nIntegrantes, cargaHoraria);
+
+        } else if (tipo == 4){
+            List<String> conteudos = new ArrayList<>();
+            String conteudo;
+
+            escrever.digiteDataComHora();
+            String data = ler.cadeiaCaract();
+            
+            do{
+                escrever.digiteConteudo();
+                conteudo = ler.cadeiaCaract();
+                
+                if (conteudo.equals("0")){
+                    break;
+                }
+                conteudos.add(conteudo);
+            }while(true);
+
+            disciplina.adicionarProva(nome, "sincrona", disciplina, data, conteudos);
+        }
     }
 
     public void avaliacaoEmAtividade(Leitura ler, Map<String, Disciplina> disciplinas, Map<Integer, Estudante> estudantes) {

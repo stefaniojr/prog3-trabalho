@@ -33,7 +33,7 @@ public class Escrita {
     }
 
     public void option2SubMenu(){
-        System.out.println("2 - GERAR RELATORIOS");
+        System.out.println("2 - MOSTRAR INFORMACOES");
     }
 
     public void option3SubMenu(){
@@ -114,12 +114,45 @@ public class Escrita {
         System.out.print("O docente possui site? (S/N): "); 
     }
 
-    public void digiteSincronismo(){
-        System.out.print("Digite o sincronismo da atividade (sincrona ou assincrona): ");
+    public void digiteTipo(){
+        System.out.println("Tipos de atividade:");
+        System.out.println("1 - Aula");
+        System.out.println("2 - Estudo");
+        System.out.println("3 - Trabalho");
+        System.out.println("4 - Prova");
+        System.out.print("Digite o tipo de atividade (1, 2, 3 ou 4): ");
     }
 
     public void digiteNota(String quem){
         System.out.print("Nota que o " + quem +  " estudante deseja atribuir a atividade: ");
+    }
+
+    public void digiteData(){
+        System.out.print("Digite a data de entrega (Ex: 00/00/0000): ");
+    }
+
+    public void digiteDataComHora(){
+        System.out.print("Digite a data e o horario (Ex: 00/00/0000-00:00): ");
+    }
+
+    public void instrucoesAdicionarConteudoAEstudar(){
+        System.out.println("Adicione primeiro um conteudo a ser estudado e, quando solicitado, uma URL.\nPara finalizar a insercao de conteudo, digite 0 ao ser solicitada a insercao de um novo conteudo.");
+    }
+
+    public void digiteConteudo(){
+        System.out.print("Adicione um conteudo a ser estudado (0 para sair): ");
+    }
+
+    public void digiteURL(){
+        System.out.print("Adicione uma URL: ");
+    }
+
+    public void digiteIntegrantes(){
+        System.out.print("Digite o numero de integrantes do grupo: ");
+    }
+
+    public void digiteCargaHoraria(){
+        System.out.print("Digite o numero da carga horaria prevista a realizacao da atividade: ");
     }
 
     public void digiteCodigoDisciplina(){

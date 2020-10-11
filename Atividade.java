@@ -7,7 +7,7 @@ public class Atividade {
   int numero;
 
   List<Avaliacao> avaliacoes = new ArrayList<>();
-  Relatorio relatorio = new Relatorio();
+  Info info = new Info();
 
   Escrita escrever = new Escrita();
 
@@ -39,7 +39,7 @@ public class Atividade {
   }
 
   public void exibirAvaliacoes() {
-    relatorio.avaliacoesCadastradas(escrever, avaliacoes);
+    info.avaliacoesCadastradas(escrever, avaliacoes);
   }
 
 }

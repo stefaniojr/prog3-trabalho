@@ -6,7 +6,7 @@ public class Estudante {
 
   Map<String, Disciplina> disciplinas = new HashMap<>();
   Escrita escrever = new Escrita();
-  Relatorio relatorio = new Relatorio();
+  Info info = new Info();
 
   public Estudante(int matricula, String nome){
     this.matricula = matricula;
@@ -31,7 +31,7 @@ public class Estudante {
 
   public void exibirDisciplinas(){
 
-    relatorio.disciplinasCadastradas(escrever, disciplinas);
+    info.disciplinasCadastradas(escrever, disciplinas);
     
   }
 
