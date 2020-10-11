@@ -7,7 +7,7 @@ public class Trabalho extends Atividade {
     Date prazo;
 
     public Trabalho(String nome, String sincronismo, Disciplina disciplina, int numero, String prazo, int nIntegrantes, int cargaHoraria){
-        super(nome, sincronismo, disciplina, numero);
+        super(nome, sincronismo, disciplina, cargaHoraria, numero, true);
 
         try{
             this.prazo = df.parse(prazo);

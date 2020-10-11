@@ -51,6 +51,7 @@ public class Cadastro {
 
         periodo.adicionarDisciplina(disciplinas.get(codigo + "-" + periodoRef));
         docente.adicionarDisciplina(disciplinas.get(codigo + "-" + periodoRef));
+        docente.adicionarPeriodo(periodos.get(periodoRef));
     }
 
     public void estudante(Leitura ler, Map<Integer, Estudante> estudantes) {
@@ -77,6 +78,7 @@ public class Cadastro {
         Disciplina disciplina = disciplinas.get(disciplinaRef);
 
         estudante.adicionarDisciplina(disciplina);
+        estudante.adicionarPeriodo(disciplina.obterPeriodo());
         disciplina.adicionarEstudante(estudante);
     }
 
@@ -174,5 +176,7 @@ public class Cadastro {
         ler.cadeiaCaract();
 
         atividade.avaliarAtividade(estudante, notaAtividade);
+    
+        estudante.adicionarAvaliacao(atividade, atividade.encontrarAvaliacao(estudante));
     }
 }

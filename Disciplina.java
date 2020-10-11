@@ -6,8 +6,12 @@ public class Disciplina {
   private Periodo periodo;
   private Docente docente;
 
+  float montanteAvaliacoesEmAtividades = 0;
+  int montanteAvaliadoresEmAtividades = 0;
+
+  int cargaHoraria = 0;
+
   Escrita escrever = new Escrita();
-  Info info = new Info();
 
   Map<Integer, Estudante> estudantes = new HashMap<>();
   Map<Integer, Atividade> atividades = new HashMap<>();
@@ -41,10 +45,74 @@ public class Disciplina {
     return docente;
   }
 
+  public float obterMontanteAvaliacoesEmAtividades(){
+    return this.montanteAvaliacoesEmAtividades;
+  }
+
+  public int obterMontanteAvaliadoresEmAtividades(){
+    return this.montanteAvaliadoresEmAtividades;
+  }
+
+  public int obterNumeroDeAtividades(){
+    return numeroAtividade - 1;
+  }
+
+  public int obterNumeroDeAlunosMatriculados(){
+    return estudantes.size();
+  }
+
+  public int obterNumeroAtividadesSincronas(){
+    int nAtividadesSincronas = 0;
+    for (Integer chave: atividades.keySet()){
+      if (atividades.get(chave).obterSincronismo().equals("sincrona")){
+        nAtividadesSincronas++;
+      }
+    }
+
+    return nAtividadesSincronas;
+  }
+
+  public Map<Integer, Atividade> obterAtividadesAvaliativas(){
+    Map<Integer, Atividade> atividadesAvaliativas = new HashMap<>();
+
+    for (Integer chave: atividades.keySet()){
+      if(atividades.get(chave).isAvaliativa()){
+        atividadesAvaliativas.put(atividades.get(chave).obterNumeroSequencial(), atividades.get(chave));
+        }
+      }
+
+    return atividadesAvaliativas;
+  }
+
+  public float obterPercentualAtividadesSincronas(){
+    return obterNumeroAtividadesSincronas()/obterNumeroDeAtividades();
+  }
+
+  public int obterCargaHorariaDisciplina(){
+    
+    for (Integer chave: atividades.keySet()){
+        this.cargaHoraria = this.cargaHoraria + atividades.get(chave).obterCargaHoraria();
+    }
+    return this.cargaHoraria;
+  }
+
+  public void calcularEstatisticasAtividadesDeDisciplina(){
+    float montanteNotas = 0;
+    int montanteAvaliadores = 0;
+    
+    for (Integer chave : atividades.keySet()) {
+      montanteNotas = montanteNotas + atividades.get(chave).obterMontanteNotasAvaliacoes();
+      montanteAvaliadores = montanteAvaliadores + atividades.get(chave).obterQtAvaliadores();
+    }
+    
+    this.montanteAvaliacoesEmAtividades = montanteNotas;
+    this.montanteAvaliadoresEmAtividades = montanteAvaliadores;
+
+  }
+
   public Atividade obterAtividade(int numeroAtividade) {
     return atividades.get(numeroAtividade);
   }
-
 
   public void adicionarEstudante(Estudante estudante) {
     estudantes.put(estudante.obterRef(), estudante);
@@ -78,13 +146,13 @@ public class Disciplina {
     
   }
 
-  public void exibirAtividades() {
-    info.atividadesCadastradas(escrever, atividades);
-  }
+  // public void exibirAtividades() {
+  //   info.atividadesCadastradas(escrever, atividades);
+  // }
   
-  public void exibirEstudantes() {
-    info.estudantesCadastrados(escrever, estudantes);
-  }
+  // public void exibirEstudantes() {
+  //   info.estudantesCadastrados(escrever, estudantes);
+  // }
 
   
 

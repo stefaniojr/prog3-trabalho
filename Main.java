@@ -1,8 +1,15 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.*;
 
-public class Main {
-  public static void main(String[] args) throws Exception, ParseException {
+public class Main implements Serializable {
+  private static final long serialVersionUID = 1L;
+  private static final String arquivoSerializacao = "dados.dat";
+
+  public static void main(String[] args) throws Exception, ParseException, IOException, ClassNotFoundException {
+    Main aplicacao = null;
+
     int opcaoSelecionada;
 
     Map<String, Periodo> periodos = new HashMap<>();
@@ -15,7 +22,7 @@ public class Main {
     /** Para escrita e leitura */
     Escrita escrever = new Escrita();
     Leitura ler = new Leitura();
-    
+
     ler.iniciarLeitura();
 
     do {
@@ -53,11 +60,23 @@ public class Main {
       }
 
       else if (opcaoSelecionada == 8) {
+        menu.subMenu8(ler, periodos, docentes, disciplinas, estudantes);
+      }
+
+      else if (opcaoSelecionada == 9) {
+        menu.subMenu9(ler, arquivoSerializacao, aplicacao);
+      }
+
+      else if (opcaoSelecionada == 10) {
+        aplicacao = menu.subMenu10(ler, arquivoSerializacao, aplicacao);
+      }
+
+      else if (opcaoSelecionada == 11) {
         escrever.saindo("programa");
         escrever.finalizado("Programa");
       }
 
-    } while (opcaoSelecionada != 8);
+    } while (opcaoSelecionada != 11);
 
     ler.finalizarLeitura();
     return;

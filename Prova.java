@@ -9,7 +9,7 @@ public class Prova extends Atividade {
     List<String> conteudos = new ArrayList<>();
 
     public Prova(String nome, String sincronismo, Disciplina disciplina, int numero, String data, List<String> conteudos){
-        super(nome, sincronismo, disciplina, numero);
+        super(nome, sincronismo, disciplina, 2, numero, true);
         
         try{
             this.data = df.parse(data);

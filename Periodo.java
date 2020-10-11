@@ -19,6 +19,10 @@ public class Periodo {
     return ano;
   }
 
+  public Map<String, Disciplina> obterDisciplinas (){
+    return disciplinas;
+  }
+
   public char obterSemestre(){
     return semestre;
   }

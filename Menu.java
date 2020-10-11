@@ -1,10 +1,14 @@
+import java.io.IOException;
 import java.util.*;
 
 public class Menu {
 
     Escrita escrever = new Escrita();
-    Info info = new Info();
     Cadastro cadastro = new Cadastro();
+    Relatorio relatorios = new Relatorio();
+
+    Serializar salvar = new Serializar();
+    Desserializar carregar = new Desserializar();
 
     public void menuPrincipal() {
         escrever.mostrarMenu();
@@ -13,9 +17,11 @@ public class Menu {
     public void subMenu1(Leitura ler, Map<String, Periodo> periodos) {
         int opcao;
 
+        relatorios.periodosCadastrados(escrever, periodos);
+
         do {
 
-            escrever.mostrarSubMenu(escrever, "PERIODO");
+            escrever.mostrarSubMenu("PERIODO");
 
             opcao = ler.inteiro();
 
@@ -23,11 +29,7 @@ public class Menu {
                 cadastro.periodo(ler, periodos);
             }
 
-            else if (opcao == 2) {
-                info.periodosCadastrados(escrever, periodos);
-            }
-
-        } while (opcao != 3);
+        } while (opcao != 2);
 
         return;
 
@@ -36,9 +38,11 @@ public class Menu {
     public void subMenu2(Leitura ler, Map<String, Docente> docentes) {
         int opcao;
 
+        relatorios.docentesCadastrados(escrever, docentes);
+
         do {
 
-            escrever.mostrarSubMenu(escrever, "DOCENTE");
+            escrever.mostrarSubMenu("DOCENTE");
 
             opcao = ler.inteiro();
             ler.cadeiaCaract();
@@ -47,11 +51,7 @@ public class Menu {
                 cadastro.docente(ler, docentes);
             }
 
-            else if (opcao == 2) {
-                info.docentesCadastrados(escrever, docentes);
-            }
-
-        } while (opcao != 3);
+        } while (opcao != 2);
 
         return;
     }
@@ -61,7 +61,7 @@ public class Menu {
         int opcao;
         do {
 
-            escrever.mostrarSubMenu(escrever, "DISCIPLINA");
+            escrever.mostrarSubMenu("DISCIPLINA");
 
             opcao = ler.inteiro();
             ler.cadeiaCaract();
@@ -70,11 +70,7 @@ public class Menu {
                 cadastro.disciplina(ler, periodos, docentes, disciplinas);
             }
 
-            else if (opcao == 2) {
-                info.disciplinasCadastradas(escrever, disciplinas);
-            }
-
-        } while (opcao != 3);
+        } while (opcao != 2);
 
         return;
     }
@@ -84,7 +80,7 @@ public class Menu {
 
         do {
 
-            escrever.mostrarSubMenu(escrever, "ESTUDANTE");
+            escrever.mostrarSubMenu("ESTUDANTE");
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
@@ -92,11 +88,7 @@ public class Menu {
                 cadastro.estudante(ler, estudantes);
             }
 
-            else if (opcao == 2) {
-                info.estudantesCadastrados(escrever, estudantes);
-            }
-
-        } while (opcao != 3);
+        } while (opcao != 2);
 
         return;
     }
@@ -106,7 +98,7 @@ public class Menu {
 
         do {
 
-            escrever.mostrarSubMenu(escrever, "ESTUDANTE");
+            escrever.mostrarSubMenu("ESTUDANTE");
 
             opcao = ler.inteiro();
             ler.cadeiaCaract();
@@ -115,10 +107,7 @@ public class Menu {
                 cadastro.estudanteEmDisciplina(ler, disciplinas, estudantes);
             }
 
-            else if (opcao == 2) {
-                info.turmasFormadas(escrever, disciplinas, estudantes);
-            }
-        } while (opcao != 3);
+        } while (opcao != 2);
 
         return;
     }
@@ -128,22 +117,22 @@ public class Menu {
 
         do {
 
-            escrever.mostrarSubMenu(escrever, "ATIVIDADE");
+            escrever.mostrarSubMenu("ATIVIDADE");
 
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
             if (opcao == 1) {
-                cadastro.atividadeEmDisciplina(ler, disciplinas);                
+                cadastro.atividadeEmDisciplina(ler, disciplinas);
             }
 
-            else if (opcao == 2) {
-                escrever.digiteRef("disciplina");
-                String disciplinaRef = ler.cadeiaCaract();
-                disciplinas.get(disciplinaRef).exibirAtividades();
-            }
+            // else if (opcao == 2) {
+            // escrever.digiteRef("disciplina");
+            // String disciplinaRef = ler.cadeiaCaract();
+            // disciplinas.get(disciplinaRef).exibirAtividades();
+            // }
 
-        } while (opcao != 3);
+        } while (opcao != 2);
 
         return;
     }
@@ -153,7 +142,7 @@ public class Menu {
 
         do {
 
-            escrever.mostrarSubMenu(escrever, "AVALIACAO");
+            escrever.mostrarSubMenu("AVALIACAO");
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
@@ -161,19 +150,102 @@ public class Menu {
                 cadastro.avaliacaoEmAtividade(ler, disciplinas, estudantes);
             }
 
-            else if (opcao == 2) {
-                escrever.digiteRef("disciplina");
-                String disciplinaRef = ler.cadeiaCaract();
-                escrever.digiteRef("atividade");
-                int atividadeRef = ler.inteiro();
-                ler.cadeiaCaract();
-                Atividade atividade = disciplinas.get(disciplinaRef).obterAtividade(atividadeRef);
-                atividade.exibirAvaliacoes();
-            }
+            // else if (opcao == 2) {
+            // escrever.digiteRef("disciplina");
+            // String disciplinaRef = ler.cadeiaCaract();
+            // escrever.digiteRef("atividade");
+            // int atividadeRef = ler.inteiro();
+            // ler.cadeiaCaract();
+            // Atividade atividade =
+            // disciplinas.get(disciplinaRef).obterAtividade(atividadeRef);
+            // atividade.exibirAvaliacoes();
+            // }
 
-        } while (opcao != 3);
+        } while (opcao != 2);
 
         return;
+    }
+
+    public void subMenu8(Leitura ler, Map<String, Periodo> periodos, Map<String, Docente> docentes,
+            Map<String, Disciplina> disciplinas, Map<Integer, Estudante> estudantes) {
+        int opcao;
+
+        do {
+            escrever.mostrarSubMenuRelatorios();
+            opcao = ler.inteiro();
+            ler.cadeiaCaract();
+
+            if (opcao == 1) {
+                relatorios.periodosCadastrados(escrever, periodos);
+                escrever.digiteRef("periodo");
+                String periodoRef = ler.cadeiaCaract();
+                Periodo periodo = periodos.get(periodoRef);
+                relatorios.estatisticasPeriodo(ler, escrever, periodo);
+            }
+
+            else if (opcao == 2) {
+                relatorios.estatisticasDocentes(escrever, docentes);
+            }
+
+            else if (opcao == 3) {
+                relatorios.estatisticasEstudantes(escrever, estudantes);
+            }
+
+            else if (opcao == 4) {
+                relatorios.docentesCadastrados(escrever, docentes);
+                escrever.digiteRef("docente");
+                String docenteRef = ler.cadeiaCaract();
+                Docente docente = docentes.get(docenteRef);
+                relatorios.estatisticasDisciplinasDeDocente(escrever, docente);
+            }
+
+        } while (opcao != 5);
+
+        return;
+    }
+
+    public void subMenu9(Leitura ler, String arquivoSerializacao, Main aplicacao) throws IOException {
+        int opcao;
+
+        escrever.showAsterisks();
+        escrever.desejaRealmente();
+        escrever.yesOrNoMenu();
+
+        opcao = ler.inteiro();
+        ler.cadeiaCaract();
+
+        if (opcao == 1) {
+            salvar.iniciarSerializacao(arquivoSerializacao, aplicacao);
+            return;
+        }
+
+        else if (opcao == 2) {
+            return;
+        }
+
+        return;
+    }
+
+    public Main subMenu10(Leitura ler, String arquivoSerializacao, Main aplicacao)
+            throws IOException, ClassNotFoundException {
+        int opcao;
+
+        escrever.showAsterisks();
+        escrever.desejaRealmente();
+        escrever.yesOrNoMenu();
+
+        opcao = ler.inteiro();
+        ler.cadeiaCaract();
+
+        if (opcao == 1) {
+            return carregar.iniciarDesserializacao(arquivoSerializacao);
+        }
+
+        else if (opcao == 2) {
+            return null;
+        }
+
+        return null;
     }
 
 }
