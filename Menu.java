@@ -1,14 +1,12 @@
 import java.io.IOException;
 import java.util.*;
+import java.io.File;
 
 public class Menu {
 
     Escrita escrever = new Escrita();
     Cadastro cadastro = new Cadastro();
     Relatorio relatorios = new Relatorio();
-
-    Serializar salvar = new Serializar();
-    Desserializar carregar = new Desserializar();
 
     public void menuPrincipal() {
         escrever.mostrarMenu();
@@ -204,7 +202,8 @@ public class Menu {
         return;
     }
 
-    public void subMenu9(Leitura ler, String arquivoSerializacao, Main aplicacao) throws IOException {
+    public void subMenu9(Leitura ler, String arquivoSerializacao, Main aplicacao)
+            throws IOException {
         int opcao;
 
         escrever.showAsterisks();
@@ -215,7 +214,9 @@ public class Menu {
         ler.cadeiaCaract();
 
         if (opcao == 1) {
-            salvar.iniciarSerializacao(arquivoSerializacao, aplicacao);
+
+            Serializar salvar = new Serializar(new File(arquivoSerializacao));
+            salvar.iniciarSerializacao(aplicacao);
             return;
         }
 
@@ -226,7 +227,7 @@ public class Menu {
         return;
     }
 
-    public Main subMenu10(Leitura ler, String arquivoSerializacao, Main aplicacao)
+    public void subMenu10(Leitura ler, String arquivoSerializacao, Main aplicacao)
             throws IOException, ClassNotFoundException {
         int opcao;
 
@@ -238,14 +239,16 @@ public class Menu {
         ler.cadeiaCaract();
 
         if (opcao == 1) {
-            return carregar.iniciarDesserializacao(arquivoSerializacao);
+            Desserializar carregar = new Desserializar(new File(arquivoSerializacao));
+            aplicacao = carregar.iniciarDesserializacao();
+            return;
         }
 
         else if (opcao == 2) {
-            return null;
+            return;
         }
 
-        return null;
+        return;
     }
 
 }
