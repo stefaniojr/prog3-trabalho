@@ -1,3 +1,4 @@
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -215,27 +216,23 @@ public class Execucao implements Serializable {
     }
 
     public void restaurarPeriodos(List<Periodo> periodos){
-        for(Periodo periodo: periodos){
+        for(Periodo periodo: periodos)
             this.periodos.put(periodo.obterRef(), periodo);
-        }
     }
 
     public void restaurarDocentes(List<Docente> docentes){
-        for(Docente docente: docentes){
+        for(Docente docente: docentes)
             this.docentes.put(docente.obterRef(), docente);
-        }
     }
 
     public void restaurarDisciplinas(List<Disciplina> disciplinas){
-        for(Disciplina disciplina: disciplinas){
+        for(Disciplina disciplina: disciplinas)
             this.disciplinas.put(disciplina.obterRef(), disciplina);
-        }
     }
 
     public void restaurarEstudantes(List<Estudante> estudantes){
-        for(Estudante estudante: estudantes){
-            this.estudantes.put(estudante.obterRef(), estudante);
-        }
+        for(Estudante estudante: estudantes)
+            this.estudantes.put(estudante.obterRef(), estudante);  
     }
 
 }

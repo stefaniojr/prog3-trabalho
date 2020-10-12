@@ -9,8 +9,6 @@ public class Main implements Serializable {
   private static final long serialVersionUID = 1L;
   private static String arquivoSerializacao = "";
 
-  Execucao exe = new Execucao();
-
   List<Periodo> periodos;
   List<Docente> docentes;
   List<Disciplina> disciplinas;
@@ -19,6 +17,8 @@ public class Main implements Serializable {
   public static void main(String[] args) throws Exception, ParseException, IOException, ClassNotFoundException, NotSerializableException {
     Main aplicacao = null;
     int opcao;
+
+    Execucao exe = new Execucao();
 
     /** Para escrita e leitura */
     Escrita escrever = new Escrita();
@@ -36,10 +36,10 @@ public class Main implements Serializable {
 
       Desserializar carregar = new Desserializar(new File(arquivoSerializacao));
       aplicacao = carregar.iniciarDesserializacao();
-      aplicacao.execute(ler, escrever, true);
+      aplicacao.execute(ler, escrever, exe, true);
     } else if (opcao == 2) {
       aplicacao = new Main();
-      aplicacao.execute(ler, escrever, false);
+      aplicacao.execute(ler, escrever, exe, false);
     }
     
     ler.finalizarLeitura();
@@ -47,7 +47,7 @@ public class Main implements Serializable {
   }
 
 
-  public void execute(Leitura ler, Escrita escrever, Boolean backup) throws IOException {
+  public void execute(Leitura ler, Escrita escrever, Execucao exe, Boolean backup) throws IOException {
     
     if(backup){
       exe.restaurarPeriodos(periodos);
@@ -58,10 +58,10 @@ public class Main implements Serializable {
     boolean serializar = exe.menuPrincipal(ler, escrever);
 
     if (serializar)
-      salvarEmDisco(ler, escrever);
+      salvarEmDisco(ler, escrever, exe);
   }
 
-  public void salvarEmDisco(Leitura ler, Escrita escrever) throws IOException {
+  public void salvarEmDisco(Leitura ler, Escrita escrever, Execucao exe) throws IOException {
     periodos = null;
     docentes = null;
     disciplinas = null;
