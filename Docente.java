@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Docente implements Serializable {
-  
+
   private String login;
   private String nome;
   private String site;
@@ -67,7 +67,7 @@ public class Docente implements Serializable {
     int montanteAtividadesSincronas = 0;
     float montanteAvaliacoes = 0;
     int montanteAvaliadores = 0;
-    
+
     for (String chave : disciplinas.keySet()) {
       montanteAtividades = montanteAtividades + disciplinas.get(chave).obterNumeroDeAtividades();
       montanteAtividadesSincronas = montanteAtividadesSincronas + disciplinas.get(chave).obterNumeroAtividadesSincronas();
@@ -75,10 +75,15 @@ public class Docente implements Serializable {
       montanteAvaliacoes = montanteAvaliacoes + disciplinas.get(chave).obterMontanteAvaliacoesEmAtividades();
       montanteAvaliadores = montanteAvaliadores + disciplinas.get(chave).obterMontanteAvaliadoresEmAtividades();
     }
-
-    this.mediaAtividadesPorDisciplina = montanteAtividades/obterNumeroDeDisciplinas();
-    this.percentualAtividadesSincronas = montanteAtividadesSincronas/montanteAtividades;
-    this.mediaAvaliacoes = montanteAvaliacoes/montanteAvaliadores;
+    if(obterNumeroDeDisciplinas()!=0){
+      this.mediaAtividadesPorDisciplina = montanteAtividades/obterNumeroDeDisciplinas();
+    }
+    if(montanteAtividades!=0){
+      this.percentualAtividadesSincronas = montanteAtividadesSincronas/montanteAtividades;
+    }
+    if(montanteAvaliadores!=0){
+      this.mediaAvaliacoes = montanteAvaliacoes/montanteAvaliadores;
+    }
   }
 
   public void adicionarDisciplina(Disciplina disciplina){

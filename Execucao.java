@@ -53,9 +53,9 @@ public class Execucao implements Serializable {
             escrever.mostrarSubMenu("PERIODO");
             opcao = ler.inteiro();
 
-            if (opcao == 1) 
+            if (opcao == 1)
                 cadastro.periodo(ler, periodos);
-            
+
         } while (opcao != 2);
 
         return;
@@ -71,7 +71,7 @@ public class Execucao implements Serializable {
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
-            if (opcao == 1) 
+            if (opcao == 1)
                 cadastro.docente(ler, docentes);
 
         } while (opcao != 2);
@@ -87,7 +87,7 @@ public class Execucao implements Serializable {
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
-            if (opcao == 1) 
+            if (opcao == 1)
                 cadastro.disciplina(ler, periodos, docentes, disciplinas);
 
         } while (opcao != 2);
@@ -104,7 +104,7 @@ public class Execucao implements Serializable {
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
-            if (opcao == 1) 
+            if (opcao == 1)
                 cadastro.estudante(ler, estudantes);
 
         } while (opcao != 2);
@@ -122,7 +122,7 @@ public class Execucao implements Serializable {
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
-            if (opcao == 1) 
+            if (opcao == 1)
                 cadastro.estudanteEmDisciplina(ler, disciplinas, estudantes);
 
         } while (opcao != 2);
@@ -139,7 +139,7 @@ public class Execucao implements Serializable {
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
-            if (opcao == 1) 
+            if (opcao == 1)
                 cadastro.atividadeEmDisciplina(ler, disciplinas);
 
         } while (opcao != 2);
@@ -156,7 +156,7 @@ public class Execucao implements Serializable {
             opcao = ler.inteiro();
             ler.cadeiaCaract();
 
-            if (opcao == 1) 
+            if (opcao == 1)
                 cadastro.avaliacaoEmAtividade(ler, disciplinas, estudantes);
 
         } while (opcao != 2);
@@ -180,12 +180,12 @@ public class Execucao implements Serializable {
                 relatorios.estatisticasPeriodo(ler, escrever, periodo);
             }
 
-            else if (opcao == 2) 
+            else if (opcao == 2)
                 relatorios.estatisticasDocentes(escrever, docentes);
-        
-            else if (opcao == 3) 
+
+            else if (opcao == 3)
                 relatorios.estatisticasEstudantes(escrever, estudantes);
-            
+
             else if (opcao == 4) {
                 relatorios.docentesCadastrados(escrever, docentes);
                 escrever.digiteRef("docente");
@@ -232,7 +232,7 @@ public class Execucao implements Serializable {
 
     public void restaurarEstudantes(List<Estudante> estudantes){
         for(Estudante estudante: estudantes)
-            this.estudantes.put(estudante.obterRef(), estudante);  
+            this.estudantes.put(estudante.obterRef(), estudante);
     }
 
 }
