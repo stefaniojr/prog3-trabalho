@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Atividade {
+public class Atividade implements Serializable {
+  
   String nome;
   String sincronismo;
   Disciplina disciplina;

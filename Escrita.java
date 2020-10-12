@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Escrita {
+public class Escrita implements Serializable {
+    
 
     public void mostrarMenu() {
         System.out.println("\n*************************************************************");
@@ -16,8 +18,7 @@ public class Escrita {
         System.out.println("7 - AVALIAR ATIVIDADE (FEEDBACK DO ESTUDANTE)");
         System.out.println("8 - RELATORIOS");
         System.out.println("9 - SALVAR (SERIALIZAR DADOS)");
-        System.out.println("10 - CARREGAR (DESSERIALIZAR DADOS)");
-        System.out.println("11 - SAIR DO PROGRAMA\n");
+        System.out.println("10 - SAIR DO PROGRAMA\n");
         System.out.print("Digite uma opcao: ");
     }
 
@@ -206,6 +207,10 @@ public class Escrita {
 
     public void digiteDataComHora() {
         System.out.print("Digite a data e o horario (Ex: 00/00/0000-00:00): ");
+    }
+
+    public void digiteNomeArquivo(){
+        System.out.print("Digite o nome do arquivo: ");
     }
 
     public void instrucoesAdicionarConteudoAEstudar() {

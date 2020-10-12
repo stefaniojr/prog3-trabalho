@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Docente {
+public class Docente implements Serializable {
+  
   private String login;
   private String nome;
   private String site;

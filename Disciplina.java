@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Disciplina {
+public class Disciplina implements Serializable {
+  
   private String codigo;
   private String nome;
   private Periodo periodo;
@@ -18,7 +20,7 @@ public class Disciplina {
 
   int numeroAtividade = 1;
 
-  public Disciplina(String codigo, String nome, Periodo periodo, Docente docente) {
+  public Disciplina(String codigo, String nome, Periodo periodo, Docente docente){
     this.codigo = codigo;
     this.nome = nome;
     this.periodo = periodo;

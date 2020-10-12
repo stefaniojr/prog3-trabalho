@@ -1,14 +1,18 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Cadastro {
-
+public class Cadastro implements Serializable{
+    
     Escrita escrever = new Escrita();
+    
 
     public void periodo(Leitura ler, Map<String, Periodo> periodos) {
         escrever.digiteAno();
         int ano = ler.inteiro();
         char semestre = ler.caract();
+
         periodos.put(ano + "/" + semestre, new Periodo(ano, semestre));
+        
     }
 
     public void docente(Leitura ler, Map<String, Docente> docentes) {

@@ -3,6 +3,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Trabalho extends Atividade {
+    
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
     Date prazo;
 

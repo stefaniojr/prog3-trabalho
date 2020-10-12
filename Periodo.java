@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Periodo {
+public class Periodo implements Serializable {
+  
   private int ano;
   private char semestre;
 
