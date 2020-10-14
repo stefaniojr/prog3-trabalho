@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Estudante implements Serializable {
-  
+
   private int matricula;
   private String nome;
 
@@ -30,16 +30,26 @@ public class Estudante implements Serializable {
   }
 
   public float obterMediaDeDisciplinasPorPeriodo(){
-    return disciplinas.size()/periodos.size();
+    if(periodos.size()!=0){
+      return disciplinas.size()/periodos.size();
+    }
+    else{
+      return 0;
+    }
   }
 
   public float obterMediaDeAvaliacoesPorDisciplina(){
-    return obterQtAvaliacoes()/obterQtDisciplinas();
+    if(obterQtDisciplinas()!=0){
+      return obterQtAvaliacoes()/obterQtDisciplinas();
+    }
+    else{
+      return 0;
+    }
   }
 
   public int obterQtAvaliacoes(){
     return avaliacoes.size();
-  } 
+  }
 
   public float obterMontanteNotas(){
     float montante = 0;
@@ -52,12 +62,17 @@ public class Estudante implements Serializable {
   }
 
   public float obterMediaNotas(){
-    return obterMontanteNotas()/obterQtAvaliacoes();
+    if(obterQtAvaliacoes()!=0){
+      return obterMontanteNotas()/obterQtAvaliacoes();
+    }
+    else{
+      return 0;
+    }
   }
 
   public int obterQtDisciplinas(){
     return disciplinas.size();
-  } 
+  }
 
   public void adicionarDisciplina(Disciplina disciplina){
     disciplinas.put(disciplina.obterRef(), disciplina);
@@ -71,12 +86,12 @@ public class Estudante implements Serializable {
     avaliacoes.put(atividade, avaliacao);
   }
 
-  
+
 
   // public void exibirDisciplinas(){
 
   //   info.disciplinasCadastradas(escrever, disciplinas);
-    
+
   // }
 
 }

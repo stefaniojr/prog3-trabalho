@@ -3,8 +3,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Trabalho extends Atividade {
-    
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     Date prazo;
 
     public Trabalho(String nome, String sincronismo, Disciplina disciplina, int numero, String prazo, int nIntegrantes, int cargaHoraria){

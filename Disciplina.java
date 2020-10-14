@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Disciplina implements Serializable {
-  
+
   private String codigo;
   private String nome;
   private Periodo periodo;
@@ -87,11 +87,16 @@ public class Disciplina implements Serializable {
   }
 
   public float obterPercentualAtividadesSincronas(){
-    return obterNumeroAtividadesSincronas()/obterNumeroDeAtividades();
+    if(obterNumeroDeAtividades()!=0){
+      return obterNumeroAtividadesSincronas()/obterNumeroDeAtividades();
+    }
+    else{
+      return 0;
+    }
   }
 
   public int obterCargaHorariaDisciplina(){
-    
+
     for (Integer chave: atividades.keySet()){
         this.cargaHoraria = this.cargaHoraria + atividades.get(chave).obterCargaHoraria();
     }
@@ -101,12 +106,12 @@ public class Disciplina implements Serializable {
   public void calcularEstatisticasAtividadesDeDisciplina(){
     float montanteNotas = 0;
     int montanteAvaliadores = 0;
-    
+
     for (Integer chave : atividades.keySet()) {
       montanteNotas = montanteNotas + atividades.get(chave).obterMontanteNotasAvaliacoes();
       montanteAvaliadores = montanteAvaliadores + atividades.get(chave).obterQtAvaliadores();
     }
-    
+
     this.montanteAvaliacoesEmAtividades = montanteNotas;
     this.montanteAvaliadoresEmAtividades = montanteAvaliadores;
 
@@ -121,41 +126,41 @@ public class Disciplina implements Serializable {
   }
 
   public void adicionarAula(String nome, String sincronismo, Disciplina disciplina, String data) {
-    
+
     atividades.put(this.numeroAtividade, new Aula(nome, sincronismo, this, this.numeroAtividade, data));
     this.numeroAtividade = this.numeroAtividade + 1;
-    
+
   }
 
   public void adicionarEstudo(String nome, String sincronismo, Disciplina disciplina, Map<String, String> conteudos) {
-    
+
     atividades.put(this.numeroAtividade, new Estudo(nome, sincronismo, this, this.numeroAtividade, conteudos));
     this.numeroAtividade = this.numeroAtividade + 1;
-    
+
   }
 
   public void adicionarTrabalho(String nome, String sincronismo, Disciplina disciplina, String prazo, int nIntegrantes, int cargaHoraria) {
-    
+
     atividades.put(this.numeroAtividade, new Trabalho(nome, sincronismo, this, this.numeroAtividade, prazo, nIntegrantes, cargaHoraria));
     this.numeroAtividade = this.numeroAtividade + 1;
-    
+
   }
 
   public void adicionarProva(String nome, String sincronismo, Disciplina disciplina, String data, List<String> conteudos) {
-    
+
     atividades.put(this.numeroAtividade, new Prova(nome, sincronismo, this, this.numeroAtividade, data, conteudos));
     this.numeroAtividade = this.numeroAtividade + 1;
-    
+
   }
 
   // public void exibirAtividades() {
   //   info.atividadesCadastradas(escrever, atividades);
   // }
-  
+
   // public void exibirEstudantes() {
   //   info.estudantesCadastrados(escrever, estudantes);
   // }
 
-  
+
 
 }

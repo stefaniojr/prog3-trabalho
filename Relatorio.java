@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Relatorio implements Serializable {
-    
+
     public void periodosCadastrados(Escrita escrever, Map<String, Periodo> periodos) {
         if (periodos.size() == 0) {
             escrever.notFound("periodos");
