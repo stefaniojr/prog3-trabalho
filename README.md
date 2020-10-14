@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-# Como compilar:
 
-=======
-# prog3-trabalho
+# Trabalho de Programação III: OTRUS SYSTEM v0.0.2
 
 
 ## OBJETIVO
