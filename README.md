@@ -8,17 +8,16 @@ Repositório criado com o intuito de facilitar o acompahamento do trabalho prát
 ## OTRUS EARTE SYSTEM v0.0.2
 Proposta de sistema a ser implementada utilizando conceitos de orientação a objetos, em JAVA. 
 
-## Objetivo
-Mediante ao contexto pandêmico, faz-se necessário a elaboração de novas ferramentas para auxiliar a todos neste momento. Nesse programa, em específica, é solicitada a demanda de um sistema que gerencie períodos, professores, estudantes, disciplinas e suas atividades e o mais saudoso: o feedback dos estudantes a essas atividades. 
+### Objetivo
+Mediante ao contexto pandêmico, faz-se necessário a elaboração de novas ferramentas para auxiliar a todos neste momento. Nesse programa, em específico, é solicitada a demanda de um sistema que gerencie períodos, professores, estudantes, disciplinas, suas atividades e o mais saudoso: o feedback dos estudantes em relação a essas atividades. 
 
 ### Primeiros passos
-É recomendado que a aplicação seja testada em ambientes similiares aos que os programadores usaram: jdk8 ou jdk11, no windows através do vscode (utilizando plug-ins de Java do vscode) e terminal do ubuntu no windows.
+É recomendado que a aplicação seja testada em ambientes similiares aos que os programadores usaram. Sendo assim, JDK8 ou JDK11 são recomendados. No Windows 10, foram utilizados o VSCode para programação e teste, utilizando plug-ins que requerem suporte a JDK11+. Ainda no Windows 10, um terminal ubuntu integrado foi também utilizado juntamente ao JDK8.
 
-### Instruções de compilação e utilização
-Logo após compilar o usuário é perguntado se deseja fazer um backup de dados já salvos ou se deseja iniciar uma aplicação do zero. Responda "SIM" para fazer o backup e "NÃO" para iniciar do zero.
-Selecionando "SIM" digite em seguida o nome do arquivo "dados.dat" (caso selecione "NÃO" sera necessário a inserção de dados para testar o trabalho) e em seguida será aberto o menu com os dados já carregados.
+### Instruções de compilação e utilização (novas features na versão 0.0.2):
+Além da alteração do nome do projeto, a release 0.0.2 traz outras novas features. Logo após compilar o usuário é perguntado se deseja fazer um backup de dados já salvos ou se deseja iniciar uma aplicação do zero. Responda "SIM" para fazer o backup ou "NÃO" para iniciar do zero. Selecionando "SIM" digite em seguida o nome do arquivo (caso selecione "NÃO" sera necessário a inserção de dados para testar o trabalho) e em seguida será aberto o menu com os dados já carregados.
 
-### Menu principal (novas features na versão 0.0.2): 
+#### Menu principal: 
 - As opções de 1-4 são utilizadas para realizar o cadastro de informações (PERÍODO, DOCENTE, DISCIPLINA e ESTUDANTE) importante prestar atenção no formato utilizado nos exemplos; 
 - Opção 5 é realizado a matrícula do estudante em determinada disciplina; 
 - Opção 6 o cadastro de uma atividade, selecionar o tipo de atividade, a referência da discinplina, e informações adicionais específicas de cada atividade (como hora e url do utilizado);
