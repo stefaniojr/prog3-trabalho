@@ -1,5 +1,5 @@
 
-# Trabalho de Programação III: OTRUS SYSTEM v0.0.2
+# Trabalho de Programação III: OTRUS EARTE SYSTEM v0.0.2
 
 
 ## OBJETIVO
