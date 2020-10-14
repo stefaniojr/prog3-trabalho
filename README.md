@@ -18,4 +18,3 @@ Selecionando "SIM" digite em seguida o nome do arquivo "dados.dat" (caso selecio
 - Opção 7, realizar avaliação de determinada atividade, selecione o aluno, disciplina e atividade.
 - Opção 8 nos mostra quatro tipos de relatórios: 1- visão geral dos períodos acadêmicos nos quais basta apenas selecionar o perído, 2- estatísticas dos docentes, 3- estatísticas dos estudantes e 4- estatísticas das disciplinas de um docente.
 - Opção 9 realizar a serialização dos dados: digita o nome do arquivo que deseja armazenar os dados.
->>>>>>> 3f4222434a01d9d70819f2e605b660c823174146
