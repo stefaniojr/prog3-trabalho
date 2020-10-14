@@ -9,6 +9,7 @@ public class Main implements Serializable {
   private static final long serialVersionUID = 1L;
   private static String arquivoSerializacao = "";
 
+  // Listas auxiliares para realizar restauração ou exportação. O uso de listas foi optado para economizar o espaço em disco do arquivo serializado.
   List<Periodo> periodos;
   List<Docente> docentes;
   List<Disciplina> disciplinas;
