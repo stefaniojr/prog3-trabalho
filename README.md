@@ -2,7 +2,7 @@
 
 
 ## OBJETIVO
-#### Esse projeto foi criado com o intuito de realizar o trabalho prático da disciplina de Programação 3, ministrada pelo professor Vitor Souza.
+Esse projeto foi criado com o intuito de realizar o trabalho prático da disciplina de Programação 3, ministrada pelo professor Vitor Souza.
 
 ## Getting Started
 #### É recomendado que a aplicação seja testada em ambientes similiares aos que os programadores usaram: jdk8 ou jdk11, no windows através do vscode (utilizando plug-ins de Java do vscode) e terminal do ubuntu no windows.
