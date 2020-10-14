@@ -32,4 +32,4 @@ Além da alteração do nome do projeto, a release 0.0.2 traz outras novas featu
 ### O que vem por aí
 Para as próximas releases são esperadas as seguintes features:
 - Ordenação dos relatórios;
-- Controle de erros.
+- Controle de erros - entradas inválidas.
