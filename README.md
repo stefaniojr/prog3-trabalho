@@ -17,10 +17,19 @@ Mediante ao contexto pandêmico, faz-se necessário a elaboração de novas ferr
 ### Instruções de compilação e utilização (novas features na versão 0.0.2):
 Além da alteração do nome do projeto, a release 0.0.2 traz outras novas features. Logo após compilar o usuário é perguntado se deseja fazer um backup de dados já salvos ou se deseja iniciar uma aplicação do zero. Responda "SIM" para fazer o backup ou "NÃO" para iniciar do zero. Selecionando "SIM" digite em seguida o nome do arquivo (caso selecione "NÃO" sera necessário a inserção de dados para testar o trabalho) e em seguida será aberto o menu com os dados já carregados.
 
-#### Menu principal: 
+#### Menu principal
 - As opções de 1-4 são utilizadas para realizar o cadastro de informações (PERÍODO, DOCENTE, DISCIPLINA e ESTUDANTE) importante prestar atenção no formato utilizado nos exemplos; 
-- Opção 5 é realizado a matrícula do estudante em determinada disciplina; 
-- Opção 6 o cadastro de uma atividade, selecionar o tipo de atividade, a referência da discinplina, e informações adicionais específicas de cada atividade (como hora e url do utilizado);
-- Opção 7, realizar avaliação de determinada atividade, selecione o aluno, disciplina e atividade;
-- Opção 8 nos mostra quatro tipos de relatórios: 1- visão geral dos períodos acadêmicos nos quais basta apenas selecionar o perído, 2- estatísticas dos docentes, 3- estatísticas dos estudantes e 4- estatísticas das disciplinas de um docente;
+- Opção 5: é realizado a matrícula do estudante em determinada disciplina; 
+- Opção 6: o cadastro de uma atividade, selecionar o tipo de atividade, a referência da discinplina, e informações adicionais específicas de cada atividade (como hora e url do utilizado);
+- Opção 7: realizar avaliação de determinada atividade, selecione o aluno, disciplina e atividade;
+- Opção 8: relatórios de quatro tipos, são eles: 
+  1. Visão geral dos períodos acadêmicos;
+  2. Estatísticas dos docentes;
+  3. Estatísticas dos estudantes;
+  4. Estatísticas das disciplinas de um docente.
 - Opção 9 realizar a serialização dos dados: digita o nome do arquivo que deseja armazenar os dados.
+
+### O que vem por aí
+Para as próximas releases são esperadas as seguintes features:
+- Ordenação dos relatórios;
+- Controle de erros.
