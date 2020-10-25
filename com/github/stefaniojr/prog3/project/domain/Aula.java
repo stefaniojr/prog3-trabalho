@@ -1,3 +1,4 @@
+package com.github.stefaniojr.prog3.project.domain;
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

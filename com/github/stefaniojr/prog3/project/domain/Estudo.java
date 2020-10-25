@@ -1,3 +1,5 @@
+package com.github.stefaniojr.prog3.project.domain;
+
 import java.util.*;
 
 public class Estudo extends Atividade {

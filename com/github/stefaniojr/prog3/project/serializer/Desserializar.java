@@ -1,7 +1,10 @@
+package com.github.stefaniojr.prog3.project.serializer;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.File;
+import com.github.stefaniojr.prog3.project.Main;
 
 public class Desserializar {
 

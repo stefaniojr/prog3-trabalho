@@ -1,5 +1,8 @@
+package com.github.stefaniojr.prog3.project.domain;
+
 import java.io.Serializable;
 import java.util.*;
+import com.github.stefaniojr.prog3.project.io.*;
 
 public class Cadastro implements Serializable{
     
@@ -52,10 +55,12 @@ public class Cadastro implements Serializable{
         Docente docente = docentes.get(docenteRef);
 
         disciplinas.put(codigo + "-" + periodoRef, new Disciplina(codigo, nome, periodo, docente));
+        
+        Disciplina disciplina = disciplinas.get(codigo + "-" + periodoRef);
 
-        periodo.adicionarDisciplina(disciplinas.get(codigo + "-" + periodoRef));
-        docente.adicionarDisciplina(disciplinas.get(codigo + "-" + periodoRef));
-        docente.adicionarPeriodo(periodos.get(periodoRef));
+        periodo.adicionarDisciplina(disciplina);
+        docente.adicionarDisciplina(disciplina);
+        docente.adicionarPeriodo(periodo);
     }
 
     public void estudante(Leitura ler, Map<Integer, Estudante> estudantes) {

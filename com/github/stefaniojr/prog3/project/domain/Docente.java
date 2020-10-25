@@ -1,3 +1,5 @@
+package com.github.stefaniojr.prog3.project.domain;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -69,11 +71,12 @@ public class Docente implements Serializable {
     int montanteAvaliadores = 0;
 
     for (String chave : disciplinas.keySet()) {
-      montanteAtividades = montanteAtividades + disciplinas.get(chave).obterNumeroDeAtividades();
-      montanteAtividadesSincronas = montanteAtividadesSincronas + disciplinas.get(chave).obterNumeroAtividadesSincronas();
-      disciplinas.get(chave).calcularEstatisticasAtividadesDeDisciplina();
-      montanteAvaliacoes = montanteAvaliacoes + disciplinas.get(chave).obterMontanteAvaliacoesEmAtividades();
-      montanteAvaliadores = montanteAvaliadores + disciplinas.get(chave).obterMontanteAvaliadoresEmAtividades();
+      Disciplina disciplina = disciplinas.get(chave);
+      montanteAtividades = montanteAtividades + disciplina.obterNumeroDeAtividades();
+      montanteAtividadesSincronas = montanteAtividadesSincronas + disciplina.obterNumeroAtividadesSincronas();
+      disciplina.calcularEstatisticasAtividadesDeDisciplina();
+      montanteAvaliacoes = montanteAvaliacoes + disciplina.obterMontanteAvaliacoesEmAtividades();
+      montanteAvaliadores = montanteAvaliadores + disciplina.obterMontanteAvaliadoresEmAtividades();
     }
     if(obterNumeroDeDisciplinas()!=0){
       this.mediaAtividadesPorDisciplina = montanteAtividades/obterNumeroDeDisciplinas();

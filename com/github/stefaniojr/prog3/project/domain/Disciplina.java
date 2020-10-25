@@ -1,5 +1,8 @@
+package com.github.stefaniojr.prog3.project.domain;
+
 import java.io.Serializable;
 import java.util.*;
+import com.github.stefaniojr.prog3.project.io.Escrita;
 
 public class Disciplina implements Serializable {
 
@@ -78,8 +81,9 @@ public class Disciplina implements Serializable {
     Map<Integer, Atividade> atividadesAvaliativas = new HashMap<>();
 
     for (Integer chave: atividades.keySet()){
-      if(atividades.get(chave).isAvaliativa()){
-        atividadesAvaliativas.put(atividades.get(chave).obterNumeroSequencial(), atividades.get(chave));
+      Atividade atividade = atividades.get(chave);
+      if(atividade.isAvaliativa()){
+        atividadesAvaliativas.put(atividade.obterNumeroSequencial(), atividade);
         }
       }
 
@@ -108,8 +112,9 @@ public class Disciplina implements Serializable {
     int montanteAvaliadores = 0;
 
     for (Integer chave : atividades.keySet()) {
-      montanteNotas = montanteNotas + atividades.get(chave).obterMontanteNotasAvaliacoes();
-      montanteAvaliadores = montanteAvaliadores + atividades.get(chave).obterQtAvaliadores();
+      Atividade atividade = atividades.get(chave);
+      montanteNotas = montanteNotas + atividade.obterMontanteNotasAvaliacoes();
+      montanteAvaliadores = montanteAvaliadores + atividade.obterQtAvaliadores();
     }
 
     this.montanteAvaliacoesEmAtividades = montanteNotas;

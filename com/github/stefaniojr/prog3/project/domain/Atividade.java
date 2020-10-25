@@ -1,5 +1,9 @@
+package com.github.stefaniojr.prog3.project.domain;
+
 import java.io.Serializable;
 import java.util.*;
+import com.github.stefaniojr.prog3.project.io.Escrita;
+
 
 public abstract class Atividade implements Serializable {
   

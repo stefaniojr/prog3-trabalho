@@ -1,5 +1,9 @@
+package com.github.stefaniojr.prog3.project.report;
+
 import java.io.Serializable;
 import java.util.*;
+import com.github.stefaniojr.prog3.project.domain.*;
+import com.github.stefaniojr.prog3.project.io.*;
 
 public class Relatorio implements Serializable {
 

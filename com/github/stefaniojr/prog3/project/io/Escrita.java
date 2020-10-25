@@ -1,5 +1,8 @@
+package com.github.stefaniojr.prog3.project.io;
+
 import java.io.Serializable;
 import java.util.*;
+import com.github.stefaniojr.prog3.project.domain.*;
 
 
 public class Escrita implements Serializable {

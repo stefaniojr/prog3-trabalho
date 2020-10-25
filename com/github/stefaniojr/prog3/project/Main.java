@@ -1,9 +1,14 @@
+package com.github.stefaniojr.prog3.project;
+
 import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.*;
 import java.io.File;
+import com.github.stefaniojr.prog3.project.domain.*;
+import com.github.stefaniojr.prog3.project.io.*;
+import com.github.stefaniojr.prog3.project.serializer.*;
 
 public class Main implements Serializable {
   private static final long serialVersionUID = 1L;

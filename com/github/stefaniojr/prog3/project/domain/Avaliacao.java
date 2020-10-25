@@ -1,3 +1,5 @@
+package com.github.stefaniojr.prog3.project.domain;
+
 public class Avaliacao {
     Estudante estudante;
     float nota;
