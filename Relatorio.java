@@ -56,9 +56,10 @@ public class Relatorio implements Serializable {
         } else {
             escrever.titleRelatorio("Atividades");
             for (Integer chave : atividades.keySet()) {
+                Atividade atividade = atividades.get(chave);
                 escrever.showSomething(Integer.toString(chave));
-                escrever.showSomething(atividades.get(chave).obterNome());
-                escrever.showSomething(atividades.get(chave).obterSincronismo());
+                escrever.showSomething(atividade.obterNome());
+                escrever.showSomething(atividade.obterSincronismo());
                 escrever.showAsterisks();
             }
         }
@@ -85,11 +86,10 @@ public class Relatorio implements Serializable {
             escrever.notFound("disciplinas");
         } else {
             for (String chave : disciplinas.keySet()) {
-                escrever.disciplinaCadastrada(disciplinas.get(chave).obterRef(), disciplinas.get(chave).obterNome(),
-                        disciplinas.get(chave).obterDocente().obterNome(),
-                        disciplinas.get(chave).obterDocente().obterLogin(),
-                        disciplinas.get(chave).obterNumeroDeAlunosMatriculados(),
-                        disciplinas.get(chave).obterNumeroDeAtividades());
+                Disciplina disciplina = disciplinas.get(chave);
+                escrever.disciplinaCadastrada(disciplina.obterRef(), disciplina.obterNome(),
+                        disciplina.obterDocente().obterNome(), disciplina.obterDocente().obterLogin(),
+                        disciplina.obterNumeroDeAlunosMatriculados(), disciplina.obterNumeroDeAtividades());
             }
         }
 
@@ -101,11 +101,11 @@ public class Relatorio implements Serializable {
         } else {
             escrever.titleRelatorio("Docentes");
             for (String chave : docentes.keySet()) {
-                docentes.get(chave).calcularEstatisticasDeDocente();
-                escrever.docenteCadastrado(docentes.get(chave).obterNome(), docentes.get(chave).obterNumeroDePeriodos(),
-                        docentes.get(chave).obterMediaAtividadesPorDisciplina(),
-                        docentes.get(chave).obterPercentualAtividadesSincronas(),
-                        docentes.get(chave).obterMediaAvaliacoes());
+                Docente docente = docentes.get(chave);
+                docente.calcularEstatisticasDeDocente();
+                escrever.docenteCadastrado(docente.obterNome(), docente.obterNumeroDePeriodos(),
+                        docente.obterMediaAtividadesPorDisciplina(), docente.obterPercentualAtividadesSincronas(),
+                        docente.obterMediaAvaliacoes());
             }
         }
     }
@@ -116,10 +116,10 @@ public class Relatorio implements Serializable {
         } else {
             escrever.titleRelatorio("Estudantes");
             for (Integer chave : estudantes.keySet()) {
-                escrever.estudanteCadastrado(estudantes.get(chave).obterRef(), estudantes.get(chave).obterNome(),
-                        estudantes.get(chave).obterMediaDeDisciplinasPorPeriodo(),
-                        estudantes.get(chave).obterMediaDeAvaliacoesPorDisciplina(),
-                        estudantes.get(chave).obterMediaNotas());
+                Estudante estudante = estudantes.get(chave);
+                escrever.estudanteCadastrado(estudante.obterRef(), estudante.obterNome(),
+                        estudante.obterMediaDeDisciplinasPorPeriodo(), estudante.obterMediaDeAvaliacoesPorDisciplina(),
+                        estudante.obterMediaNotas());
             }
         }
     }
@@ -133,12 +133,11 @@ public class Relatorio implements Serializable {
         } else {
             escrever.titleRelatorio("Disciplinas");
             for (String chave : disciplinas.keySet()) {
-                escrever.disciplinasDeDocente(disciplinas.get(chave).obterPeriodo().obterRef(),
-                        disciplinas.get(chave).obterCodigo(), disciplinas.get(chave).obterNome(),
-                        disciplinas.get(chave).obterNumeroDeAtividades(),
-                        disciplinas.get(chave).obterPercentualAtividadesSincronas(),
-                        disciplinas.get(chave).obterCargaHorariaDisciplina(),
-                        disciplinas.get(chave).obterAtividadesAvaliativas());
+                Disciplina disciplina = disciplinas.get(chave);
+                escrever.disciplinasDeDocente(disciplina.obterPeriodo().obterRef(), disciplina.obterCodigo(),
+                        disciplina.obterNome(), disciplina.obterNumeroDeAtividades(),
+                        disciplina.obterPercentualAtividadesSincronas(), disciplina.obterCargaHorariaDisciplina(),
+                        disciplina.obterAtividadesAvaliativas());
             }
         }
     }
