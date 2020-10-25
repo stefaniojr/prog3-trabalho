@@ -1,7 +1,9 @@
-package com.github.stefaniojr.prog3.project.domain;
+package com.github.stefaniojr.prog3.project.domain.atividades;
+
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import com.github.stefaniojr.prog3.project.domain.Disciplina;
 
 public class Aula extends Atividade {
     

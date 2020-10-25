@@ -3,6 +3,8 @@ package com.github.stefaniojr.prog3.project.domain;
 import java.io.Serializable;
 import java.util.*;
 import com.github.stefaniojr.prog3.project.io.Escrita;
+import com.github.stefaniojr.prog3.project.domain.atividades.*;
+
 
 public class Estudante implements Serializable {
 
@@ -58,7 +60,7 @@ public class Estudante implements Serializable {
     float montante = 0;
 
     for (Atividade chave : avaliacoes.keySet()){
-      montante = montante + avaliacoes.get(chave).nota;
+      montante = montante + avaliacoes.get(chave).obterNota();
     }
 
     return montante;

@@ -1,4 +1,5 @@
-package com.github.stefaniojr.prog3.project.domain;
+package com.github.stefaniojr.prog3.project.domain.atividades;
+import com.github.stefaniojr.prog3.project.domain.Disciplina;
 
 import java.util.*;
 

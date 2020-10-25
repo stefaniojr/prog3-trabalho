@@ -3,6 +3,7 @@ package com.github.stefaniojr.prog3.project.domain;
 import java.io.Serializable;
 import java.util.*;
 import com.github.stefaniojr.prog3.project.io.Escrita;
+import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 public class Disciplina implements Serializable {
 

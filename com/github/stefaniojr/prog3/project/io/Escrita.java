@@ -2,7 +2,7 @@ package com.github.stefaniojr.prog3.project.io;
 
 import java.io.Serializable;
 import java.util.*;
-import com.github.stefaniojr.prog3.project.domain.*;
+import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 
 public class Escrita implements Serializable {
