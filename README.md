@@ -1,11 +1,11 @@
 
-# Trabalho de Programação III: OTRUS EARTE SYSTEM v0.0.2
+# Trabalho de Programação III: OTRUS EARTE SYSTEM v0.0.3
 
 
 ## Sobre esse repositório
 Repositório criado com o intuito de facilitar o acompanhamento do trabalho prático da disciplina de Programação III (INF09331), ministrada pelo professor Vítor Souza na Universidade Federal do Espírito santo em um semestre especial de ensino remoto.
 
-## OTRUS EARTE SYSTEM v0.0.2
+## OTRUS EARTE SYSTEM
 Proposta de sistema a ser implementada utilizando conceitos de orientação a objetos, em JAVA. 
 
 ### Objetivo
@@ -29,7 +29,12 @@ Além da alteração do nome do projeto, a release 0.0.2 traz outras novas featu
   4. Estatísticas das disciplinas de um docente.
 - Opção 9 realizar a serialização dos dados: digita o nome do arquivo que deseja armazenar os dados.
 
+### Novidades da v0.0.3
+A nova release (0.0.3) traz novidades relacionadas à perfomance, modularização, controle de erros e ordenação dos relatórios:
+- Relatórios agora são exibidos com alguma ordenação;
+- Aumento da performance de execução em função do número de reduzidos de buscas nos hashmaps;
+- Controle de erros: entradas inválidas, principalmente. Agora o programa não é abortado nesses casos e uma tratativa é lançada.
+
 ### O que vem por aí
 Para as próximas releases são esperadas as seguintes features:
-- Ordenação dos relatórios;
-- Controle de erros - entradas inválidas.
+- Relatórios agora possuem saídas externas (...);
