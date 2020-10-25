@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.*;
 
-public class Atividade implements Serializable {
+public abstract class Atividade implements Serializable {
   
   String nome;
   String sincronismo;
