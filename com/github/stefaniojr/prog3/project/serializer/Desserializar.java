@@ -16,6 +16,6 @@ public class Desserializar {
     public Main iniciarDesserializacao() throws IOException, ClassNotFoundException {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoSerializacao))){
             return (Main) in.readObject(); 
-        } 
+        }
     }
 }

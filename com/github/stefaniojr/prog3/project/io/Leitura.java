@@ -11,6 +11,10 @@ public class Leitura {
         in.useLocale(Locale.US);
     }
 
+    public Scanner leitor(){
+        return in;
+    }
+
     public int inteiro(){
        return this.in.nextInt();
     }
@@ -27,7 +31,12 @@ public class Leitura {
         return this.in.next().charAt(0);
     }
 
+    public String linha(){
+        return this.in.nextLine();
+    }
+
     public void finalizarLeitura(){
         this.in.close();
     }
+
 }

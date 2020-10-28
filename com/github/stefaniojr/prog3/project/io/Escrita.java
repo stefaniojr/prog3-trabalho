@@ -37,6 +37,14 @@ public class Escrita implements Serializable {
         this.digiteOpcao();
     }
 
+    public void desejaRestaurar(){
+        System.out.println("Deseja restaurar uma aplicacao antiga?");
+    }
+
+    public void opcaoInvalida(){
+        System.out.println("Opcao invalida.");
+    }
+
     public void mostrarSubMenuRelatorios() {
         this.showAsterisks();
         this.option1SubMenuRelatorios();
@@ -160,7 +168,11 @@ public class Escrita implements Serializable {
 
     /** Entradas messages */
     public void digiteAno() {
-        System.out.print("Digite o ano acompanhado do semestre (Ex: 2020 E, 2019 1): ");
+        System.out.print("Digite o ano (Ex: 2020, 2019, 1998, etc.): ");
+    }
+
+    public void digiteSemestre() {
+        System.out.print("Digite o semestre - somente numero ou letra maiuscula (Ex: 1, 2, E, etc.): ");
     }
 
     public void digiteNome(String disso) {
@@ -176,11 +188,11 @@ public class Escrita implements Serializable {
     }
 
     public void digiteMatricula() {
-        System.out.print("Digite o numero de matricula do estudante: ");
+        System.out.print("Digite o numero de matricula do estudante (10 digitos): ");
     }
 
     public void digiteLogin() {
-        System.out.print("Digite o login institucional do docente: ");
+        System.out.print("Digite o login institucional do docente - somente letras minusculas (Ex: vitor.souza OU vitor.e.souza): ");
     }
 
     public void digiteSite(String disso) {
@@ -238,7 +250,7 @@ public class Escrita implements Serializable {
     }
 
     public void digiteCodigoDisciplina() {
-        System.out.print("Digite o codigo da disciplina (Ex: MAT666): ");
+        System.out.print("Digite o codigo da disciplina - 3 letras maiusculas seguidas de 5 numeros (Ex: INF09331): ");
     }
 
     /** Fim entradas messages */
@@ -246,6 +258,10 @@ public class Escrita implements Serializable {
     /** Feedback messages */
     public void sucess(String isso) {
         System.out.println(isso + " cadastrado(a) com sucesso!");
+    }
+
+    public void foi() {
+        System.out.println("foooi!");
     }
 
     public void error(String isso) {
@@ -264,4 +280,39 @@ public class Escrita implements Serializable {
         System.out.println(isso + " finalizado(a)!");
     }
     /** Fim feedback messages */
+
+    /** Controle de erros messages */
+    public void invalidData(String invalid) {
+        System.out.println("Dado invalido: " + invalid);
+    }
+
+    public void invalidReferencia(String invalid) {
+        System.out.println("Referencia invalida: " + invalid);
+    }
+    public void naoEncontrado() {
+        System.out.println("Nao encontrado!");
+    }
+
+    public void cadastroRepetido(String disso) {
+        System.out.println("Cadastro repetido: " + disso);
+    }
+
+    public void matriculaRepetida(int matricula, String disciplina) {
+        System.out.println("Matricula repetida: " + matricula + " em " + disciplina + ".");
+    }
+
+    public void avaliacaoRepetida(int matricula, String disciplina, int numeroAtividade) {
+        System.out.println("Avaliacao repetida: estudante " + matricula + " para atividade " + numeroAtividade + " de " + disciplina + ".");
+    }
+
+    public void dataFormatoErrado(){
+        System.out.println("Formato incorreto de data.");
+    }
+
+    public void erroIO(){
+        System.out.println("Erro de I/O.");
+    }
+
+
+    /** Fim controle de erros messages */
 }
