@@ -31,10 +31,12 @@ Além da alteração do nome do projeto, a release 0.0.2 traz outras novas featu
 
 ### Novidades da v0.0.3
 A nova release (0.0.3) traz novidades relacionadas à perfomance, modularização, controle de erros e ordenação dos relatórios:
-- Relatórios agora são exibidos com alguma ordenação;
 - Aumento da performance de execução em função do número de reduzidos de buscas nos hashmaps;
-- Controle de erros: entradas inválidas, principalmente. Agora o programa não é abortado nesses casos e uma tratativa é lançada.
+- Nova organização de pastas e uso de packages;
+- Controle de erros: agora as entradas são checadas. O programa não é abortado nesses casos e uma tratativa é lançada.
 
 ### O que vem por aí
 Para as próximas releases são esperadas as seguintes features:
-- Relatórios agora possuem saídas externas (...);
+- Integração com leitura e escrita em arquivos;
+- Ordenação de relatórios;
+- Correção de bugs gerais.
