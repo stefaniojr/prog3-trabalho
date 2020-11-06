@@ -276,25 +276,30 @@ public class Escrita implements Serializable {
         System.out.println("Saindo do(a) " + disso + "...");
     }
 
-    public void finalizado(String isso) {
-        System.out.println(isso + " finalizado(a)!");
+    public void finalizado(String s) {
+        System.out.println(s + " finalizado(a)!");
     }
     /** Fim feedback messages */
 
     /** Controle de erros messages */
-    public void invalidData(String invalid) {
-        System.out.println("Dado invalido: " + invalid);
+    public void invalidData(String s) {
+        System.out.println("Dado invalido: " + s);
     }
 
-    public void invalidReferencia(String invalid) {
-        System.out.println("Referencia invalida: " + invalid);
+    public void invalidReferencia(String s) {
+        System.out.println("Referencia invalida: " + s);
     }
+    
     public void naoEncontrado() {
         System.out.println("Nao encontrado!");
     }
 
-    public void cadastroRepetido(String disso) {
-        System.out.println("Cadastro repetido: " + disso);
+    public void problemInt() {
+        System.out.println("Nao encontrado!");
+    }
+
+    public void cadastroRepetido(String s) {
+        System.out.println("Cadastro repetido: " + s);
     }
 
     public void matriculaRepetida(int matricula, String disciplina) {

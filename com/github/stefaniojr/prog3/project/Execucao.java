@@ -20,65 +20,46 @@ public class Execucao implements Serializable {
 
     public boolean menuPrincipal(Leitura ler, Escrita escrever) {
         int opcao = 0;
-        do {
-            boolean keepGoing = false;
-            do {
-                try {
-                    escrever.mostrarMenu();
-                    opcao = ler.inteiro();
-                    ler.cadeiaCaract();
-                    keepGoing = false;
-                } catch (InputMismatchException e) {
-                    escrever.opcaoInvalida();
-                    ler.cadeiaCaract();
-                    keepGoing = true;
-                }
-            } while (keepGoing);
-            
-            keepGoing = false;
 
-            if (opcao == 1)
-                subMenu1(ler, escrever);
-            else if (opcao == 2)
-                subMenu2(ler, escrever);
-            else if (opcao == 3)
-                subMenu3(ler, escrever);
-            else if (opcao == 4)
-                subMenu4(ler, escrever);
-            else if (opcao == 5)
-                subMenu5(ler, escrever);
-            else if (opcao == 6)
-                subMenu6(ler, escrever);
-            else if (opcao == 7)
-                subMenu7(ler, escrever);
-            else if (opcao == 8)
-                subMenu8(ler, escrever);
-            else if (opcao == 9)
-                return true;
-            else if (opcao == 10) {
-                escrever.saindo("programa");
-                escrever.finalizado("Programa");
-            }
+        escrever.mostrarMenu();
+        opcao = ler.inteiro();
+        ler.cadeiaCaract();
 
-        } while (opcao != 10);
-
+        if (opcao == 1)
+            subMenu1(ler, escrever);
+        else if (opcao == 2)
+            subMenu2(ler, escrever);
+        else if (opcao == 3)
+            subMenu3(ler, escrever);
+        else if (opcao == 4)
+            subMenu4(ler, escrever);
+        else if (opcao == 5)
+            subMenu5(ler, escrever);
+        else if (opcao == 6)
+            subMenu6(ler, escrever);
+        else if (opcao == 7)
+            subMenu7(ler, escrever);
+        else if (opcao == 8)
+            subMenu8(ler, escrever);
+        else if (opcao == 9)
+            return true;
+        else if (opcao == 10) {
+            escrever.saindo("programa");
+            escrever.finalizado("Programa");
+        }
         return false;
     }
 
     public void subMenu1(Leitura ler, Escrita escrever) {
         int opcao;
-
-        do {
+        
             escrever.mostrarSubMenu("PERIODO");
             opcao = ler.inteiro();
+            ler.cadeiaCaract();
 
             if (opcao == 1)
                 cadastro.periodo(ler, periodos);
-
-        } while (opcao != 2);
-
         return;
-
     }
 
     public void subMenu2(Leitura ler, Escrita escrever) {

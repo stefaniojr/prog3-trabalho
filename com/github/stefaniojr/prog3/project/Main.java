@@ -78,6 +78,7 @@ public class Main implements Serializable {
     } while (keepGoing);
 
     ler.finalizarLeitura();
+    System.out.println("FINALIZEIII CORRETOOOOOOOOOOOOO");
     return;
   }
 
