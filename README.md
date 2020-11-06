@@ -30,7 +30,7 @@ Além da alteração do nome do projeto, a release 0.0.2 traz outras novas featu
 - Opção 9 realizar a serialização dos dados: digita o nome do arquivo que deseja armazenar os dados.
 
 ### Novidades da v0.0.3
-A nova release (0.0.3) traz novidades relacionadas à perfomance, modularização, controle de erros e ordenação dos relatórios:
+A nova release (0.0.3) traz novidades relacionadas à perfomance, modularização e controle de erros:
 - Aumento da performance de execução em função do número de reduzidos de buscas nos hashmaps;
 - Nova organização de pastas e uso de packages;
 - Controle de erros: agora as entradas são checadas. O programa não é abortado nesses casos e uma tratativa é lançada.
