@@ -1,5 +1,6 @@
 package com.github.stefaniojr.prog3.project;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -18,37 +19,6 @@ public class Execucao implements Serializable {
     Map<String, Disciplina> disciplinas = new HashMap<>();
     Map<Integer, Estudante> estudantes = new HashMap<>();
 
-    public boolean menuPrincipal(Leitura ler, Escrita escrever) {
-        int opcao = 0;
-
-        escrever.mostrarMenu();
-        opcao = ler.inteiro();
-        ler.cadeiaCaract();
-
-        if (opcao == 1)
-            subMenu1(ler, escrever);
-        else if (opcao == 2)
-            subMenu2(ler, escrever);
-        else if (opcao == 3)
-            subMenu3(ler, escrever);
-        else if (opcao == 4)
-            subMenu4(ler, escrever);
-        else if (opcao == 5)
-            subMenu5(ler, escrever);
-        else if (opcao == 6)
-            subMenu6(ler, escrever);
-        else if (opcao == 7)
-            subMenu7(ler, escrever);
-        else if (opcao == 8)
-            subMenu8(ler, escrever);
-        else if (opcao == 9)
-            return true;
-        else if (opcao == 10) {
-            escrever.saindo("programa");
-            escrever.finalizado("Programa");
-        }
-        return false;
-    }
 
     public void subMenu1(Leitura ler, Escrita escrever) {
         int opcao;
@@ -268,4 +238,10 @@ public class Execucao implements Serializable {
             this.estudantes.put(estudante.obterRef(), estudante);
     }
 
+    public void gerarRelatorios(Escrita escrever) throws IOException {
+        escrever.relatarVisaoGeral(periodos);
+        escrever.relatarDocentes(docentes);
+        escrever.relatarEstudantes(estudantes);
+        escrever.relatarDisciplinas(disciplinas);
+    }
 }

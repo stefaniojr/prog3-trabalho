@@ -216,10 +216,13 @@ public class Cadastro implements Serializable {
         Pattern patternDataSemHora = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
         Pattern patternDataComHora = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}-\\d{2}:\\d{2}$");
         int tipo = 0;
+        int nIntegrantes = 0;
+        int cargaHoraria = 0;
         String linha = null;
         String s = null;
         String disciplinaRef = null;
         Disciplina disciplina = null;
+        boolean ehCargaHoraria = false;
 
         try {
             escrever.digiteNome("atividade");
@@ -276,10 +279,11 @@ public class Cadastro implements Serializable {
                 if (!patternDataSemHora.matcher(linha).matches())
                     throw new IllegalArgumentException();
                 escrever.digiteIntegrantes();
-                int nIntegrantes = ler.inteiro();
+                nIntegrantes = ler.inteiro();
                 ler.cadeiaCaract();
                 escrever.digiteCargaHoraria();
-                int cargaHoraria = ler.inteiro();
+                ehCargaHoraria = true;
+                cargaHoraria = ler.inteiro();
                 ler.cadeiaCaract();
 
                 disciplina.adicionarTrabalho(nome, "assincrona", disciplina, linha, nIntegrantes, cargaHoraria);
@@ -311,7 +315,14 @@ public class Cadastro implements Serializable {
             escrever.invalidData(s);
 
     
-        } catch (NullPointerException e) {
+        } catch (InputMismatchException e) {
+            if(ehCargaHoraria){
+                escrever.invalidData(Integer.toString(cargaHoraria));
+            } else {
+                escrever.invalidData(Integer.toString(nIntegrantes));
+            }
+        
+        }  catch (NullPointerException e) {
             escrever.invalidReferencia(s);
         }
     }
@@ -322,6 +333,7 @@ public class Cadastro implements Serializable {
         Pattern patternMatricula = Pattern.compile("\\d{10}");
         Pattern patternDisciplina = Pattern.compile("[A-Z]{3}\\d{5}-\\d{4}/[A-Z 0-9]{1}");
 
+        boolean ehFloat = false;
         int estudanteRef = 0;
         int numeroAtividade = 0;
         float notaAtividade = 0;
@@ -331,6 +343,7 @@ public class Cadastro implements Serializable {
         Estudante estudante = null;
         Disciplina disciplina = null;
         Atividade atividade = null;
+        
 
         try {
             escrever.digiteRef("estudante");
@@ -357,6 +370,7 @@ public class Cadastro implements Serializable {
             atividade = disciplina.obterAtividade(numeroAtividade);
 
             escrever.digiteNota("estudante");
+            ehFloat = true;
             notaAtividade = ler.flutuante();
             ler.cadeiaCaract();
 
@@ -372,6 +386,13 @@ public class Cadastro implements Serializable {
         } catch (NullPointerException e) {
             escrever.invalidReferencia(s);
 
+        } catch (InputMismatchException e) {
+            if(ehFloat){
+                escrever.invalidData(Float.toString(notaAtividade));
+            } else {
+                escrever.invalidData(Integer.toString(numeroAtividade));
+            }
+        
         }  catch (RuntimeException e) {
             escrever.avaliacaoRepetida(estudanteRef, disciplina.obterRef(), numeroAtividade);
 

@@ -51,6 +51,10 @@ public class Disciplina implements Serializable {
     return docente;
   }
 
+  public Map<Integer, Estudante> obterEstudantes(){
+    return estudantes;
+  }
+
   public float obterMontanteAvaliacoesEmAtividades() {
     return this.montanteAvaliacoesEmAtividades;
   }

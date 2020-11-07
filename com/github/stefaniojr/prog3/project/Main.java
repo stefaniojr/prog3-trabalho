@@ -13,87 +13,135 @@ import com.github.stefaniojr.prog3.project.serializer.*;
 
 public class Main implements Serializable {
   private static final long serialVersionUID = 1L;
-  private static String arquivoSerializacao = "";
+  private static final String ARQUIVO_SERIALIZACAO = "dados.dat";
+  private static final String SAIDA_VISAOGERAL = "1-visao-geral.csv";
+  private static final String SAIDA_DOCENTES = "2-docentes.csv";
+  private static final String SAIDA_ESTUDANTES = "3-estudantes.csv";
+  private static final String SAIDA_DISCIPLINAS = "4-disciplinas.csv";
 
-  /**
-   * Listas auxiliares para realizar restauração ou exportação. O uso de listas
-   * foi optado para economizar o espaço em disco do arquivo serializado.
-   */
+  // Listas auxiliares para realizar restauração ou exportação. O uso de listas
+  // foi optado para economizar o espaço em disco do arquivo serializado.
+
   List<Periodo> periodos;
   List<Docente> docentes;
-  List<Disciplina> disciplinas;
   List<Estudante> estudantes;
+  List<Disciplina> disciplinas;
 
   public static void main(String[] args)
       throws Exception, ParseException, IOException, ClassNotFoundException, NotSerializableException {
+    Locale.setDefault(new Locale("pt", "BR"));
     Main aplicacao = null;
-    int opcao = 0;
+
+    // Bloco de variáveis para arquivos de entrada:
+    String arqPeriodos = null;
+    String arqDocentes = null;
+    String arqOferta = null;
+    String arqEstudantes = null;
+    String arqMatriculas = null;
+    String arqAtividades = null;
+    String arqNotas = null;
+
+    // Indicadores de serialização e desserialização:
+    boolean writeOnly = false;
+    boolean readOnly = false;
 
     Execucao exe = new Execucao();
 
-    /** Para escrita e leitura */
-    Escrita escrever = new Escrita();
+    // Para escrita e leitura
+    Escrita escrever = new Escrita(new File(ARQUIVO_SERIALIZACAO), new File(SAIDA_VISAOGERAL), new File(SAIDA_DOCENTES), new File(SAIDA_ESTUDANTES), new File(SAIDA_DISCIPLINAS));
     Leitura ler = new Leitura();
     ler.iniciarLeitura();
 
-    boolean keepGoing = false;
-    do {
-      boolean subKeepGoing = false;
-      do {
-        try {
-          escrever.desejaRestaurar();
-          escrever.yesOrNoMenu();
-          opcao = ler.inteiro();
-          ler.cadeiaCaract();
-          subKeepGoing = false;
-        } catch (InputMismatchException e) {
-          ler.cadeiaCaract();
-          escrever.opcaoInvalida();
-          subKeepGoing = true;
-        }
-      } while (subKeepGoing);
+    try {
+      // Bloco inspirado nos códigos do professor Vítor Souza (DI-UFES):
 
-      if (opcao == 1) {
-        try {
-          escrever.digiteNomeArquivo();
-          arquivoSerializacao = ler.cadeiaCaract();
-          Desserializar carregar = new Desserializar(new File(arquivoSerializacao));
+      for (int i = 0; i < args.length; i++) {
+        // Procura pelo prefixo de períodos e checa se não é o fim do vetor de strings.
+        if ("-p".equals(args[i]) && args.length > i + 1)
+          arqPeriodos = args[i + 1];
+
+        // Procura pelo prefixo de docentes e checa se não é o fim do vetor de strings.
+        else if ("-d".equals(args[i]) && args.length > i + 1)
+          arqDocentes = args[i + 1];
+
+        // Procura pelo prefixo de oferta e checa se não é o fim do vetor de strings.
+        else if ("-o".equals(args[i]) && args.length > i + 1)
+          arqOferta = args[i + 1];
+
+        // Procura pelo prefixo de estudantes e checa se não é o fim do vetor de
+        // strings.
+        else if ("-e".equals(args[i]) && args.length > i + 1)
+          arqEstudantes = args[i + 1];
+
+        // Procura pelo prefixo de matriculas em disciplinas e checa se não é o fim do
+        // vetor de strings.
+        else if ("-m".equals(args[i]) && args.length > i + 1)
+          arqMatriculas = args[i + 1];
+
+        // Procura pelo prefixo de atividades de disciplinas e checa se não é o fim do
+        // vetor de strings.
+        else if ("-a".equals(args[i]) && args.length > i + 1)
+          arqAtividades = args[i + 1];
+
+        // Procura pelo prefixo de avaliações de atividades de disciplinas e checa se
+        // não é o fim do vetor de strings.
+        else if ("-n".equals(args[i]) && args.length > i + 1)
+          arqNotas = args[i + 1];
+
+        // Indicadores de serialização, desserialização ou nenhum dos dois:
+        else if ("--write-only".equals(args[i]))
+          writeOnly = true;
+        else if ("--read-only".equals(args[i]))
+          readOnly = true;
+
+        // Um erro possível é o usuário não especificar os arquivos de escrita no modo de leitura:
+        if (!writeOnly && (arqPeriodos == null || arqDocentes == null || arqOferta == null || arqEstudantes == null || arqMatriculas == null || arqAtividades == null || arqNotas == null))
+          System.out.println("Erro!%nVocê precisa informar TODOS os nomes dos arquivos a serem lidos para que a serialização seja realizada! ;)");
+         
+        // Caso a desserialização seja necessária, faz a desserialização e executa a aplicação com esses dados desserialização nos Lists.
+        else if (writeOnly){
+          Desserializar carregar = new Desserializar(new File(ARQUIVO_SERIALIZACAO));
           aplicacao = carregar.iniciarDesserializacao();
-          aplicacao.execute(ler, escrever, exe, true);
-          keepGoing = false;
-        } catch (IOException e) {
-          escrever.erroIO();
-          keepGoing = true;
-        }
+          aplicacao.execute(ler, escrever, exe, true, readOnly);
+        } 
 
-      } else if (opcao == 2) {
-        aplicacao = new Main();
-        aplicacao.execute(ler, escrever, exe, false);
-        keepGoing = false;
-      } else {
-        escrever.opcaoInvalida();
-        keepGoing = true;
+        // Por outro lado, caso uma serialização esteja prestes a ser realizada OU não, inicia uma instância de Main novinha em folha e executa a partir dela.
+        else {
+          aplicacao = new Main();
+          aplicacao.execute(ler, escrever, exe, false, readOnly);
+        }
       }
 
-    } while (keepGoing);
+    } catch (IOException e) {
+      escrever.erroIO();
+    }
 
     ler.finalizarLeitura();
     System.out.println("FINALIZEIII CORRETOOOOOOOOOOOOO");
     return;
   }
 
-  public void execute(Leitura ler, Escrita escrever, Execucao exe, Boolean backup) throws IOException {
+  public void execute(Leitura ler, Escrita escrever, Execucao exe, boolean desserializar, boolean readOnly) throws IOException {
+    // Existem 3 tipos possíveis de execução:
 
-    if (backup) {
+    // 1 - Usuário especificou writeOnly, logo desserializa e gera os relatórios necessários.
+    if (desserializar) {
       exe.restaurarPeriodos(periodos);
       exe.restaurarDocentes(docentes);
       exe.restaurarDisciplinas(disciplinas);
       exe.restaurarEstudantes(estudantes);
-    }
-    boolean serializar = exe.menuPrincipal(ler, escrever);
+      exe.gerarRelatorios(escrever);
 
-    if (serializar)
+      // 2 - Usuário especificou readOnly, logo carrega dados de planilhas de entrada e serializa em disco.
+    } else if (readOnly) {
+      //Carregar dados de planilha.
       salvarEmDisco(ler, escrever, exe);
+
+      // 3 - Usuário não especificou writeOnly, nem readOnly, logo carrega dados de planilhas de entrada e gera os relatórios necessários.
+    } else {
+      //Carregar dados de planilha.
+      exe.gerarRelatorios(escrever);
+    }
   }
 
   public void salvarEmDisco(Leitura ler, Escrita escrever, Execucao exe) throws IOException {
@@ -106,19 +154,13 @@ public class Main implements Serializable {
     disciplinas = exe.exportarDisciplinas();
     estudantes = exe.exportarEstudantes();
 
-    boolean keepGoing = false;
-    do {
       try {
-        escrever.digiteNomeArquivo();
-        ler.cadeiaCaract();
-        arquivoSerializacao = ler.cadeiaCaract();
-        Serializar salvar = new Serializar(new File(arquivoSerializacao));
+        Serializar salvar = new Serializar(new File(ARQUIVO_SERIALIZACAO));
         salvar.iniciarSerializacao(this);
       } catch (IOException e) {
         escrever.erroIO();
       }
-    } while (keepGoing);
-
+    
   }
 
 }
