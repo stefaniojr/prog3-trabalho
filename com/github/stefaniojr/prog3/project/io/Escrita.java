@@ -47,7 +47,7 @@ public class Escrita implements Serializable {
                 Map<String, Disciplina> disciplinas = periodos.get(chaveP).obterDisciplinas();
                 out.printf("%s%s", periodos.get(chaveP).obterRef(), SEPARADOR);
                 for (String chaveD : disciplinas.keySet()) {
-                    out.printf("%s%s%s%s%s%s%s%s%d%s%d%n", disciplinas.get(chaveD).obterCodigo(), SEPARADOR,
+                    out.printf("%s%s%s%s%s%s%s%s%d%s%d\n", disciplinas.get(chaveD).obterCodigo(), SEPARADOR,
                             disciplinas.get(chaveD).obterNome(), SEPARADOR,
                             disciplinas.get(chaveD).obterDocente().obterNome(), SEPARADOR,
                             disciplinas.get(chaveD).obterDocente().obterEmail(), SEPARADOR,
@@ -63,7 +63,7 @@ public class Escrita implements Serializable {
             out.printf("%s%n", CABECALHO_DOCENTES);
 
             for (String chave : docentes.keySet())
-                out.printf("%s%s%d%s%d%s%.1f%s%d%s%d%s%.1f%n", docentes.get(chave).obterLogin(), SEPARADOR,
+                out.printf("%s%s%d%s%d%s%.1f%s%d%s%d%s%.1f\n", docentes.get(chave).obterLogin(), SEPARADOR,
                         docentes.get(chave).obterNumeroDeDisciplinas(), SEPARADOR,
                         docentes.get(chave).obterNumeroDePeriodos(), SEPARADOR,
                         docentes.get(chave).obterMediaAtividadesPorDisciplina(), SEPARADOR,
@@ -79,7 +79,7 @@ public class Escrita implements Serializable {
             out.printf("%s%n", CABECALHO_ESTUDANTES);
 
             for (Integer chave : estudantes.keySet())
-                out.printf("%d%s%s%s%.1f%.1f%.1f%n", estudantes.get(chave).obterMatricula(), SEPARADOR,
+                out.printf("%d%s%s%s%.1f%.1f%.1f\n", estudantes.get(chave).obterMatricula(), SEPARADOR,
                         estudantes.get(chave).obterNome(), SEPARADOR,
                         estudantes.get(chave).obterMediaDeDisciplinasPorPeriodo(), SEPARADOR,
                         estudantes.get(chave).obterMediaDeAvaliacoesPorDisciplina(), SEPARADOR,
@@ -94,7 +94,7 @@ public class Escrita implements Serializable {
 
     //         // fazer hoje: retornar datas.
     //         for (String chave : disciplinas.keySet()) {
-    //             out.printf("%s%s%s%s%s%s%s%s%d%s%d%s%d%s%s%n", disciplinas.get(chave).obterDocente().obterNome(),
+    //             out.printf("%s%s%s%s%s%s%s%s%d%s%d%s%d%s%s\n", disciplinas.get(chave).obterDocente().obterNome(),
     //                     SEPARADOR, disciplinas.get(chave).obterPeriodo().obterRef(), SEPARADOR,
     //                     disciplinas.get(chave).obterCodigo(), SEPARADOR,
     //                     disciplinas.get(chave).obterPercentualAtividadesSincronas() + "%",
