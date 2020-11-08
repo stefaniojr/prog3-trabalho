@@ -4,398 +4,253 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import com.github.stefaniojr.prog3.project.io.*;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 public class Cadastro implements Serializable {
 
-    Escrita escrever = new Escrita();
+    // Bloco de patterns para conferência de entradas:
 
-    public void periodo(Leitura ler, Map<String, Periodo> periodos) {
+    public void periodos(String[] dados, Map<String, Periodo> periodos) {
         Pattern patternAno = Pattern.compile("\\d{4}");
-        Pattern patternPeriodo = Pattern.compile("[A-Z 0-9]{1}");
-        int ano = 0;
-        char semestre = '\0';
-        String linha = null;
-        String s = null;
+        Pattern patternSemestre = Pattern.compile("[A-Z 0-9]{1}");
 
-        try {
-            escrever.digiteAno();
-            linha = ler.linha();
-            if (!patternAno.matcher(linha).matches())
+        for (int i = 0; i < dados.length; i = i + 2) {
+            String anoStr = dados[i];
+            if (!patternAno.matcher(anoStr).matches())
+                throw new IllegalArgumentException("Dado invalido: " + anoStr);
+            int ano = Integer.parseInt(anoStr);
+
+            String semestreStr = dados[i + 1];
+            if (!patternSemestre.matcher(semestreStr).matches())
                 throw new IllegalArgumentException();
-            ano = Integer.parseInt(linha);
-            escrever.digiteSemestre();
-            linha = ler.linha();
-            s = linha;
-            if (!patternPeriodo.matcher(linha).matches())
-                throw new IllegalArgumentException();
-            semestre = linha.charAt(0);
+            char semestre = semestreStr.charAt(0);
+
             if (periodos.containsKey(ano + "/" + semestre))
-                throw new RuntimeException();
+                throw new IllegalArgumentException("Cadastro repetido: " + ano + "/" + semestre);
+
             periodos.put(ano + "/" + semestre, new Periodo(ano, semestre));
-        } catch (IllegalArgumentException e) {
-            escrever.invalidData(s);
-        } catch (RuntimeException e) {
-            escrever.cadastroRepetido(ano + "/" + semestre);
         }
+
     }
 
-    public void docente(Leitura ler, Map<String, Docente> docentes) {
+    public void docentes(String[] dados, Map<String, Docente> docentes) {
         Pattern patternLogin = Pattern.compile("^[a-z]+(?:\\.[a-z]?)?\\.[a-z]+$");
-        Pattern patternYesOrNoQuestion = Pattern.compile("[SN]{1}");
-        String s = null;
-        String login = null;
-        String possuiSite = null;
-        String semSite = "Docente sem site.";
 
-        try {
-            escrever.digiteNome("docente");
-            String nome = ler.cadeiaCaract();
-            escrever.digiteLogin();
-            login = ler.cadeiaCaract();
-            s = login;
+        for (int i = 0; i < dados.length; i = i + 3) {
+            String nome = dados[i];
+
+            String login = dados[i + 1];
             if (!patternLogin.matcher(login).matches())
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Dado invalido: " + login);
             if (docentes.containsKey(login))
-                throw new RuntimeException();
+                throw new IllegalArgumentException("Cadastro repetido: " + login);
 
-            escrever.possuiSite();
-            possuiSite = ler.cadeiaCaract();
-            s = possuiSite;
-            if (!patternYesOrNoQuestion.matcher(possuiSite).matches())
-                throw new IllegalArgumentException();
-            if (possuiSite.charAt(0) == 'S') {
-                escrever.digiteSite("docente");
-                String comSite = ler.cadeiaCaract();
-                docentes.put(login, new Docente(login, nome, comSite));
-            } else {
-                docentes.put(login, new Docente(login, nome, semSite));
-            }
+            String site = dados[i + 2];
 
-        } catch (IllegalArgumentException e) {
-            escrever.invalidData(s);
-
-        } catch (RuntimeException e) {
-            escrever.cadastroRepetido(s);
+            docentes.put(login, new Docente(login, nome, site));
         }
 
     }
 
-    public void disciplina(Leitura ler, Map<String, Periodo> periodos, Map<String, Docente> docentes,
+    public void disciplinas(String[] dados, Map<String, Periodo> periodos, Map<String, Docente> docentes,
             Map<String, Disciplina> disciplinas) {
 
         Pattern patternCodigoDisciplina = Pattern.compile("[A-Z]{3}\\d{5}");
         Pattern patternPeriodo = Pattern.compile("\\d{4}/[A-Z 0-9]{1}");
         Pattern patternLogin = Pattern.compile("^[a-z]+(?:\\.[a-z]?)?\\.[a-z]+$");
         String s = null;
-        String codigo = null;
-        String periodoRef = null;
 
         try {
-            escrever.digiteNome("disciplina");
-            String nome = ler.cadeiaCaract();
-            escrever.digiteCodigoDisciplina();
-            codigo = ler.cadeiaCaract();
-            if (!patternCodigoDisciplina.matcher(codigo).matches())
-                throw new IllegalArgumentException();
+            for (int i = 0; i < dados.length; i = i + 4) {
+                String periodoRef = dados[i];
+                s = periodoRef;
+                if (!patternPeriodo.matcher(periodoRef).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + periodoRef);
+                Periodo periodo = periodos.get(periodoRef);
 
-            escrever.digitePeriodo();
-            periodoRef = ler.cadeiaCaract();
-            s = periodoRef;
-            if (!patternPeriodo.matcher(periodoRef).matches())
-                throw new IllegalArgumentException();
-            Periodo periodo = null;
-            periodo = periodos.get(periodoRef);
-            if (disciplinas.containsKey(codigo + "-" + periodoRef))
-                throw new RuntimeException();
+                String codigo = dados[i + 1];
+                if (!patternCodigoDisciplina.matcher(codigo).matches())
+                    throw new IllegalArgumentException();
 
-            String docenteRef = null;
-            escrever.digiteRef("docente");
-            docenteRef = ler.cadeiaCaract();
-            s = docenteRef;
-            if (!patternLogin.matcher(docenteRef).matches())
-                throw new IllegalArgumentException();
-            Docente docente = null;
-            docente = docentes.get(docenteRef);
+                if (disciplinas.containsKey(codigo + "-" + periodoRef))
+                    throw new IllegalArgumentException("Cadastro repetido: " + codigo + "-" + periodoRef);
 
-            disciplinas.put(codigo + "-" + periodoRef, new Disciplina(codigo, nome, periodo, docente));
-            Disciplina disciplina = disciplinas.get(codigo + "-" + periodoRef);
-            periodo.adicionarDisciplina(disciplina);
-            docente.adicionarDisciplina(disciplina);
-            docente.adicionarPeriodo(periodo);
+                String nome = dados[i + 2];
 
-        } catch (IllegalArgumentException e) {
-            escrever.invalidData(s);
+                String docenteRef = dados[i + 3];
+                s = docenteRef;
+                if (!patternLogin.matcher(docenteRef).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + docenteRef);
+                Docente docente = docentes.get(docenteRef);
+
+                disciplinas.put(codigo + "-" + periodoRef, new Disciplina(codigo, nome, periodo, docente));
+                Disciplina disciplina = disciplinas.get(codigo + "-" + periodoRef);
+                periodo.adicionarDisciplina(disciplina);
+                docente.adicionarDisciplina(disciplina);
+                docente.adicionarPeriodo(periodo);
+            }
 
         } catch (NullPointerException e) {
-            escrever.invalidReferencia(s);
-
-        } catch (RuntimeException e) {
-            escrever.cadastroRepetido(codigo + "-" + periodoRef);
+            System.out.println("Referencia invalida: " + s);
         }
     }
 
-    public void estudante(Leitura ler, Map<Integer, Estudante> estudantes) {
+    public void estudantes(String[] dados, Map<Integer, Estudante> estudantes) {
         Pattern patternMatricula = Pattern.compile("\\d{10}");
-        String linha = null;
-        String s = null;
-        String nome = null;
-        int matricula = 0;
 
-        try {
-            escrever.digiteMatricula();
-            linha = ler.linha();
-            s = linha;
-            if (!patternMatricula.matcher(linha).matches())
-                throw new IllegalArgumentException();
-            matricula = Integer.parseInt(linha);
+        for (int i = 0; i < dados.length; i = i + 2) {
+            String nome = dados[i];
+
+            String estudanteRef = dados[i + 1];
+            if (!patternMatricula.matcher(estudanteRef).matches())
+                throw new IllegalArgumentException("Dado invalido: " + estudanteRef);
+            int matricula = Integer.parseInt(estudanteRef);
             if (estudantes.containsKey(matricula))
-                throw new RuntimeException();
-            escrever.digiteNome("estudante");
-            nome = ler.cadeiaCaract();
+                throw new IllegalArgumentException("Cadastro repetido: " + matricula);
+
             estudantes.put(matricula, new Estudante(matricula, nome));
-
-        } catch (IllegalArgumentException e) {
-            escrever.invalidData(s);
-
-        } catch (RuntimeException e) {
-            escrever.cadastroRepetido(Integer.toString(matricula));
         }
     }
 
-    public void estudanteEmDisciplina(Leitura ler, Map<String, Disciplina> disciplinas,
+    public void estudanteEmDisciplina(String[] dados, Map<String, Disciplina> disciplinas,
             Map<Integer, Estudante> estudantes) {
         Pattern patternMatricula = Pattern.compile("\\d{10}");
         Pattern patternDisciplina = Pattern.compile("[A-Z]{3}\\d{5}-\\d{4}/[A-Z 0-9]{1}");
-        int estudanteRef = 0;
-        String linha = null;
         String s = null;
-        String disciplinaRef = null;
-        Estudante estudante = null;
-        Disciplina disciplina = null;
 
         try {
-            escrever.digiteRef("estudante");
-            linha = ler.linha();
-            s = linha;
-            if (!patternMatricula.matcher(linha).matches())
-                throw new IllegalArgumentException();
-            estudanteRef = Integer.parseInt(linha);
-            estudante = estudantes.get(estudanteRef);
+            for (int i = 0; i < dados.length; i = i + 2) {
+                String disciplinaRef = dados[i];
+                s = disciplinaRef;
+                if (!patternDisciplina.matcher(disciplinaRef).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + disciplinaRef);
+                Disciplina disciplina = disciplinas.get(disciplinaRef);
 
-            escrever.digiteRef("disciplina");
-            disciplinaRef = ler.cadeiaCaract();
-            s = disciplinaRef;
-            if (!patternDisciplina.matcher(disciplinaRef).matches())
-                throw new IllegalArgumentException();
-            disciplina = disciplinas.get(disciplinaRef);
+                String estudanteRef = dados[i + 1];
+                s = estudanteRef;
+                if (!patternMatricula.matcher(estudanteRef).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + estudanteRef);
+                int matricula = Integer.parseInt(estudanteRef);
+                Estudante estudante = estudantes.get(matricula);
 
-            if (disciplina.jaMatriculado(estudanteRef))
-                throw new RuntimeException();
+                if (disciplina.jaMatriculado(matricula))
+                    throw new IllegalArgumentException(
+                            "Matricula repetida: " + matricula + " em " + disciplina.obterRef() + ".");
 
-            estudante.adicionarDisciplina(disciplina);
-            estudante.adicionarPeriodo(disciplina.obterPeriodo());
-            disciplina.adicionarEstudante(estudante);
-
-        } catch (IllegalArgumentException e) {
-            escrever.invalidData(s);
+                estudante.adicionarDisciplina(disciplina);
+                estudante.adicionarPeriodo(disciplina.obterPeriodo());
+                disciplina.adicionarEstudante(estudante);
+            }
 
         } catch (NullPointerException e) {
-            escrever.invalidReferencia(s);
-
-        } catch (RuntimeException e) {
-            escrever.matriculaRepetida(estudanteRef, disciplina.obterRef());
+            System.out.println("Referencia invalida: " + s);
         }
     }
 
-    public void atividadeEmDisciplina(Leitura ler, Map<String, Disciplina> disciplinas) {
+    public void atividadesEmDisciplina(String[] dados, Map<String, Disciplina> disciplinas) {
 
-        Pattern patternOption = Pattern.compile("[1-4]{1}");
+        Pattern patternAtividade = Pattern.compile("[AETP]");
         Pattern patternDisciplina = Pattern.compile("[A-Z]{3}\\d{5}-\\d{4}/[A-Z 0-9]{1}");
-        Pattern patternDataSemHora = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
-        Pattern patternDataComHora = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}-\\d{2}:\\d{2}$");
-        int tipo = 0;
-        int nIntegrantes = 0;
-        int cargaHoraria = 0;
-        String linha = null;
+        Pattern patternData = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
+        Pattern patternHora = Pattern.compile("^\\d{2}:\\d{2}$");
+        Pattern patternOnlyInteger = Pattern.compile("(?<=\\s|^)\\d+(?=\\s|$)");
         String s = null;
-        String disciplinaRef = null;
-        Disciplina disciplina = null;
-        boolean ehCargaHoraria = false;
 
         try {
-            escrever.digiteNome("atividade");
-            String nome = ler.cadeiaCaract();
+            for (int i = 0; i < dados.length; i = i + 8) {
+                String disciplinaRef = dados[i];
+                s = disciplinaRef;
+                if (!patternDisciplina.matcher(disciplinaRef).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + disciplinaRef);
+                Disciplina disciplina = disciplinas.get(disciplinaRef);
 
-            escrever.digiteRef("disciplina");
-            disciplinaRef = ler.cadeiaCaract();
-            linha = disciplinaRef;
-            s = linha;
-            if (!patternDisciplina.matcher(disciplinaRef).matches())
-                throw new IllegalArgumentException();
-            disciplina = disciplinas.get(disciplinaRef);
+                String nome = dados[i + 1];
 
-            escrever.digiteTipo();
-            linha = ler.linha();
-            s = linha;
-            if (!patternOption.matcher(linha).matches())
-                throw new IllegalArgumentException();
-            tipo = Integer.parseInt(linha);
-            if (tipo == 1) {
-                escrever.digiteDataComHora();
-                linha = ler.cadeiaCaract(); // Data.
-                s = linha;
-                if (!patternDataComHora.matcher(linha).matches())
-                    throw new RuntimeException();
-                disciplina.adicionarAula(nome, "sincrona", disciplina, linha);
-            } else if (tipo == 2) {
-                Map<String, String> conteudos = new HashMap<>();
-                String url;
-                String conteudo;
+                String tipo = dados[i + 2];
+                if (!patternAtividade.matcher(tipo).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + tipo);
 
-                do {
-                    escrever.instrucoesAdicionarConteudoAEstudar();
+                String data = dados[i + 3];
+                if (!patternData.matcher(data).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + data);
 
-                    escrever.digiteConteudo();
-                    conteudo = ler.cadeiaCaract();
+                String hora = dados[i + 4];
+                if (!patternHora.matcher(hora).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + hora);
 
-                    if (conteudo.equals("0")) {
-                        break;
-                    }
+                String conteudo = dados[i + 5];
 
-                    escrever.digiteURL();
-                    url = ler.cadeiaCaract();
+                String tamMaxGrupoStr = dados[i + 6];
+                if (!patternOnlyInteger.matcher(tamMaxGrupoStr).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + tamMaxGrupoStr);
+                int tamMaxGrupo = Integer.parseInt(tamMaxGrupoStr);
 
-                    conteudos.put(url, conteudo);
-                } while (true);
+                String cargaHorariaStr = dados[i + 7];
+                if (!patternOnlyInteger.matcher(cargaHorariaStr).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + cargaHorariaStr);
+                int cargaHoraria = Integer.parseInt(cargaHorariaStr);
 
-                disciplina.adicionarEstudo(nome, "assincrona", disciplina, conteudos);
-
-            } else if (tipo == 3) {
-                escrever.digiteData();
-                linha = ler.cadeiaCaract(); // Prazo.
-                s = linha;
-                if (!patternDataSemHora.matcher(linha).matches())
-                    throw new IllegalArgumentException();
-                escrever.digiteIntegrantes();
-                nIntegrantes = ler.inteiro();
-                ler.cadeiaCaract();
-                escrever.digiteCargaHoraria();
-                ehCargaHoraria = true;
-                cargaHoraria = ler.inteiro();
-                ler.cadeiaCaract();
-
-                disciplina.adicionarTrabalho(nome, "assincrona", disciplina, linha, nIntegrantes, cargaHoraria);
-
-            } else if (tipo == 4) {
-                List<String> conteudos = new ArrayList<>();
-                String conteudo;
-
-                escrever.digiteDataComHora();
-                linha = ler.cadeiaCaract(); // Data.
-                s = linha;
-
-                if (!patternDataComHora.matcher(linha).matches())
-                    throw new IllegalArgumentException();
-
-                do {
-                    escrever.digiteConteudo();
-                    conteudo = ler.cadeiaCaract();
-                    if (conteudo.equals("0")) {
-                        break;
-                    }
-                    conteudos.add(conteudo);
-                } while (true);
-
-                disciplina.adicionarProva(nome, "sincrona", disciplina, linha, conteudos);
+                if (tipo.equals("A"))
+                    disciplina.adicionarAula(nome, "sincrona", disciplina, data + "-" + hora);
+                else if (tipo.equals("E"))
+                    disciplina.adicionarEstudo(nome, "assincrona", disciplina, conteudo);
+                else if (tipo.equals("T"))
+                    disciplina.adicionarTrabalho(nome, "assincrona", disciplina, data, tamMaxGrupo, cargaHoraria);
+                else if (tipo.equals("P"))
+                    disciplina.adicionarProva(nome, "sincrona", disciplina, data, conteudo);
             }
 
-        } catch (IllegalArgumentException e) {
-            escrever.invalidData(s);
-
-    
-        } catch (InputMismatchException e) {
-            if(ehCargaHoraria){
-                escrever.invalidData(Integer.toString(cargaHoraria));
-            } else {
-                escrever.invalidData(Integer.toString(nIntegrantes));
-            }
-        
-        }  catch (NullPointerException e) {
-            escrever.invalidReferencia(s);
+        } catch (NullPointerException e) {
+            System.out.println("Referencia invalida: " + s);
         }
     }
 
-    public void avaliacaoEmAtividade(Leitura ler, Map<String, Disciplina> disciplinas,
+    public void avaliacoesEmAtividade(String[] dados, Map<String, Disciplina> disciplinas,
             Map<Integer, Estudante> estudantes) {
-
         Pattern patternMatricula = Pattern.compile("\\d{10}");
         Pattern patternDisciplina = Pattern.compile("[A-Z]{3}\\d{5}-\\d{4}/[A-Z 0-9]{1}");
-
-        boolean ehFloat = false;
-        int estudanteRef = 0;
-        int numeroAtividade = 0;
-        float notaAtividade = 0;
-        String disciplinaRef = null;
-        String linha = null;
+        Pattern patternOnlyInteger = Pattern.compile("(?<=\\s|^)\\d+(?=\\s|$)");
         String s = null;
-        Estudante estudante = null;
-        Disciplina disciplina = null;
-        Atividade atividade = null;
-        
+        Float notaAtividade = 0F;
 
         try {
-            escrever.digiteRef("estudante");
-            linha = ler.linha();
-            if (!patternMatricula.matcher(linha).matches())
-                throw new IllegalArgumentException();
-            estudanteRef = Integer.parseInt(linha);
-            estudante = estudantes.get(estudanteRef);
+            for (int i = 0; i < dados.length; i = i + 4) {
+                String disciplinaRef = dados[i];
+                s = disciplinaRef;
+                if (!patternDisciplina.matcher(disciplinaRef).matches())
+                    throw new IllegalArgumentException();
+                Disciplina disciplina = disciplinas.get(disciplinaRef);
 
-            escrever.digiteRef("disciplina");
-            disciplinaRef = ler.cadeiaCaract();
-            linha = disciplinaRef;
-            s = linha;
-            if (!patternDisciplina.matcher(disciplinaRef).matches())
-                throw new IllegalArgumentException();
-            disciplina = disciplinas.get(disciplinaRef);
+                String estudanteRef = dados[i + 1];
+                s = estudanteRef;
+                if (!patternMatricula.matcher(estudanteRef).matches())
+                    throw new IllegalArgumentException();
+                int matricula = Integer.parseInt(estudanteRef);
+                Estudante estudante = estudantes.get(matricula);
 
-            escrever.digiteRef("atividade");
-            numeroAtividade = ler.inteiro();
-            ler.cadeiaCaract();
-            s = Integer.toString(numeroAtividade);
-            if (numeroAtividade < 0 && numeroAtividade > 30000)
-                throw new IllegalArgumentException();
-            atividade = disciplina.obterAtividade(numeroAtividade);
+                String numeroAtividadeStr = dados[i + 2];
+                s = numeroAtividadeStr;
+                if (!patternOnlyInteger.matcher(numeroAtividadeStr).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + numeroAtividadeStr);
+                int numeroAtividade = Integer.parseInt(numeroAtividadeStr);
+                Atividade atividade = disciplina.obterAtividade(numeroAtividade);
 
-            escrever.digiteNota("estudante");
-            ehFloat = true;
-            notaAtividade = ler.flutuante();
-            ler.cadeiaCaract();
+                String notaAtividadeStr = dados[i + 3];
+                notaAtividade = Float.valueOf(notaAtividadeStr);
 
-            if (atividade.encontrarAvaliacao(estudante) != null)
-                throw new RuntimeException();
+                if (atividade.encontrarAvaliacao(estudante) != null)
+                    throw new IllegalArgumentException("Avaliacao repetida: estudante " + matricula + " para atividade "
+                            + numeroAtividade + " de " + disciplina.obterRef() + ".");
 
-            atividade.avaliarAtividade(estudante, notaAtividade);
-            estudante.adicionarAvaliacao(atividade, atividade.encontrarAvaliacao(estudante));
-
-        } catch (IllegalArgumentException e) {
-            escrever.invalidData(s);
+                atividade.avaliarAtividade(estudante, notaAtividade);
+                estudante.adicionarAvaliacao(atividade, atividade.encontrarAvaliacao(estudante));
+            }
 
         } catch (NullPointerException e) {
-            escrever.invalidReferencia(s);
+            System.out.println("Referencia invalida: " + s);
 
         } catch (InputMismatchException e) {
-            if(ehFloat){
-                escrever.invalidData(Float.toString(notaAtividade));
-            } else {
-                escrever.invalidData(Integer.toString(numeroAtividade));
-            }
-        
-        }  catch (RuntimeException e) {
-            escrever.avaliacaoRepetida(estudanteRef, disciplina.obterRef(), numeroAtividade);
-
+            System.out.println("Dado invalido: " + notaAtividade);
         }
     }
 }

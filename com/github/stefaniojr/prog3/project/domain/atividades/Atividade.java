@@ -2,7 +2,6 @@ package com.github.stefaniojr.prog3.project.domain.atividades;
 
 import java.io.Serializable;
 import java.util.*;
-import com.github.stefaniojr.prog3.project.io.Escrita;
 import com.github.stefaniojr.prog3.project.domain.*;
 
 public abstract class Atividade implements Serializable {
@@ -15,8 +14,6 @@ public abstract class Atividade implements Serializable {
   boolean avaliativa;
 
   List<Avaliacao> avaliacoes = new ArrayList<>();
-
-  Escrita escrever = new Escrita();
 
   public Atividade(String nome, String sincronismo, Disciplina disciplina, int cargaHoraria, int numero, boolean avaliativa) {
     this.nome = nome;

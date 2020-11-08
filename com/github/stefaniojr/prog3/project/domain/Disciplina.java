@@ -2,7 +2,6 @@ package com.github.stefaniojr.prog3.project.domain;
 
 import java.io.Serializable;
 import java.util.*;
-import com.github.stefaniojr.prog3.project.io.Escrita;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 public class Disciplina implements Serializable {
@@ -16,8 +15,6 @@ public class Disciplina implements Serializable {
   int montanteAvaliadoresEmAtividades = 0;
 
   int cargaHoraria = 0;
-
-  Escrita escrever = new Escrita();
 
   Map<Integer, Estudante> estudantes = new HashMap<>();
   Map<Integer, Atividade> atividades = new HashMap<>();
@@ -95,9 +92,17 @@ public class Disciplina implements Serializable {
     return atividadesAvaliativas;
   }
 
-  public float obterPercentualAtividadesSincronas() {
+  public int obterPercentualAtividadesSincronas() {
     if (obterNumeroDeAtividades() != 0) {
       return obterNumeroAtividadesSincronas() / obterNumeroDeAtividades();
+    } else {
+      return 0;
+    }
+  }
+
+  public float obterPercentualAtividadesAssincronas() {
+    if (obterNumeroDeAtividades() != 0) {
+      return (1 - (this.obterPercentualAtividadesSincronas()));
     } else {
       return 0;
     }
@@ -141,9 +146,9 @@ public class Disciplina implements Serializable {
 
   }
 
-  public void adicionarEstudo(String nome, String sincronismo, Disciplina disciplina, Map<String, String> conteudos) {
+  public void adicionarEstudo(String nome, String sincronismo, Disciplina disciplina, String conteudo) {
 
-    atividades.put(this.numeroAtividade, new Estudo(nome, sincronismo, this, this.numeroAtividade, conteudos));
+    atividades.put(this.numeroAtividade, new Estudo(nome, sincronismo, this, this.numeroAtividade, conteudo));
     this.numeroAtividade = this.numeroAtividade + 1;
 
   }
@@ -158,9 +163,9 @@ public class Disciplina implements Serializable {
   }
 
   public void adicionarProva(String nome, String sincronismo, Disciplina disciplina, String data,
-      List<String> conteudos) {
+      String conteudo) {
 
-    atividades.put(this.numeroAtividade, new Prova(nome, sincronismo, this, this.numeroAtividade, data, conteudos));
+    atividades.put(this.numeroAtividade, new Prova(nome, sincronismo, this, this.numeroAtividade, data, conteudo));
     this.numeroAtividade = this.numeroAtividade + 1;
 
   }

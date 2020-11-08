@@ -10,9 +10,9 @@ public class Prova extends Atividade {
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
     Date data;
 
-    List<String> conteudos = new ArrayList<>();
+    String conteudo = null;
 
-    public Prova(String nome, String sincronismo, Disciplina disciplina, int numero, String data, List<String> conteudos){
+    public Prova(String nome, String sincronismo, Disciplina disciplina, int numero, String data, String conteudo){
         super(nome, sincronismo, disciplina, 2, numero, true);
         
         try{
@@ -20,7 +20,7 @@ public class Prova extends Atividade {
         } catch (ParseException e){
             e.printStackTrace();
         }
-        this.conteudos = conteudos;
+        this.conteudo = conteudo;
         
     }
 }

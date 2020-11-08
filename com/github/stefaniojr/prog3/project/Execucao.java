@@ -1,9 +1,11 @@
 package com.github.stefaniojr.prog3.project;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.*;
-import java.util.regex.Pattern;
 
 import com.github.stefaniojr.prog3.project.domain.*;
 import com.github.stefaniojr.prog3.project.io.*;
@@ -11,196 +13,22 @@ import com.github.stefaniojr.prog3.project.report.*;
 
 public class Execucao implements Serializable {
 
-    Cadastro cadastro = new Cadastro();
+    Cadastro cadastrar = new Cadastro();
     Relatorio relatorios = new Relatorio();
+    Leitura ler = new Leitura();
 
     Map<String, Periodo> periodos = new HashMap<>();
     Map<String, Docente> docentes = new HashMap<>();
     Map<String, Disciplina> disciplinas = new HashMap<>();
     Map<Integer, Estudante> estudantes = new HashMap<>();
 
-
-    public void subMenu1(Leitura ler, Escrita escrever) {
-        int opcao;
-        
-            escrever.mostrarSubMenu("PERIODO");
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1)
-                cadastro.periodo(ler, periodos);
-        return;
-    }
-
-    public void subMenu2(Leitura ler, Escrita escrever) {
-        int opcao;
-
-        do {
-            escrever.mostrarSubMenu("DOCENTE");
-
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1)
-                cadastro.docente(ler, docentes);
-
-        } while (opcao != 2);
-
-        return;
-    }
-
-    public void subMenu3(Leitura ler, Escrita escrever) {
-        int opcao;
-        do {
-            escrever.mostrarSubMenu("DISCIPLINA");
-
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1)
-                cadastro.disciplina(ler, periodos, docentes, disciplinas);
-
-        } while (opcao != 2);
-
-        return;
-    }
-
-    public void subMenu4(Leitura ler, Escrita escrever) {
-        int opcao;
-
-        do {
-
-            escrever.mostrarSubMenu("ESTUDANTE");
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1)
-                cadastro.estudante(ler, estudantes);
-
-        } while (opcao != 2);
-
-        return;
-    }
-
-    public void subMenu5(Leitura ler, Escrita escrever) {
-        int opcao;
-
-        do {
-
-            escrever.mostrarSubMenu("ESTUDANTE");
-
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1)
-                cadastro.estudanteEmDisciplina(ler, disciplinas, estudantes);
-
-        } while (opcao != 2);
-
-        return;
-    }
-
-    public void subMenu6(Leitura ler, Escrita escrever) {
-        int opcao;
-
-        do {
-            escrever.mostrarSubMenu("ATIVIDADE");
-
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1)
-                cadastro.atividadeEmDisciplina(ler, disciplinas);
-
-        } while (opcao != 2);
-
-        return;
-    }
-
-    public void subMenu7(Leitura ler, Escrita escrever) {
-        int opcao;
-
-        do {
-
-            escrever.mostrarSubMenu("AVALIACAO");
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1)
-                cadastro.avaliacaoEmAtividade(ler, disciplinas, estudantes);
-
-        } while (opcao != 2);
-
-        return;
-    }
-
-    public void subMenu8(Leitura ler, Escrita escrever) {
-        Pattern patternLogin = Pattern.compile("^[a-z]+(?:\\.[a-z]?)?\\.[a-z]+$");
-        Pattern patternPeriodo = Pattern.compile("\\d{4}/[A-Z 0-9]{1}");
-        int opcao;
-        String periodoRef = null;
-        String docenteRef = null;
-
-        do {
-            escrever.mostrarSubMenuRelatorios();
-            opcao = ler.inteiro();
-            ler.cadeiaCaract();
-
-            if (opcao == 1) {
-                boolean keepGoing = false;
-                do {
-                    try {
-                        relatorios.periodosCadastrados(escrever, periodos);
-                        escrever.digiteRef("periodo");
-                        periodoRef = ler.cadeiaCaract();
-                        if (!patternPeriodo.matcher(periodoRef).matches())
-                            throw new IllegalArgumentException();
-                        Periodo periodo = periodos.get(periodoRef);
-                        relatorios.estatisticasPeriodo(ler, escrever, periodo);
-                        keepGoing = false;
-                    } catch (IllegalArgumentException e) {
-                        escrever.invalidReferencia(periodoRef);
-                        keepGoing = true;
-                    } catch (NullPointerException e) {
-                        escrever.naoEncontrado();
-                        keepGoing = true;
-                    }
-                } while (keepGoing);
-
-            }
-
-            else if (opcao == 2)
-                relatorios.estatisticasDocentes(escrever, docentes);
-
-            else if (opcao == 3)
-                relatorios.estatisticasEstudantes(escrever, estudantes);
-
-            else if (opcao == 4) {
-                boolean keepGoing = false;
-                do {
-                    try {
-                        relatorios.docentesCadastrados(escrever, docentes);
-                        escrever.digiteRef("docente");
-                        docenteRef = ler.cadeiaCaract();
-                        if (!patternLogin.matcher(docenteRef).matches())
-                            throw new IllegalArgumentException();
-                        Docente docente = docentes.get(docenteRef);
-                        relatorios.estatisticasDisciplinasDeDocente(escrever, docente);
-                        keepGoing = false;
-                    } catch (IllegalArgumentException e) {
-                        escrever.invalidReferencia(docenteRef);
-                        keepGoing = true;
-                    } catch (NullPointerException e) {
-                        escrever.naoEncontrado();
-                        keepGoing = true;
-                    }
-                } while (keepGoing);
-            }
-
-        } while (opcao != 5);
-
-        return;
-    }
+    String[] dadosPeriodos = null;
+    String[] dadosDocentes = null;
+    String[] dadosDisciplinas = null;
+    String[] dadosEstudantes = null;
+    String[] dadosMatriculas =  null;
+    String[] dadosAtividades = null;
+    String[] dadosAvaliacoes = null; 
 
     public List<Periodo> exportarPeriodos() {
         return new ArrayList<Periodo>(periodos.values());
@@ -242,6 +70,44 @@ public class Execucao implements Serializable {
         escrever.relatarVisaoGeral(periodos);
         escrever.relatarDocentes(docentes);
         escrever.relatarEstudantes(estudantes);
-        escrever.relatarDisciplinas(disciplinas);
+        //escrever.relatarDisciplinas(disciplinas);
+    }
+
+    public void carregarPlanilhas(String arqPeriodos, String arqDocentes, String arqOferta, String arqEstudantes, String arqMatriculas, String arqAtividades, String arqNotas) throws IOException, ParseException, FileNotFoundException{
+      dadosPeriodos = ler.planilha(new File(arqPeriodos));
+      dadosDocentes = ler.planilha(new File(arqDocentes));
+      dadosDisciplinas = ler.planilha(new File(arqOferta));
+      dadosEstudantes = ler.planilha(new File(arqEstudantes));
+      dadosMatriculas = ler.planilha(new File(arqMatriculas));
+      dadosAtividades = ler.planilha(new File(arqAtividades));
+      dadosAvaliacoes = ler.planilha(new File(arqNotas));
+    }
+
+    public void cadastrarPeriodos(){
+        cadastrar.periodos(dadosPeriodos, periodos);
+    } 
+
+    public void cadastrarDocentes(){
+        cadastrar.docentes(dadosDocentes, docentes);
+    }
+
+    public void cadastrarDisciplinas(){
+        cadastrar.disciplinas(dadosDisciplinas, periodos, docentes, disciplinas);
+    }
+
+    public void cadastrarEstudantes(){
+        cadastrar.estudantes(dadosEstudantes, estudantes);
+    }
+
+    public void matricularEstudantes(){
+        cadastrar.estudanteEmDisciplina(dadosMatriculas, disciplinas, estudantes);
+    }
+
+    public void cadastrarAtividades(){
+        cadastrar.atividadesEmDisciplina(dadosAtividades, disciplinas);
+    }
+
+    public void cadastrarAvaliacoes(){
+        cadastrar.avaliacoesEmAtividade(dadosAvaliacoes, disciplinas, estudantes);
     }
 }

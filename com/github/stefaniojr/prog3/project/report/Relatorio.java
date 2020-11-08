@@ -65,7 +65,7 @@ public class Relatorio implements Serializable {
                 escrever.showSomething(Integer.toString(chave));
                 escrever.showSomething(atividade.obterNome());
                 escrever.showSomething(atividade.obterSincronismo());
-                escrever.showAsterisks();
+                // escrever.showAsterisks();
             }
         }
     }
@@ -78,7 +78,7 @@ public class Relatorio implements Serializable {
             for (Avaliacao avaliacao : avaliacoes) {
                 escrever.showSomething(avaliacao.obterAvaliador().obterNome());
                 escrever.showSomething(Float.toString(avaliacao.obterNota()));
-                escrever.showAsterisks();
+                // escrever.showAsterisks();
             }
         }
     }

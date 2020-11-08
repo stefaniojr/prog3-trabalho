@@ -2,7 +2,6 @@ package com.github.stefaniojr.prog3.project.domain;
 
 import java.io.Serializable;
 import java.util.*;
-import com.github.stefaniojr.prog3.project.io.Escrita;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 
@@ -15,7 +14,6 @@ public class Estudante implements Serializable {
   Map<String, Periodo> periodos = new HashMap<>();
   Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
 
-  Escrita escrever = new Escrita();
 
   public Estudante(int matricula, String nome){
     this.matricula = matricula;

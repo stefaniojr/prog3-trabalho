@@ -8,6 +8,7 @@ public class Docente implements Serializable {
   private String login;
   private String nome;
   private String site;
+  
 
 
   float mediaAtividadesPorDisciplina = 0;
@@ -32,6 +33,10 @@ public class Docente implements Serializable {
     return this.login;
   }
 
+  public String obterEmail(){
+    return this.login + "@ufes.br";
+  }
+
   public String obterNome(){
     return this.nome;
   }
@@ -52,8 +57,12 @@ public class Docente implements Serializable {
     return this.mediaAtividadesPorDisciplina;
   }
 
-  public float obterPercentualAtividadesSincronas(){
-    return this.percentualAtividadesSincronas;
+  public int obterPercentualAtividadesSincronas(){
+    return Math.round(this.percentualAtividadesSincronas);
+  }
+
+  public int obterPercentualAtividadesAssincronas(){
+    return Math.round((1 -  this.percentualAtividadesSincronas));
   }
 
   public float obterMediaAvaliacoes(){

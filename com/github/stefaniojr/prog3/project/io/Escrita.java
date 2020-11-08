@@ -25,35 +25,14 @@ public class Escrita implements Serializable {
     private static final String CABECALHO_ESTUDANTES = "Matrícula" + SEPARADOR + "Nome Completo";
     private static final String CABECALHO_DISCIPLINAS = "Disciplina (Código-Período)" + SEPARADOR
             + "Estudante (Matrícula)";
-    // private static final String CABECALHO_PERIODOS = "Ano" + SEPARADOR +
-    // "Semestre";
-    // private static final String CABECALHO_DOCENTES = "Login Institucional" +
-    // SEPARADOR + "Nome Completo" + SEPARADOR + "Endereço Web";
-    // private static final String CABECALHO_OFERTA = "Período" + SEPARADOR +
-    // "Código" + SEPARADOR + "Nome" + SEPARADOR + "Docente Responsável";
-    // private static final String CABECALHO_ESTUDANTES = "Matrícula" + SEPARADOR +
-    // "Nome Completo";
-    // private static final String CABECALHO_MATRICULAS = "Disciplina
-    // (Código-Período)" + SEPARADOR + "Estudante (Matrícula)";
-    // private static final String CABECALHO_ATIVIDADES = "Disciplina
-    // (Código-Período)" + SEPARADOR + "Nome" + SEPARADOR + "Tipo" + SEPARADOR +
-    // "Data / Prazo" + SEPARADOR + "Hora" + SEPARADOR + "Materiais / Conteúdo" +
-    // SEPARADOR + "Tamanho Máximo Grupos" + SEPARADOR + "Carga Horária Esperada";
-    // private static final String CABECALHO_NOTAS = "Disciplina (Código-Período)" +
-    // SEPARADOR + "Estudante (Matrícula)" + SEPARADOR + "# Atividade" + SEPARADOR +
-    // "Nota";
 
-    // Bloco de variáveis para tratamento das saídas de relatórios e/ou serialização
-    // e desserialização:
-    private File arquivoSerializacao;
+    // Bloco de variáveis para tratamento das saídas de relatórios:
     private File saidaVisaoGeral;
     private File saidaDocentes;
     private File saidaEstudantes;
     private File saidaDisciplinas;
 
-    public Escrita(File arquivoSerializacao, File saidaVisaoGeral, File saidaDocentes, File saidaEstudantes,
-            File saidaDisciplinas) {
-        this.arquivoSerializacao = arquivoSerializacao;
+    public Escrita(File saidaVisaoGeral, File saidaDocentes, File saidaEstudantes, File saidaDisciplinas) {
         this.saidaVisaoGeral = saidaVisaoGeral;
         this.saidaDocentes = saidaDocentes;
         this.saidaEstudantes = saidaEstudantes;
@@ -68,9 +47,10 @@ public class Escrita implements Serializable {
                 Map<String, Disciplina> disciplinas = periodos.get(chaveP).obterDisciplinas();
                 out.printf("%s%s", periodos.get(chaveP).obterRef(), SEPARADOR);
                 for (String chaveD : disciplinas.keySet()) {
-                    out.printf("%s%s%s%s%s%s%d%s%d%n", disciplinas.get(chaveD).obterCodigo(), SEPARADOR,
+                    out.printf("%s%s%s%s%s%s%s%s%d%s%d%n", disciplinas.get(chaveD).obterCodigo(), SEPARADOR,
                             disciplinas.get(chaveD).obterNome(), SEPARADOR,
                             disciplinas.get(chaveD).obterDocente().obterNome(), SEPARADOR,
+                            disciplinas.get(chaveD).obterDocente().obterEmail(), SEPARADOR,
                             disciplinas.get(chaveD).obterNumeroDeAlunosMatriculados(), SEPARADOR,
                             disciplinas.get(chaveD).obterNumeroDeAtividades());
                 }
@@ -82,10 +62,15 @@ public class Escrita implements Serializable {
         try (PrintWriter out = new PrintWriter(saidaDocentes)) {
             out.printf("%s%n", CABECALHO_DOCENTES);
 
-            for (String chave : docentes.keySet()) {
-                out.printf("%s%s%s%s%s%n", docentes.get(chave).obterLogin(), SEPARADOR, docentes.get(chave).obterNome(),
-                        SEPARADOR, docentes.get(chave).obterSite());
-            }
+            for (String chave : docentes.keySet())
+                out.printf("%s%s%d%s%d%s%.1f%s%d%s%d%s%.1f%n", docentes.get(chave).obterLogin(), SEPARADOR,
+                        docentes.get(chave).obterNumeroDeDisciplinas(), SEPARADOR,
+                        docentes.get(chave).obterNumeroDePeriodos(), SEPARADOR,
+                        docentes.get(chave).obterMediaAtividadesPorDisciplina(), SEPARADOR,
+                        docentes.get(chave).obterPercentualAtividadesSincronas() + "%", SEPARADOR,
+                        docentes.get(chave).obterPercentualAtividadesAssincronas() + "%", SEPARADOR,
+                        docentes.get(chave).obterMediaAvaliacoes());
+
         }
     }
 
@@ -93,25 +78,32 @@ public class Escrita implements Serializable {
         try (PrintWriter out = new PrintWriter(saidaEstudantes)) {
             out.printf("%s%n", CABECALHO_ESTUDANTES);
 
-            for (Integer chave : estudantes.keySet()){
-                out.printf("%d%s%s%n", estudantes.get(chave).obterMatricula(), SEPARADOR, estudantes.get(chave).obterNome());
-            }
+            for (Integer chave : estudantes.keySet())
+                out.printf("%d%s%s%s%.1f%.1f%.1f%n", estudantes.get(chave).obterMatricula(), SEPARADOR,
+                        estudantes.get(chave).obterNome(), SEPARADOR,
+                        estudantes.get(chave).obterMediaDeDisciplinasPorPeriodo(), SEPARADOR,
+                        estudantes.get(chave).obterMediaDeAvaliacoesPorDisciplina(), SEPARADOR,
+                        estudantes.get(chave).obterMediaNotas());
+
         }
     }
 
-    public void relatarDisciplinas(Map<String, Disciplina> disciplinas) throws IOException {
-        try (PrintWriter out = new PrintWriter(saidaDisciplinas)) {
-            out.printf("%s%n", CABECALHO_DISCIPLINAS);
+    // public void relatarDisciplinas(Map<String, Disciplina> disciplinas) throws IOException {
+    //     try (PrintWriter out = new PrintWriter(saidaDisciplinas)) {
+    //         out.printf("%s%n", CABECALHO_DISCIPLINAS);
 
-            for (String chaveD : disciplinas.keySet()) {
-                Map<Integer, Estudante> estudantes =  disciplinas.get(chaveD).obterEstudantes();
-                out.printf("%s%s", disciplinas.get(chaveD).obterRef(), SEPARADOR);
-                for (Integer chaveE : estudantes.keySet()){
-                    out.printf("%d%n", estudantes.get(chaveE).obterMatricula());
-                }
-            }
-        }
-    }
+    //         // fazer hoje: retornar datas.
+    //         for (String chave : disciplinas.keySet()) {
+    //             out.printf("%s%s%s%s%s%s%s%s%d%s%d%s%d%s%s%n", disciplinas.get(chave).obterDocente().obterNome(),
+    //                     SEPARADOR, disciplinas.get(chave).obterPeriodo().obterRef(), SEPARADOR,
+    //                     disciplinas.get(chave).obterCodigo(), SEPARADOR,
+    //                     disciplinas.get(chave).obterPercentualAtividadesSincronas() + "%",
+    //                     disciplinas.get(chave).obterPercentualAtividadesAssincronas() + "%", SEPARADOR,
+    //                     disciplinas.get(chave).obterCargaHorariaDisciplina(), SEPARADOR, inserirdatasaqui);
+
+    //         }
+    //     }
+    // }
 
     /** Relatorios messages */
     public void notFound(String isso) {

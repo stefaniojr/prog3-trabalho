@@ -1,15 +1,13 @@
 package com.github.stefaniojr.prog3.project.domain.atividades;
 import com.github.stefaniojr.prog3.project.domain.Disciplina;
 
-import java.util.*;
-
 public class Estudo extends Atividade {
 
-    Map<String, String> conteudos = new HashMap<>();
+    String conteudo = null;
 
-    public Estudo(String nome, String sincronismo, Disciplina disciplina, int numero, Map<String, String> conteudos) {
+    public Estudo(String nome, String sincronismo, Disciplina disciplina, int numero, String conteudo) {
         super(nome, sincronismo, disciplina, 2, numero, false);
 
-        this.conteudos = conteudos;
+        this.conteudo = conteudo;
     }
 }

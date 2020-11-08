@@ -1,0 +1,31 @@
+Disciplina (Código-Período);Nome;Tipo;Data / Prazo;Hora;Materiais / Conteúdo;Tamanho Máximo Grupos;Carga Horária Esperada
+INF01515-2018/2;Aula 1: Apresentação da Disciplina;A;4/06/18;15:00;;;
+INF01515-2018/2;Aula 2: Introdução a programação;A;6/06/18;15:00;;;
+INF01515-2018/2;Aula 3: Operadores relacionais;A;8/06/18;15:00;;;
+INF01515-2018/2;Aula 4: Estruturas de repetição;A;11/06/18;15:00;;;
+INF01515-2018/2;Aula 5: Manipulação de arquivos;A;13/06/18;15:00;;;
+INF01515-2018/2;Aula 6: Funções;A;15/06/18;15:00;;;
+INF01515-2018/2;Aula 7: Vetores;A;18/06/18;15:00;;;
+INF01515-2018/2;Aula 8: Matrizes;A;20/06/18;15:00;;;
+INF01515-2018/2;Trabalho 1;T;20/06/18;;;2;15
+INF01515-2018/2;Trablho 2;T;30/06/18;;;2;15
+CAL01212-2018/1;Aula 1: Apresentação da Disciplina;A;1/02/18;07:00;;;
+CAL01212-2018/1;Aula 2: Revisão do Ensino Médio;A;3/02/18;07:00;;;
+CAL01212-2018/1;Aula 3: Introdução;A;5/02/18;07:00;;;
+CAL01212-2018/1;Aula 4: Operações com Matrizes;A;7/02/18;07:00;;;
+CAL01212-2018/1;Aula 5: Determinantes;A;9/02/18;07:00;;;
+CAL01212-2018/1;Prova 1;P;10/02/18;07:00;Matrizes e Determinantes;;
+CAL01212-2018/1;Aula 6: Vetores;A;11/02/18;07:00;;;
+CAL01212-2018/1;Aula 7: Matrizes Inversas;A;13/02/18;07:00;;;
+CAL01212-2018/1;Aula 8: Matrizes Transpostas;A;15/02/18;07:00;;;
+CAL01212-2018/1;Prova 2;P;17/02/18;07:00;Vetores, Matrizes Inversas e Transpostas;;
+ELE01414-2018/1;Aula 1: Apresentação da Disciplina;A;1/02/18;13:00;;;
+ELE01414-2018/1;Aula 2: Associação de Resistores;A;3/02/18;13:00;;;
+ELE01414-2018/1;Aula 3: Leis de Ohm;A;5/02/18;13:00;;;
+ELE01414-2018/1;Aula 4: Leis de  Kirchhoff das Tensões;A;7/02/18;13:00;;;
+ELE01414-2018/1;Aula 5: Leis de  Kirchhoff das Correntes;A;9/02/18;13:00;;;
+ELE01414-2018/1;Prova 1;P;15/02/18;13:00;Associção de Resistores, Leis de Kirchhoff e Leis de Ohm;;
+ELE01414-2018/1;Aula 6: Tensões de Nó;A;17/02/18;13:00;;;
+ELE01414-2018/1;Aula 7: Correntes de Malha;A;19/02/18;13:00;;;
+ELE01414-2018/1;Aula 8: Teorema de Thévenin;A;21/02/18;13:00;;;
+ELE01414-2018/1;Prova 2;P;25/02/18;13:00;Tensões de Nó, Correntes de Malha e Teorema de Thévenin;;

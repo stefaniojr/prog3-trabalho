@@ -45,13 +45,9 @@ public class Main implements Serializable {
     boolean writeOnly = false;
     boolean readOnly = false;
 
-    Execucao exe = new Execucao();
-
-    // Para escrita e leitura
-    Escrita escrever = new Escrita(new File(ARQUIVO_SERIALIZACAO), new File(SAIDA_VISAOGERAL), new File(SAIDA_DOCENTES), new File(SAIDA_ESTUDANTES), new File(SAIDA_DISCIPLINAS));
-    Leitura ler = new Leitura();
-    ler.iniciarLeitura();
-
+  // Para escrita em tela e/ou feedbacks no terminal para o usuário.
+  Escrita escrever = new Escrita(new File(SAIDA_VISAOGERAL), new File(SAIDA_DOCENTES), new File(SAIDA_ESTUDANTES), new File(SAIDA_DISCIPLINAS));
+    
     try {
       // Bloco inspirado nos códigos do professor Vítor Souza (DI-UFES):
 
@@ -94,21 +90,27 @@ public class Main implements Serializable {
         else if ("--read-only".equals(args[i]))
           readOnly = true;
 
+      
+        // Inicia uma instância da execução da aplicação.
+        Execucao exe = new Execucao();
+
         // Um erro possível é o usuário não especificar os arquivos de escrita no modo de leitura:
         if (!writeOnly && (arqPeriodos == null || arqDocentes == null || arqOferta == null || arqEstudantes == null || arqMatriculas == null || arqAtividades == null || arqNotas == null))
           System.out.println("Erro!%nVocê precisa informar TODOS os nomes dos arquivos a serem lidos para que a serialização seja realizada! ;)");
          
-        // Caso a desserialização seja necessária, faz a desserialização e executa a aplicação com esses dados desserialização nos Lists.
+        // Caso a desserialização seja necessária, faz a desserialização e executa a aplicação com esses dados desserialização nas Lists.
         else if (writeOnly){
           Desserializar carregar = new Desserializar(new File(ARQUIVO_SERIALIZACAO));
           aplicacao = carregar.iniciarDesserializacao();
-          aplicacao.execute(ler, escrever, exe, true, readOnly);
+          aplicacao.execute(escrever, exe, true, readOnly);
         } 
 
         // Por outro lado, caso uma serialização esteja prestes a ser realizada OU não, inicia uma instância de Main novinha em folha e executa a partir dela.
         else {
+          exe.carregarPlanilhas(arqPeriodos, arqDocentes, arqOferta, arqEstudantes, arqMatriculas, arqAtividades, arqNotas);
+          
           aplicacao = new Main();
-          aplicacao.execute(ler, escrever, exe, false, readOnly);
+          aplicacao.execute(escrever, exe, false, readOnly);
         }
       }
 
@@ -116,12 +118,12 @@ public class Main implements Serializable {
       escrever.erroIO();
     }
 
-    ler.finalizarLeitura();
+    
     System.out.println("FINALIZEIII CORRETOOOOOOOOOOOOO");
     return;
   }
 
-  public void execute(Leitura ler, Escrita escrever, Execucao exe, boolean desserializar, boolean readOnly) throws IOException {
+  public void execute(Escrita escrever, Execucao exe, boolean desserializar, boolean readOnly) throws IOException {
     // Existem 3 tipos possíveis de execução:
 
     // 1 - Usuário especificou writeOnly, logo desserializa e gera os relatórios necessários.
@@ -134,17 +136,15 @@ public class Main implements Serializable {
 
       // 2 - Usuário especificou readOnly, logo carrega dados de planilhas de entrada e serializa em disco.
     } else if (readOnly) {
-      //Carregar dados de planilha.
-      salvarEmDisco(ler, escrever, exe);
+      salvarEmDisco(escrever, exe);
 
       // 3 - Usuário não especificou writeOnly, nem readOnly, logo carrega dados de planilhas de entrada e gera os relatórios necessários.
     } else {
-      //Carregar dados de planilha.
       exe.gerarRelatorios(escrever);
     }
   }
 
-  public void salvarEmDisco(Leitura ler, Escrita escrever, Execucao exe) throws IOException {
+  public void salvarEmDisco(Escrita escrever, Execucao exe) throws IOException {
     periodos = null;
     docentes = null;
     disciplinas = null;
