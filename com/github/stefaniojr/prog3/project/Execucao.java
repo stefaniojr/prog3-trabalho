@@ -16,11 +16,13 @@ public class Execucao implements Serializable {
     Cadastro cadastrar = new Cadastro();
     Leitura ler = new Leitura();
 
+    // HashMaps com as informações essenciais da aplicação.
     Map<String, Periodo> periodos = new HashMap<>();
     Map<String, Docente> docentes = new HashMap<>();
     Map<String, Disciplina> disciplinas = new HashMap<>();
     Map<BigInteger, Estudante> estudantes = new HashMap<>();
 
+    // Vetores de strings auxiliares para processamento de dados importados de planilhas.
     String[] dadosPeriodos = null;
     String[] dadosDocentes = null;
     String[] dadosDisciplinas = null;
@@ -29,6 +31,7 @@ public class Execucao implements Serializable {
     String[] dadosAtividades = null;
     String[] dadosAvaliacoes = null; 
 
+    // Métodos responsáveis por transformar os HashMaps em Lists. Chamados durante serializações.
     public List<Periodo> exportarPeriodos() {
         return new ArrayList<Periodo>(periodos.values());
     }
@@ -44,6 +47,8 @@ public class Execucao implements Serializable {
     public List<Estudante> exportarEstudantes() {
         return new ArrayList<Estudante>(estudantes.values());
     }
+
+    // Métodos responsáveis por transformar as Lists em HashMaps. Chamados durante desserializações.
 
     public void restaurarPeriodos(List<Periodo> periodos) {
         for (Periodo periodo : periodos)
@@ -65,6 +70,7 @@ public class Execucao implements Serializable {
             this.estudantes.put(estudante.obterRef(), estudante);
     }
 
+    // Método responsável por realizar chamadas aos métodos que geram relatórios.
     public void gerarRelatorios(Escrita escrever) throws IOException {
         escrever.relatarVisaoGeral(disciplinas);
         escrever.relatarDocentes(docentes);
@@ -72,6 +78,7 @@ public class Execucao implements Serializable {
         escrever.relatarDisciplinas(disciplinas);
     }
 
+    // Método responsável por carregar planilhas com dados de entrada em vetores de strings a serem manipulados posteriormente.
     public void carregarPlanilhas(String arqPeriodos, String arqDocentes, String arqOferta, String arqEstudantes, String arqMatriculas, String arqAtividades, String arqNotas) throws IOException, ParseException, FileNotFoundException{
       dadosPeriodos = ler.planilha(new File(arqPeriodos));
       dadosDocentes = ler.planilha(new File(arqDocentes));
@@ -82,16 +89,7 @@ public class Execucao implements Serializable {
       dadosAvaliacoes = ler.planilha(new File(arqNotas));
     }
 
-    public void cadastrarDados(){
-        cadastrarPeriodos();
-        cadastrarDocentes();
-        cadastrarDisciplinas();
-        cadastrarEstudantes();
-        matricularEstudantes();
-        cadastrarAtividades();
-        cadastrarAvaliacoes();
-    }
-
+    // Métodos responsáveis por cadastrar as informações de entrada no sistema.
     public void cadastrarPeriodos(){
         cadastrar.periodos(dadosPeriodos, periodos);
     } 

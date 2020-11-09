@@ -11,8 +11,11 @@ public class Estudante implements Serializable {
   private BigInteger matricula;
   private String nome;
 
-  Map<String, Disciplina> disciplinas = new HashMap<>();
+  // Estudante possui um HashMap com referências para os periodos em que ele está matriculado.
   Map<String, Periodo> periodos = new HashMap<>();
+  // Estudante possui um HashMap com referências para as disciplinas em que ele está matriculado.
+  Map<String, Disciplina> disciplinas = new HashMap<>();
+  // Estudante possui um HashMap com referências para as avaliações que ele realizou.
   Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
 
 
@@ -21,6 +24,7 @@ public class Estudante implements Serializable {
     this.nome = nome;
   }
 
+  // Getters.
   public BigInteger obterRef(){
     return obterMatricula();
   }
@@ -33,6 +37,28 @@ public class Estudante implements Serializable {
     return nome;
   }
 
+  public int obterQtDisciplinas(){
+    return disciplinas.size();
+  }
+
+  public int obterQtAvaliacoes(){
+    return avaliacoes.size();
+  }
+
+  // Setters.
+  public void adicionarDisciplina(Disciplina disciplina){
+    disciplinas.put(disciplina.obterRef(), disciplina);
+  }
+
+  public void adicionarPeriodo(Periodo periodo){
+    periodos.put(periodo.obterRef(), periodo);
+  }
+
+  public void adicionarAvaliacao(Atividade atividade, Avaliacao avaliacao){
+    avaliacoes.put(atividade, avaliacao);
+  }
+
+  // Estatísticas.
   public float obterMediaDeDisciplinasPorPeriodo(){
     if(periodos.size()!=0){
       return (float)disciplinas.size()/(float)periodos.size();
@@ -49,10 +75,6 @@ public class Estudante implements Serializable {
     else{
       return (float)0;
     }
-  }
-
-  public int obterQtAvaliacoes(){
-    return avaliacoes.size();
   }
 
   public float obterMontanteNotas(){
@@ -73,29 +95,5 @@ public class Estudante implements Serializable {
       return (float)0;
     }
   }
-
-  public int obterQtDisciplinas(){
-    return disciplinas.size();
-  }
-
-  public void adicionarDisciplina(Disciplina disciplina){
-    disciplinas.put(disciplina.obterRef(), disciplina);
-  }
-
-  public void adicionarPeriodo(Periodo periodo){
-    periodos.put(periodo.obterRef(), periodo);
-  }
-
-  public void adicionarAvaliacao(Atividade atividade, Avaliacao avaliacao){
-    avaliacoes.put(atividade, avaliacao);
-  }
-
-
-
-  // public void exibirDisciplinas(){
-
-  //   info.disciplinasCadastradas(escrever, disciplinas);
-
-  // }
 
 }

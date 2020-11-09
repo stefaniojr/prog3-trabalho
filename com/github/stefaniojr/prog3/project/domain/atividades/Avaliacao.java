@@ -1,7 +1,10 @@
 package com.github.stefaniojr.prog3.project.domain.atividades;
+
+import java.io.Serializable;
+
 import com.github.stefaniojr.prog3.project.domain.Estudante;
 
-public class Avaliacao {
+public class Avaliacao implements Serializable {
     Estudante estudante;
     float nota;
 

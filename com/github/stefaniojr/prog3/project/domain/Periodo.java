@@ -8,6 +8,7 @@ public class Periodo implements Serializable {
   private int ano;
   private char semestre;
 
+  // Periodo possui um HashMap com referências para as disciplinas a que ele compõe.
   Map<String, Disciplina> disciplinas = new HashMap<>();
 
   public Periodo(int ano, char semestre){
@@ -15,6 +16,7 @@ public class Periodo implements Serializable {
     this.semestre = semestre;
   }
 
+  // Getters.
   public String obterRef(){
     return obterAno() + "/" + obterSemestre();
   }
@@ -31,6 +33,7 @@ public class Periodo implements Serializable {
     return semestre;
   }
 
+  // Setters.
   public void adicionarDisciplina(Disciplina disciplina){
     disciplinas.put(disciplina.obterRef(), disciplina);
   }

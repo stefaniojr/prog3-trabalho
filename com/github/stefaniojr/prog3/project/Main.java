@@ -32,7 +32,7 @@ public class Main implements Serializable {
     Locale.setDefault(new Locale("pt", "BR"));
     Main aplicacao = null;
 
-    // Bloco de variáveis para arquivos de entrada:
+    // Variáveis para arquivos de entrada:
     String arqPeriodos = null;
     String arqDocentes = null;
     String arqOferta = null;
@@ -50,7 +50,8 @@ public class Main implements Serializable {
         new File(SAIDA_DISCIPLINAS));
 
     try {
-      // Bloco inspirado nos códigos do professor Vítor Souza (DI-UFES):
+      // Sequência de códigos por cortesia do professor Vítor Souza do Departamento de
+      // Informática (UFES):
 
       for (int i = 0; i < args.length; i++) {
         // Procura pelo prefixo de períodos e checa se não é o fim do vetor de strings.
@@ -95,6 +96,7 @@ public class Main implements Serializable {
       // Inicia uma instância da execução da aplicação.
       Execucao exe = new Execucao();
 
+      /////////// REMOVER DEPOIS
       arqPeriodos = "periodos.csv";
       arqDocentes = "docentes.csv";
       arqOferta = "disciplinas.csv";
@@ -102,6 +104,8 @@ public class Main implements Serializable {
       arqMatriculas = "matriculas.csv";
       arqAtividades = "atividades.csv";
       arqNotas = "avaliacoes.csv";
+      writeOnly = true;
+      ////////
 
       // Um erro possível é o usuário não especificar os arquivos de escrita no modo
       // de leitura:
@@ -119,7 +123,8 @@ public class Main implements Serializable {
             arqMatriculas, arqAtividades, arqNotas);
       }
 
-      // Por outro lado, caso uma serialização esteja prestes a ser realizada OU não,
+      // Por outro lado, caso uma serialização esteja prestes a ser realizada ou,
+      // então, apenas os relatórios serão gerados (!readOnly && !writeOnly)
       // inicia uma instância de Main novinha em folha e executa a partir dela.
       else {
         aplicacao = new Main();
@@ -127,9 +132,9 @@ public class Main implements Serializable {
             arqMatriculas, arqAtividades, arqNotas);
       }
 
-    } catch (IOException e) {
+    } catch (IOException | ParseException e) {
       e.printStackTrace();
-      escrever.erroIO();
+      System.out.println("Erro de I/O.");
     }
 
     return;
@@ -153,18 +158,35 @@ public class Main implements Serializable {
       // e serializa em disco.
     } else if (readOnly) {
       exe.carregarPlanilhas(arqPeriodos, arqDocentes, arqOferta, arqEstudantes, arqMatriculas, arqAtividades, arqNotas);
-      exe.cadastrarDados();
+      // Chamada de métodos de cadastro de informações.
+      exe.cadastrarPeriodos();
+      exe.cadastrarDocentes();
+      exe.cadastrarDisciplinas();
+      exe.cadastrarEstudantes();
+      exe.matricularEstudantes();
+      exe.cadastrarAtividades();
+      exe.cadastrarAvaliacoes();
       salvarEmDisco(escrever, exe);
 
       // 3 - Usuário não especificou writeOnly, nem readOnly, logo carrega dados de
-      // planilhas de entrada e gera os relatórios necessários.
+      // planilhas de entrada e gera os relatórios necessários, sem o uso de
+      // serialização ou desserialização.
     } else {
       exe.carregarPlanilhas(arqPeriodos, arqDocentes, arqOferta, arqEstudantes, arqMatriculas, arqAtividades, arqNotas);
-      exe.cadastrarDados();
+      // Chamada de métodos de cadastro de informações.
+      exe.cadastrarPeriodos();
+      exe.cadastrarDocentes();
+      exe.cadastrarDisciplinas();
+      exe.cadastrarEstudantes();
+      exe.matricularEstudantes();
+      exe.cadastrarAtividades();
+      exe.cadastrarAvaliacoes();
       exe.gerarRelatorios(escrever);
     }
   }
 
+  // Método responsável por chamar os métodos que passam HashMaps para Lists e,
+  // então, serializa a aplicação.
   public void salvarEmDisco(Escrita escrever, Execucao exe) throws IOException {
     periodos = null;
     docentes = null;
@@ -175,12 +197,8 @@ public class Main implements Serializable {
     disciplinas = exe.exportarDisciplinas();
     estudantes = exe.exportarEstudantes();
 
-    try {
-      Serializar salvar = new Serializar(new File(ARQUIVO_SERIALIZACAO));
-      salvar.iniciarSerializacao(this);
-    } catch (IOException e) {
-      escrever.erroIO();
-    }
+    Serializar salvar = new Serializar(new File(ARQUIVO_SERIALIZACAO));
+    salvar.iniciarSerializacao(this);
 
   }
 
