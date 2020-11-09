@@ -1,13 +1,14 @@
 package com.github.stefaniojr.prog3.project.domain;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.*;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 
 public class Estudante implements Serializable {
 
-  private int matricula;
+  private BigInteger matricula;
   private String nome;
 
   Map<String, Disciplina> disciplinas = new HashMap<>();
@@ -15,16 +16,16 @@ public class Estudante implements Serializable {
   Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
 
 
-  public Estudante(int matricula, String nome){
+  public Estudante(BigInteger matricula, String nome){
     this.matricula = matricula;
     this.nome = nome;
   }
 
-  public int obterRef(){
+  public BigInteger obterRef(){
     return obterMatricula();
   }
 
-  public int obterMatricula(){
+  public BigInteger obterMatricula(){
     return matricula;
   }
 
@@ -34,19 +35,19 @@ public class Estudante implements Serializable {
 
   public float obterMediaDeDisciplinasPorPeriodo(){
     if(periodos.size()!=0){
-      return disciplinas.size()/periodos.size();
+      return (float)disciplinas.size()/(float)periodos.size();
     }
     else{
-      return 0;
+      return (float)0;
     }
   }
 
   public float obterMediaDeAvaliacoesPorDisciplina(){
     if(obterQtDisciplinas()!=0){
-      return obterQtAvaliacoes()/obterQtDisciplinas();
+      return (float)obterQtAvaliacoes()/(float)obterQtDisciplinas();
     }
     else{
-      return 0;
+      return (float)0;
     }
   }
 
@@ -66,10 +67,10 @@ public class Estudante implements Serializable {
 
   public float obterMediaNotas(){
     if(obterQtAvaliacoes()!=0){
-      return obterMontanteNotas()/obterQtAvaliacoes();
+      return (float)obterMontanteNotas()/(float)obterQtAvaliacoes();
     }
     else{
-      return 0;
+      return (float)0;
     }
   }
 

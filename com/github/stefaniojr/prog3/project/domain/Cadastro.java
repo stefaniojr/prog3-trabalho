@@ -3,6 +3,7 @@ package com.github.stefaniojr.prog3.project.domain;
 import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.math.BigInteger;
 
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
@@ -37,13 +38,13 @@ public class Cadastro implements Serializable {
         Pattern patternLogin = Pattern.compile("^[a-z]+(?:\\.[a-z]?)?\\.[a-z]+$");
 
         for (int i = 0; i < dados.length; i = i + 3) {
-            String nome = dados[i];
-
-            String login = dados[i + 1];
+            String login = dados[i];
             if (!patternLogin.matcher(login).matches())
                 throw new IllegalArgumentException("Dado invalido: " + login);
             if (docentes.containsKey(login))
                 throw new IllegalArgumentException("Cadastro repetido: " + login);
+
+            String nome = dados[i + 1];
 
             String site = dados[i + 2];
 
@@ -70,7 +71,7 @@ public class Cadastro implements Serializable {
 
                 String codigo = dados[i + 1];
                 if (!patternCodigoDisciplina.matcher(codigo).matches())
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Dado invalido: " + codigo);
 
                 if (disciplinas.containsKey(codigo + "-" + periodoRef))
                     throw new IllegalArgumentException("Cadastro repetido: " + codigo + "-" + periodoRef);
@@ -81,6 +82,7 @@ public class Cadastro implements Serializable {
                 s = docenteRef;
                 if (!patternLogin.matcher(docenteRef).matches())
                     throw new IllegalArgumentException("Dado invalido: " + docenteRef);
+
                 Docente docente = docentes.get(docenteRef);
 
                 disciplinas.put(codigo + "-" + periodoRef, new Disciplina(codigo, nome, periodo, docente));
@@ -91,32 +93,40 @@ public class Cadastro implements Serializable {
             }
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
             System.out.println("Referencia invalida: " + s);
         }
     }
 
-    public void estudantes(String[] dados, Map<Integer, Estudante> estudantes) {
+    public void estudantes(String[] dados, Map<BigInteger, Estudante> estudantes) {
         Pattern patternMatricula = Pattern.compile("\\d{10}");
+        BigInteger matricula;
 
-        for (int i = 0; i < dados.length; i = i + 2) {
-            String nome = dados[i];
+        try {
+            for (int i = 0; i < dados.length; i = i + 2) {
+                String estudanteRef = dados[i];
+                if (!patternMatricula.matcher(estudanteRef).matches())
+                    throw new IllegalArgumentException("Dado invalido: " + estudanteRef);
+                matricula = new BigInteger(estudanteRef);
+            
+                if (estudantes.containsKey(matricula))
+                    throw new IllegalArgumentException("Cadastro repetido: " + matricula);
 
-            String estudanteRef = dados[i + 1];
-            if (!patternMatricula.matcher(estudanteRef).matches())
-                throw new IllegalArgumentException("Dado invalido: " + estudanteRef);
-            int matricula = Integer.parseInt(estudanteRef);
-            if (estudantes.containsKey(matricula))
-                throw new IllegalArgumentException("Cadastro repetido: " + matricula);
+                String nome = dados[i + 1];
 
-            estudantes.put(matricula, new Estudante(matricula, nome));
+                estudantes.put(matricula, new Estudante(matricula, nome));
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
     public void estudanteEmDisciplina(String[] dados, Map<String, Disciplina> disciplinas,
-            Map<Integer, Estudante> estudantes) {
+            Map<BigInteger, Estudante> estudantes) {
         Pattern patternMatricula = Pattern.compile("\\d{10}");
         Pattern patternDisciplina = Pattern.compile("[A-Z]{3}\\d{5}-\\d{4}/[A-Z 0-9]{1}");
         String s = null;
+        BigInteger matricula;
 
         try {
             for (int i = 0; i < dados.length; i = i + 2) {
@@ -125,25 +135,32 @@ public class Cadastro implements Serializable {
                 if (!patternDisciplina.matcher(disciplinaRef).matches())
                     throw new IllegalArgumentException("Dado invalido: " + disciplinaRef);
                 Disciplina disciplina = disciplinas.get(disciplinaRef);
+                
+                if (disciplina == null)
+                    throw new NullPointerException();
 
                 String estudanteRef = dados[i + 1];
                 s = estudanteRef;
                 if (!patternMatricula.matcher(estudanteRef).matches())
                     throw new IllegalArgumentException("Dado invalido: " + estudanteRef);
-                int matricula = Integer.parseInt(estudanteRef);
+                matricula = new BigInteger(estudanteRef);
+                
                 Estudante estudante = estudantes.get(matricula);
 
                 if (disciplina.jaMatriculado(matricula))
                     throw new IllegalArgumentException(
                             "Matricula repetida: " + matricula + " em " + disciplina.obterRef() + ".");
-
                 estudante.adicionarDisciplina(disciplina);
                 estudante.adicionarPeriodo(disciplina.obterPeriodo());
                 disciplina.adicionarEstudante(estudante);
+
             }
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
             System.out.println("Referencia invalida: " + s);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
@@ -151,9 +168,9 @@ public class Cadastro implements Serializable {
 
         Pattern patternAtividade = Pattern.compile("[AETP]");
         Pattern patternDisciplina = Pattern.compile("[A-Z]{3}\\d{5}-\\d{4}/[A-Z 0-9]{1}");
+        Pattern patternOnlyInteger = Pattern.compile("(?<=\\s|^)\\d+(?=\\s|$)");
         Pattern patternData = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
         Pattern patternHora = Pattern.compile("^\\d{2}:\\d{2}$");
-        Pattern patternOnlyInteger = Pattern.compile("(?<=\\s|^)\\d+(?=\\s|$)");
         String s = null;
 
         try {
@@ -171,24 +188,25 @@ public class Cadastro implements Serializable {
                     throw new IllegalArgumentException("Dado invalido: " + tipo);
 
                 String data = dados[i + 3];
-                if (!patternData.matcher(data).matches())
+                if (!patternData.matcher(data).matches() && !data.equals(""))
                     throw new IllegalArgumentException("Dado invalido: " + data);
 
                 String hora = dados[i + 4];
-                if (!patternHora.matcher(hora).matches())
+                if (!patternHora.matcher(hora).matches() && !hora.equals(""))
                     throw new IllegalArgumentException("Dado invalido: " + hora);
 
                 String conteudo = dados[i + 5];
 
-                String tamMaxGrupoStr = dados[i + 6];
-                if (!patternOnlyInteger.matcher(tamMaxGrupoStr).matches())
-                    throw new IllegalArgumentException("Dado invalido: " + tamMaxGrupoStr);
-                int tamMaxGrupo = Integer.parseInt(tamMaxGrupoStr);
+                String tamMaxGrupo = dados[i + 6];
+                if (!patternOnlyInteger.matcher(tamMaxGrupo).matches() && !tamMaxGrupo.equals(""))
+                    throw new IllegalArgumentException("Dado invalido: " + tamMaxGrupo);
 
-                String cargaHorariaStr = dados[i + 7];
-                if (!patternOnlyInteger.matcher(cargaHorariaStr).matches())
-                    throw new IllegalArgumentException("Dado invalido: " + cargaHorariaStr);
-                int cargaHoraria = Integer.parseInt(cargaHorariaStr);
+                String cargaHoraria = dados[i + 7];
+                if (!patternOnlyInteger.matcher(cargaHoraria).matches() && !cargaHoraria.equals(""))
+                    throw new IllegalArgumentException("Dado invalido: " + cargaHoraria);
+
+                if (!data.equals("") && (tipo.equals("P") || tipo.equals("T")))
+                    disciplina.adicionarDataAvaliacao(data);
 
                 if (tipo.equals("A"))
                     disciplina.adicionarAula(nome, "sincrona", disciplina, data + "-" + hora);
@@ -197,21 +215,23 @@ public class Cadastro implements Serializable {
                 else if (tipo.equals("T"))
                     disciplina.adicionarTrabalho(nome, "assincrona", disciplina, data, tamMaxGrupo, cargaHoraria);
                 else if (tipo.equals("P"))
-                    disciplina.adicionarProva(nome, "sincrona", disciplina, data, conteudo);
+                    disciplina.adicionarProva(nome, "sincrona", disciplina, data, hora, conteudo);
             }
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
             System.out.println("Referencia invalida: " + s);
         }
     }
 
     public void avaliacoesEmAtividade(String[] dados, Map<String, Disciplina> disciplinas,
-            Map<Integer, Estudante> estudantes) {
+            Map<BigInteger, Estudante> estudantes) {
         Pattern patternMatricula = Pattern.compile("\\d{10}");
         Pattern patternDisciplina = Pattern.compile("[A-Z]{3}\\d{5}-\\d{4}/[A-Z 0-9]{1}");
         Pattern patternOnlyInteger = Pattern.compile("(?<=\\s|^)\\d+(?=\\s|$)");
         String s = null;
         Float notaAtividade = 0F;
+        int nAux = 0;
 
         try {
             for (int i = 0; i < dados.length; i = i + 4) {
@@ -224,18 +244,21 @@ public class Cadastro implements Serializable {
                 String estudanteRef = dados[i + 1];
                 s = estudanteRef;
                 if (!patternMatricula.matcher(estudanteRef).matches())
-                    throw new IllegalArgumentException();
-                int matricula = Integer.parseInt(estudanteRef);
+                    throw new IllegalArgumentException("Dado invalido: " + estudanteRef);
+                BigInteger matricula = new BigInteger(estudanteRef);
                 Estudante estudante = estudantes.get(matricula);
 
                 String numeroAtividadeStr = dados[i + 2];
                 s = numeroAtividadeStr;
                 if (!patternOnlyInteger.matcher(numeroAtividadeStr).matches())
                     throw new IllegalArgumentException("Dado invalido: " + numeroAtividadeStr);
-                int numeroAtividade = Integer.parseInt(numeroAtividadeStr);
+                nAux = Integer.parseInt(numeroAtividadeStr);
+                int numeroAtividade = nAux;
+
                 Atividade atividade = disciplina.obterAtividade(numeroAtividade);
 
                 String notaAtividadeStr = dados[i + 3];
+                notaAtividadeStr = notaAtividadeStr.replace(",", ".");
                 notaAtividade = Float.valueOf(notaAtividadeStr);
 
                 if (atividade.encontrarAvaliacao(estudante) != null)
@@ -247,10 +270,14 @@ public class Cadastro implements Serializable {
             }
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
             System.out.println("Referencia invalida: " + s);
-
         } catch (InputMismatchException e) {
+            e.printStackTrace();
             System.out.println("Dado invalido: " + notaAtividade);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            System.out.println("Dado invalido: " + nAux);
         }
     }
 }

@@ -8,12 +8,11 @@ public class Docente implements Serializable {
   private String login;
   private String nome;
   private String site;
-  
 
-
-  float mediaAtividadesPorDisciplina = 0;
-  float percentualAtividadesSincronas = 0;
-  float mediaAvaliacoes = 0;
+  float mediaAtividadesPorDisciplina = 0F;
+  float percentualAtividadesSincronas = 0F;
+  float percentualAtividadesAssincronas = 0F;
+  float mediaAvaliacoes = 0F;
 
   Map<String, Disciplina> disciplinas = new HashMap<>();
   Map<String, Periodo> periodos = new HashMap<>();
@@ -62,7 +61,7 @@ public class Docente implements Serializable {
   }
 
   public int obterPercentualAtividadesAssincronas(){
-    return Math.round((1 -  this.percentualAtividadesSincronas));
+    return Math.round(this.percentualAtividadesAssincronas);
   }
 
   public float obterMediaAvaliacoes(){
@@ -76,26 +75,29 @@ public class Docente implements Serializable {
   public void calcularEstatisticasDeDocente(){
     int montanteAtividades = 0;
     int montanteAtividadesSincronas = 0;
-    float montanteAvaliacoes = 0;
+    int montanteAtividadesAssincronas = 0;
+    float montanteAvaliacoes = 0F;
     int montanteAvaliadores = 0;
 
     for (String chave : disciplinas.keySet()) {
       Disciplina disciplina = disciplinas.get(chave);
       montanteAtividades = montanteAtividades + disciplina.obterNumeroDeAtividades();
       montanteAtividadesSincronas = montanteAtividadesSincronas + disciplina.obterNumeroAtividadesSincronas();
+      montanteAtividadesAssincronas = montanteAtividadesAssincronas + disciplina.obterNumeroAtividadesAssincronas();
       disciplina.calcularEstatisticasAtividadesDeDisciplina();
       montanteAvaliacoes = montanteAvaliacoes + disciplina.obterMontanteAvaliacoesEmAtividades();
       montanteAvaliadores = montanteAvaliadores + disciplina.obterMontanteAvaliadoresEmAtividades();
     }
-    if(obterNumeroDeDisciplinas()!=0){
-      this.mediaAtividadesPorDisciplina = montanteAtividades/obterNumeroDeDisciplinas();
-    }
+    if(obterNumeroDeDisciplinas()!=0)
+      this.mediaAtividadesPorDisciplina = (float)montanteAtividades/(float)obterNumeroDeDisciplinas();
     if(montanteAtividades!=0){
-      this.percentualAtividadesSincronas = montanteAtividadesSincronas/montanteAtividades;
+      this.percentualAtividadesSincronas = ((float)montanteAtividadesSincronas/(float)montanteAtividades)*100;
+      this.percentualAtividadesAssincronas = ((float)montanteAtividadesAssincronas/(float)montanteAtividades)*100;
     }
-    if(montanteAvaliadores!=0){
-      this.mediaAvaliacoes = montanteAvaliacoes/montanteAvaliadores;
-    }
+      
+    if(montanteAvaliadores!=0)
+      this.mediaAvaliacoes = montanteAvaliacoes/(float)montanteAvaliadores;
+    
   }
 
   public void adicionarDisciplina(Disciplina disciplina){

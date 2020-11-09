@@ -12,11 +12,11 @@ public class Prova extends Atividade {
 
     String conteudo = null;
 
-    public Prova(String nome, String sincronismo, Disciplina disciplina, int numero, String data, String conteudo){
+    public Prova(String nome, String sincronismo, Disciplina disciplina, int numero, String data, String hora, String conteudo){
         super(nome, sincronismo, disciplina, 2, numero, true);
         
         try{
-            this.data = df.parse(data);
+            this.data = df.parse(data + "-" + hora);
         } catch (ParseException e){
             e.printStackTrace();
         }

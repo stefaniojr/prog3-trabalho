@@ -6,21 +6,20 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.*;
+import java.math.BigInteger;
 
 import com.github.stefaniojr.prog3.project.domain.*;
 import com.github.stefaniojr.prog3.project.io.*;
-import com.github.stefaniojr.prog3.project.report.*;
 
 public class Execucao implements Serializable {
 
     Cadastro cadastrar = new Cadastro();
-    Relatorio relatorios = new Relatorio();
     Leitura ler = new Leitura();
 
     Map<String, Periodo> periodos = new HashMap<>();
     Map<String, Docente> docentes = new HashMap<>();
     Map<String, Disciplina> disciplinas = new HashMap<>();
-    Map<Integer, Estudante> estudantes = new HashMap<>();
+    Map<BigInteger, Estudante> estudantes = new HashMap<>();
 
     String[] dadosPeriodos = null;
     String[] dadosDocentes = null;
@@ -67,10 +66,10 @@ public class Execucao implements Serializable {
     }
 
     public void gerarRelatorios(Escrita escrever) throws IOException {
-        escrever.relatarVisaoGeral(periodos);
+        escrever.relatarVisaoGeral(disciplinas);
         escrever.relatarDocentes(docentes);
         escrever.relatarEstudantes(estudantes);
-        //escrever.relatarDisciplinas(disciplinas);
+        escrever.relatarDisciplinas(disciplinas);
     }
 
     public void carregarPlanilhas(String arqPeriodos, String arqDocentes, String arqOferta, String arqEstudantes, String arqMatriculas, String arqAtividades, String arqNotas) throws IOException, ParseException, FileNotFoundException{
@@ -81,6 +80,16 @@ public class Execucao implements Serializable {
       dadosMatriculas = ler.planilha(new File(arqMatriculas));
       dadosAtividades = ler.planilha(new File(arqAtividades));
       dadosAvaliacoes = ler.planilha(new File(arqNotas));
+    }
+
+    public void cadastrarDados(){
+        cadastrarPeriodos();
+        cadastrarDocentes();
+        cadastrarDisciplinas();
+        cadastrarEstudantes();
+        matricularEstudantes();
+        cadastrarAtividades();
+        cadastrarAvaliacoes();
     }
 
     public void cadastrarPeriodos(){

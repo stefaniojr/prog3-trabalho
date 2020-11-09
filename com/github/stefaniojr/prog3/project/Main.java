@@ -95,6 +95,14 @@ public class Main implements Serializable {
       // Inicia uma instância da execução da aplicação.
       Execucao exe = new Execucao();
 
+      arqPeriodos = "periodos.csv";
+      arqDocentes = "docentes.csv";
+      arqOferta = "disciplinas.csv";
+      arqEstudantes = "estudantes.csv";
+      arqMatriculas = "matriculas.csv";
+      arqAtividades = "atividades.csv";
+      arqNotas = "avaliacoes.csv";
+
       // Um erro possível é o usuário não especificar os arquivos de escrita no modo
       // de leitura:
       if (!writeOnly && (arqPeriodos == null || arqDocentes == null || arqOferta == null || arqEstudantes == null
@@ -107,28 +115,29 @@ public class Main implements Serializable {
       else if (writeOnly) {
         Desserializar carregar = new Desserializar(new File(ARQUIVO_SERIALIZACAO));
         aplicacao = carregar.iniciarDesserializacao();
-        aplicacao.execute(escrever, exe, true, readOnly);
+        aplicacao.execute(escrever, exe, true, readOnly, arqPeriodos, arqDocentes, arqOferta, arqEstudantes,
+            arqMatriculas, arqAtividades, arqNotas);
       }
 
       // Por outro lado, caso uma serialização esteja prestes a ser realizada OU não,
       // inicia uma instância de Main novinha em folha e executa a partir dela.
       else {
-        exe.carregarPlanilhas(arqPeriodos, arqDocentes, arqOferta, arqEstudantes, arqMatriculas, arqAtividades,
-            arqNotas);
-
         aplicacao = new Main();
-        aplicacao.execute(escrever, exe, false, readOnly);
+        aplicacao.execute(escrever, exe, false, readOnly, arqPeriodos, arqDocentes, arqOferta, arqEstudantes,
+            arqMatriculas, arqAtividades, arqNotas);
       }
 
     } catch (IOException e) {
+      e.printStackTrace();
       escrever.erroIO();
     }
 
-    System.out.println("FINALIZEIII CORRETOOOOOOOOOOOOO");
     return;
   }
 
-  public void execute(Escrita escrever, Execucao exe, boolean desserializar, boolean readOnly) throws IOException {
+  public void execute(Escrita escrever, Execucao exe, boolean desserializar, boolean readOnly, String arqPeriodos,
+      String arqDocentes, String arqOferta, String arqEstudantes, String arqMatriculas, String arqAtividades,
+      String arqNotas) throws IOException, ParseException {
     // Existem 3 tipos possíveis de execução:
 
     // 1 - Usuário especificou writeOnly, logo desserializa e gera os relatórios
@@ -143,11 +152,15 @@ public class Main implements Serializable {
       // 2 - Usuário especificou readOnly, logo carrega dados de planilhas de entrada
       // e serializa em disco.
     } else if (readOnly) {
+      exe.carregarPlanilhas(arqPeriodos, arqDocentes, arqOferta, arqEstudantes, arqMatriculas, arqAtividades, arqNotas);
+      exe.cadastrarDados();
       salvarEmDisco(escrever, exe);
 
       // 3 - Usuário não especificou writeOnly, nem readOnly, logo carrega dados de
       // planilhas de entrada e gera os relatórios necessários.
     } else {
+      exe.carregarPlanilhas(arqPeriodos, arqDocentes, arqOferta, arqEstudantes, arqMatriculas, arqAtividades, arqNotas);
+      exe.cadastrarDados();
       exe.gerarRelatorios(escrever);
     }
   }

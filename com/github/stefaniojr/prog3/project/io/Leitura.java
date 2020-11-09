@@ -47,7 +47,7 @@ public class Leitura {
     }
 
     public String[] planilha(File arq) throws IOException, ParseException, FileNotFoundException {
-        try (Scanner scanner = new Scanner(arq, "UTF-8")) {
+        try (Scanner scanner = new Scanner(arq)) {
             String dados = scanner.nextLine(); // Cabeçalho...
             dados = scanner.useDelimiter("\\A").next().trim(); // Ler string completa
             String[] dadosTruncados = dados.split(";|\n", -1); // Trunca string, o parâmetro -1 garante que espaços vazios também serão capturados.

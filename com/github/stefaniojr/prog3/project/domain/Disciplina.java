@@ -2,6 +2,7 @@ package com.github.stefaniojr.prog3.project.domain;
 
 import java.io.Serializable;
 import java.util.*;
+import java.math.BigInteger;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 public class Disciplina implements Serializable {
@@ -16,8 +17,9 @@ public class Disciplina implements Serializable {
 
   int cargaHoraria = 0;
 
-  Map<Integer, Estudante> estudantes = new HashMap<>();
+  Map<BigInteger, Estudante> estudantes = new HashMap<>();
   Map<Integer, Atividade> atividades = new HashMap<>();
+  ArrayList<String> dataAvaliacoes = new ArrayList<>();
 
   int numeroAtividade = 1;
 
@@ -48,7 +50,12 @@ public class Disciplina implements Serializable {
     return docente;
   }
 
-  public Map<Integer, Estudante> obterEstudantes(){
+  public String dataAvaliacoes() {
+    dataAvaliacoes.removeIf(Objects::isNull);
+    return dataAvaliacoes.toString().replace(",", "").replace("[", "").replace("]", "");
+  }
+
+  public Map<BigInteger, Estudante> obterEstudantes() {
     return estudantes;
   }
 
@@ -70,13 +77,18 @@ public class Disciplina implements Serializable {
 
   public int obterNumeroAtividadesSincronas() {
     int nAtividadesSincronas = 0;
-    for (Integer chave : atividades.keySet()) {
-      if (atividades.get(chave).obterSincronismo().equals("sincrona")) {
+    for (Integer chave : atividades.keySet())
+      if (atividades.get(chave).obterSincronismo().equals("sincrona"))
         nAtividadesSincronas++;
-      }
-    }
-
     return nAtividadesSincronas;
+  }
+
+  public int obterNumeroAtividadesAssincronas() {
+    int nAtividadesAssincronas = 0;
+    for (Integer chave : atividades.keySet())
+      if (atividades.get(chave).obterSincronismo().equals("assincrona"))
+        nAtividadesAssincronas++;
+    return nAtividadesAssincronas;
   }
 
   public Map<Integer, Atividade> obterAtividadesAvaliativas() {
@@ -94,15 +106,15 @@ public class Disciplina implements Serializable {
 
   public int obterPercentualAtividadesSincronas() {
     if (obterNumeroDeAtividades() != 0) {
-      return obterNumeroAtividadesSincronas() / obterNumeroDeAtividades();
+      return Math.round(((float) obterNumeroAtividadesSincronas() / (float) obterNumeroDeAtividades()) * 100);
     } else {
       return 0;
     }
   }
 
-  public float obterPercentualAtividadesAssincronas() {
+  public int obterPercentualAtividadesAssincronas() {
     if (obterNumeroDeAtividades() != 0) {
-      return (1 - (this.obterPercentualAtividadesSincronas()));
+      return Math.round(((float) obterNumeroAtividadesAssincronas() / (float) obterNumeroDeAtividades()) * 100);
     } else {
       return 0;
     }
@@ -153,33 +165,44 @@ public class Disciplina implements Serializable {
 
   }
 
-  public void adicionarTrabalho(String nome, String sincronismo, Disciplina disciplina, String prazo, int nIntegrantes,
-      int cargaHoraria) {
+  public void adicionarTrabalho(String nome, String sincronismo, Disciplina disciplina, String prazo,
+      String nIntegrantesStr, String cargaHorariaStr) {
+    int nIntegrantes = 0;
+    int cargaHoraria = 0;
+    int nAux = 0;
 
-    atividades.put(this.numeroAtividade,
-        new Trabalho(nome, sincronismo, this, this.numeroAtividade, prazo, nIntegrantes, cargaHoraria));
-    this.numeroAtividade = this.numeroAtividade + 1;
+    try {
+      nAux = Integer.parseInt(nIntegrantesStr);
+      nIntegrantes = nAux;
+      nAux = Integer.parseInt(cargaHorariaStr);
+      cargaHoraria = nAux;
+      atividades.put(this.numeroAtividade,
+          new Trabalho(nome, sincronismo, this, this.numeroAtividade, prazo, nIntegrantes, cargaHoraria));
+      this.numeroAtividade = this.numeroAtividade + 1;
+    } catch (NumberFormatException e) {
+      System.out.println("Dado invalido: " + nAux);
+      nAux = 0;
+    }
 
   }
 
-  public void adicionarProva(String nome, String sincronismo, Disciplina disciplina, String data,
+  // Setters
+
+  public void adicionarProva(String nome, String sincronismo, Disciplina disciplina, String data, String hora,
       String conteudo) {
 
-    atividades.put(this.numeroAtividade, new Prova(nome, sincronismo, this, this.numeroAtividade, data, conteudo));
+    atividades.put(this.numeroAtividade,
+        new Prova(nome, sincronismo, this, this.numeroAtividade, data, hora, conteudo));
     this.numeroAtividade = this.numeroAtividade + 1;
 
   }
 
-  public boolean jaMatriculado(int matricula) {
-    return estudantes.containsKey(matricula);
+  public void adicionarDataAvaliacao(String data) {
+    dataAvaliacoes.add(data);
   }
 
-  // public void exibirAtividades() {
-  // info.atividadesCadastradas(escrever, atividades);
-  // }
-
-  // public void exibirEstudantes() {
-  // info.estudantesCadastrados(escrever, estudantes);
-  // }
+  public boolean jaMatriculado(BigInteger matricula) {
+    return estudantes.containsKey(matricula);
+  }
 
 }
