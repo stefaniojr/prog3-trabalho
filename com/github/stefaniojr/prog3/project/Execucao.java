@@ -12,7 +12,7 @@ import com.github.stefaniojr.prog3.project.domain.*;
 import com.github.stefaniojr.prog3.project.io.*;
 
 public class Execucao implements Serializable {
-
+    private static final long serialVersionUID = 1348633635465464577L;
     Cadastro cadastrar = new Cadastro();
     Leitura ler = new Leitura();
 

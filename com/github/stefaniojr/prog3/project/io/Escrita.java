@@ -12,7 +12,7 @@ import com.github.stefaniojr.prog3.project.domain.Docente;
 import com.github.stefaniojr.prog3.project.domain.Estudante;
 
 public class Escrita implements Serializable {
-
+    private static final long serialVersionUID = 1348633635465464574L;
     private static final String SEPARADOR = ";";
 
     // Cabeçalhos conhecidos dos arquivos de saída.

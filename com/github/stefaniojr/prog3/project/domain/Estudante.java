@@ -6,7 +6,7 @@ import java.util.*;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 public class Estudante implements Serializable {
-
+  private static final long serialVersionUID = 1348633635465464578L;
   private BigInteger matricula;
   private String nome;
 

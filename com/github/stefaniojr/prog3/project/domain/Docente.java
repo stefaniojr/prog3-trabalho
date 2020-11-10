@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Docente implements Serializable {
-
+  private static final long serialVersionUID = 1348633635465464579L;
   private String login;
   private String nome;
   private String site;

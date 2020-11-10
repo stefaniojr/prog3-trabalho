@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 public class Disciplina implements Serializable {
-
+  private static final long serialVersionUID = 1348633635465464580L;
   private String codigo;
   private String nome;
   private Periodo periodo;

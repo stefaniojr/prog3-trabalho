@@ -5,7 +5,7 @@ import java.util.*;
 import com.github.stefaniojr.prog3.project.domain.*;
 
 public abstract class Atividade implements Serializable {
-  
+  private static final long serialVersionUID = 1348633635465464564L;
   private String nome;
   private String sincronismo;
   private Disciplina disciplina;

@@ -3,7 +3,7 @@ package com.github.stefaniojr.prog3.project.domain.atividades;
 import com.github.stefaniojr.prog3.project.domain.Disciplina;
 
 public class Trabalho extends Atividade {
-
+    private static final long serialVersionUID = 134863363546546481L;
     private String prazo;
 
     public Trabalho(String nome, String sincronismo, Disciplina disciplina, int numero, String prazo, int nIntegrantes,

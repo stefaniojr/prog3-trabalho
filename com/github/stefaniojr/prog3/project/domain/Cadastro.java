@@ -8,7 +8,7 @@ import java.math.BigInteger;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
 public class Cadastro implements Serializable {
-
+    private static final long serialVersionUID = 1348633635465464573L;
     // Patterns para conferência de dados de entrada.
     private static final Pattern PATTERN_ANO = Pattern.compile("\\d{4}");
     private static final Pattern PATTERN_SEMESTRE = Pattern.compile("[A-Z 0-9]{1}");
@@ -22,8 +22,14 @@ public class Cadastro implements Serializable {
     private static final Pattern PATTERN_DATA = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
     private static final Pattern PATTERN_HORA = Pattern.compile("^\\d{2}:\\d{2}$");
 
-    // Registro de períodos em HashMap através de dados armazenados em vetor de
-    // String em ordem de dados conhecida.
+    /**
+     * Registro de períodos em HashMap através de dados armazenados em vetor de
+     * String em ordem de dados conhecida.
+     *
+     * @param String
+     * @param HashMap
+     * @throws RunTimeException
+     */
     public void periodos(String[] dados, Map<String, Periodo> periodos) throws RuntimeException {
         // Registra dados do vetor de string em HashMap de forma iterativa: primeiro
         // dado sendo o ano e segundo dado sendo o semestre.
@@ -54,8 +60,16 @@ public class Cadastro implements Serializable {
 
     }
 
-    // Registro de docentes em HashMap através de dados armazenados em vetor de
-    // String em ordem de dados conhecida.
+    /**
+     * Registro de docentes em HashMap através de dados armazenados em vetor de
+     * String em ordem de dados conhecida.
+     *
+     * @param String  com dados gerais obtidos de planilhas.
+     * @param HashMap para armazenamento de informações de docentes.
+     * @throws RunTimeException lança a exceção para que seja tratada em uma camada
+     *                          superior.
+     */
+
     public void docentes(String[] dados, Map<String, Docente> docentes) throws RuntimeException {
         // Registra dados do vetor de string em HashMap de forma iterativa: primeiro
         // dado sendo o login institucional, segundo dado sendo o nome completo e

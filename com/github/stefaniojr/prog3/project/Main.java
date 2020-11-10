@@ -12,7 +12,7 @@ import com.github.stefaniojr.prog3.project.io.*;
 import com.github.stefaniojr.prog3.project.serializer.*;
 
 public class Main implements Serializable {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1345634635465464564L;
   private static final String ARQUIVO_SERIALIZACAO = "dados.dat";
   private static final String SAIDA_VISAOGERAL = "1-visao-geral.csv";
   private static final String SAIDA_DOCENTES = "2-docentes.csv";
@@ -27,8 +27,7 @@ public class Main implements Serializable {
   List<Estudante> estudantes;
   List<Disciplina> disciplinas;
 
-  public static void main(String[] args)
-      throws ClassNotFoundException, NotSerializableException {
+  public static void main(String[] args) throws NotSerializableException {
     Locale.setDefault(new Locale("pt", "BR"));
     Main aplicacao = null;
 
@@ -96,15 +95,15 @@ public class Main implements Serializable {
       // Inicia uma instância da execução da aplicação.
       Execucao exe = new Execucao();
 
-      /////////// REMOVER DEPOIS
-      arqPeriodos = "periodos.csv";
-      arqDocentes = "docentes.csv";
-      arqOferta = "disciplinas.csv";
-      arqEstudantes = "estudantes.csv";
-      arqMatriculas = "matriculas.csv";
-      arqAtividades = "atividades.csv";
-      arqNotas = "avaliacoes.csv";
-      //writeOnly = true;
+      /////////// REMOVER DEPOIS, ENQUANTO NÃO BAIXO O ANT
+      // arqPeriodos = "periodos.csv";
+      // arqDocentes = "docentes.csv";
+      // arqOferta = "disciplinas.csv";
+      // arqEstudantes = "estudantes.csv";
+      // arqMatriculas = "matriculas.csv";
+      // arqAtividades = "atividades.csv";
+      // arqNotas = "avaliacoes.csv";
+      // writeOnly = true;
       ////////
 
       // Um erro possível é o usuário não especificar os arquivos de escrita no modo
@@ -132,12 +131,12 @@ public class Main implements Serializable {
             arqMatriculas, arqAtividades, arqNotas);
       }
 
-    } catch (IOException | ParseException e) {
+    } catch (IOException | ParseException | ClassNotFoundException e) {
       System.out.println("Erro de I/O.");
-    } 
-    catch (RuntimeException e){
-      //e.printStackTrace();
-      // Tudo bem! Eu já imprimi a mensagem que eu queria dentro dos métodos. Não quero fazer mais nada aqui. :)
+    } catch (RuntimeException e) {
+      // e.printStackTrace();
+      // Tudo bem! Eu já imprimi a mensagem que eu queria dentro dos métodos. Não
+      // quero fazer mais nada aqui. :)
     }
     return;
   }

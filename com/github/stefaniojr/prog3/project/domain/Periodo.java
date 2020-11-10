@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Periodo implements Serializable {
-
+  private static final long serialVersionUID = 1348633635465464576L;
   private int ano;
   private char semestre;
 

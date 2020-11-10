@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.github.stefaniojr.prog3.project.domain.Estudante;
 
 public class Avaliacao implements Serializable {
+    private static final long serialVersionUID = 1348633635465464569L;
     private Estudante estudante;
     private float nota;
 

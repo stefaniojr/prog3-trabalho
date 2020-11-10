@@ -3,7 +3,7 @@ package com.github.stefaniojr.prog3.project.domain.atividades;
 import com.github.stefaniojr.prog3.project.domain.Disciplina;
 
 public class Prova extends Atividade {
-
+    private static final long serialVersionUID = 1348633635465464571L;
     private String data;
     private String hora;
     private String conteudo = null;
