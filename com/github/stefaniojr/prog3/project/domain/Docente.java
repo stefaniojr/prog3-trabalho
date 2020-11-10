@@ -10,10 +10,10 @@ public class Docente implements Serializable {
   private String site;
 
   // Atributos para auxiliar no cálculo das estatísticas.
-  float mediaAtividadesPorDisciplina = 0F;
-  float percentualAtividadesSincronas = 0F;
-  float percentualAtividadesAssincronas = 0F;
-  float mediaAvaliacoes = 0F;
+  private float mediaAtividadesPorDisciplina = 0F;
+  private float percentualAtividadesSincronas = 0F;
+  private float percentualAtividadesAssincronas = 0F;
+  private float mediaAvaliacoes = 0F;
 
   // Docente possui um HashMap com referências para os períodos em que ele
   // leciona/lecionou disciplinas.

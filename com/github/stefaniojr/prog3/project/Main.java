@@ -28,7 +28,7 @@ public class Main implements Serializable {
   List<Disciplina> disciplinas;
 
   public static void main(String[] args)
-      throws Exception, ParseException, IOException, ClassNotFoundException, NotSerializableException {
+      throws ClassNotFoundException, NotSerializableException {
     Locale.setDefault(new Locale("pt", "BR"));
     Main aplicacao = null;
 
@@ -104,7 +104,7 @@ public class Main implements Serializable {
       arqMatriculas = "matriculas.csv";
       arqAtividades = "atividades.csv";
       arqNotas = "avaliacoes.csv";
-      writeOnly = true;
+      //writeOnly = true;
       ////////
 
       // Um erro possível é o usuário não especificar os arquivos de escrita no modo
@@ -133,16 +133,18 @@ public class Main implements Serializable {
       }
 
     } catch (IOException | ParseException e) {
-      e.printStackTrace();
       System.out.println("Erro de I/O.");
+    } 
+    catch (RuntimeException e){
+      //e.printStackTrace();
+      // Tudo bem! Eu já imprimi a mensagem que eu queria dentro dos métodos. Não quero fazer mais nada aqui. :)
     }
-
     return;
   }
 
   public void execute(Escrita escrever, Execucao exe, boolean desserializar, boolean readOnly, String arqPeriodos,
       String arqDocentes, String arqOferta, String arqEstudantes, String arqMatriculas, String arqAtividades,
-      String arqNotas) throws IOException, ParseException {
+      String arqNotas) throws IOException, ParseException, RuntimeException {
     // Existem 3 tipos possíveis de execução:
 
     // 1 - Usuário especificou writeOnly, logo desserializa e gera os relatórios

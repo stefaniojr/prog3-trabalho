@@ -22,16 +22,18 @@ public class Execucao implements Serializable {
     Map<String, Disciplina> disciplinas = new HashMap<>();
     Map<BigInteger, Estudante> estudantes = new HashMap<>();
 
-    // Vetores de strings auxiliares para processamento de dados importados de planilhas.
+    // Vetores de strings auxiliares para processamento de dados importados de
+    // planilhas.
     String[] dadosPeriodos = null;
     String[] dadosDocentes = null;
     String[] dadosDisciplinas = null;
     String[] dadosEstudantes = null;
-    String[] dadosMatriculas =  null;
+    String[] dadosMatriculas = null;
     String[] dadosAtividades = null;
-    String[] dadosAvaliacoes = null; 
+    String[] dadosAvaliacoes = null;
 
-    // Métodos responsáveis por transformar os HashMaps em Lists. Chamados durante serializações.
+    // Métodos responsáveis por transformar os HashMaps em Lists. Chamados durante
+    // serializações.
     public List<Periodo> exportarPeriodos() {
         return new ArrayList<Periodo>(periodos.values());
     }
@@ -48,7 +50,8 @@ public class Execucao implements Serializable {
         return new ArrayList<Estudante>(estudantes.values());
     }
 
-    // Métodos responsáveis por transformar as Lists em HashMaps. Chamados durante desserializações.
+    // Métodos responsáveis por transformar as Lists em HashMaps. Chamados durante
+    // desserializações.
 
     public void restaurarPeriodos(List<Periodo> periodos) {
         for (Periodo periodo : periodos)
@@ -78,43 +81,46 @@ public class Execucao implements Serializable {
         escrever.relatarDisciplinas(disciplinas);
     }
 
-    // Método responsável por carregar planilhas com dados de entrada em vetores de strings a serem manipulados posteriormente.
-    public void carregarPlanilhas(String arqPeriodos, String arqDocentes, String arqOferta, String arqEstudantes, String arqMatriculas, String arqAtividades, String arqNotas) throws IOException, ParseException, FileNotFoundException{
-      dadosPeriodos = ler.planilha(new File(arqPeriodos));
-      dadosDocentes = ler.planilha(new File(arqDocentes));
-      dadosDisciplinas = ler.planilha(new File(arqOferta));
-      dadosEstudantes = ler.planilha(new File(arqEstudantes));
-      dadosMatriculas = ler.planilha(new File(arqMatriculas));
-      dadosAtividades = ler.planilha(new File(arqAtividades));
-      dadosAvaliacoes = ler.planilha(new File(arqNotas));
+    // Método responsável por carregar planilhas com dados de entrada em vetores de
+    // strings a serem manipulados posteriormente.
+    public void carregarPlanilhas(String arqPeriodos, String arqDocentes, String arqOferta, String arqEstudantes,
+            String arqMatriculas, String arqAtividades, String arqNotas)
+            throws IOException, ParseException, FileNotFoundException {
+        dadosPeriodos = ler.planilha(new File(arqPeriodos));
+        dadosDocentes = ler.planilha(new File(arqDocentes));
+        dadosDisciplinas = ler.planilha(new File(arqOferta));
+        dadosEstudantes = ler.planilha(new File(arqEstudantes));
+        dadosMatriculas = ler.planilha(new File(arqMatriculas));
+        dadosAtividades = ler.planilha(new File(arqAtividades));
+        dadosAvaliacoes = ler.planilha(new File(arqNotas));
     }
 
     // Métodos responsáveis por cadastrar as informações de entrada no sistema.
-    public void cadastrarPeriodos(){
+    public void cadastrarPeriodos() throws RuntimeException {
         cadastrar.periodos(dadosPeriodos, periodos);
-    } 
+    }
 
-    public void cadastrarDocentes(){
+    public void cadastrarDocentes() throws RuntimeException {
         cadastrar.docentes(dadosDocentes, docentes);
     }
 
-    public void cadastrarDisciplinas(){
+    public void cadastrarDisciplinas() throws RuntimeException {
         cadastrar.disciplinas(dadosDisciplinas, periodos, docentes, disciplinas);
     }
 
-    public void cadastrarEstudantes(){
+    public void cadastrarEstudantes() throws RuntimeException {
         cadastrar.estudantes(dadosEstudantes, estudantes);
     }
 
-    public void matricularEstudantes(){
+    public void matricularEstudantes() throws RuntimeException {
         cadastrar.estudanteEmDisciplina(dadosMatriculas, disciplinas, estudantes);
     }
 
-    public void cadastrarAtividades(){
+    public void cadastrarAtividades() throws RuntimeException {
         cadastrar.atividadesEmDisciplina(dadosAtividades, disciplinas);
     }
 
-    public void cadastrarAvaliacoes(){
+    public void cadastrarAvaliacoes() throws RuntimeException {
         cadastrar.avaliacoesEmAtividade(dadosAvaliacoes, disciplinas, estudantes);
     }
 }

@@ -1,22 +1,20 @@
 package com.github.stefaniojr.prog3.project.domain.atividades;
-import com.github.stefaniojr.prog3.project.domain.Disciplina;
 
-import java.util.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.github.stefaniojr.prog3.project.domain.Disciplina;
 
 public class Trabalho extends Atividade {
 
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    Date prazo;
+    private String prazo;
 
-    public Trabalho(String nome, String sincronismo, Disciplina disciplina, int numero, String prazo, int nIntegrantes, int cargaHoraria){
+    public Trabalho(String nome, String sincronismo, Disciplina disciplina, int numero, String prazo, int nIntegrantes,
+            int cargaHoraria) {
         super(nome, sincronismo, disciplina, cargaHoraria, numero, true);
-
-        try{
-            this.prazo = df.parse(prazo);
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
+        this.prazo = prazo;
     }
+
+    // Getters.
+    public String obterPrazo() {
+        return this.prazo;
+    }
+
 }

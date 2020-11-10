@@ -12,10 +12,10 @@ public class Disciplina implements Serializable {
   private Periodo periodo;
   private Docente docente;
 
-  float montanteAvaliacoesEmAtividades = 0;
-  int montanteAvaliadoresEmAtividades = 0;
+  private float montanteAvaliacoesEmAtividades = 0;
+  private int montanteAvaliadoresEmAtividades = 0;
 
-  int cargaHoraria = 0;
+  private int cargaHoraria = 0;
 
   // Disciplina possui um HashMap com referências para os estudantes matriculados nela.
   Map<BigInteger, Estudante> estudantes = new HashMap<>();
@@ -72,7 +72,7 @@ public class Disciplina implements Serializable {
   }
 
   public String obterDataAvaliacoes() {
-    dataAvaliacoes.removeIf(Objects::isNull);
+    dataAvaliacoes.removeIf(Objects::isNull); // Uma expressãozinha lambda às vezes não vai matar ninguém, né?
     return dataAvaliacoes.toString().replace(",", "").replace("[", "").replace("]", "");
   }
 

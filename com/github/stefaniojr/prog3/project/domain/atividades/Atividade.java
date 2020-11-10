@@ -6,13 +6,14 @@ import com.github.stefaniojr.prog3.project.domain.*;
 
 public abstract class Atividade implements Serializable {
   
-  String nome;
-  String sincronismo;
-  Disciplina disciplina;
-  int numero;
-  int cargaHoraria;
-  boolean avaliativa;
+  private String nome;
+  private String sincronismo;
+  private Disciplina disciplina;
+  private int numero;
+  private int cargaHoraria;
+  private boolean avaliativa;
 
+  // Atividade possui uma lista de avaliações.
   List<Avaliacao> avaliacoes = new ArrayList<>();
 
   public Atividade(String nome, String sincronismo, Disciplina disciplina, int cargaHoraria, int numero, boolean avaliativa) {
@@ -24,6 +25,7 @@ public abstract class Atividade implements Serializable {
     this.avaliativa = avaliativa;
   }
 
+  // Getters.
   public int obterRef() {
     return numero;
   }
@@ -44,28 +46,26 @@ public abstract class Atividade implements Serializable {
     return this.cargaHoraria;
   }
 
-  public boolean isAvaliativa(){
-    return this.avaliativa;
-  }
-
   public int obterNumeroSequencial(){
     return this.numero;
-  }
-
-  public float obterMontanteNotasAvaliacoes() {
-    float montanteNotas = 0;
-    for (Avaliacao avaliacao : avaliacoes) {
-      montanteNotas = montanteNotas + avaliacao.obterNota();
-    }
-    return montanteNotas;
   }
 
   public Disciplina obterDisciplina() {
     return this.disciplina;
   }
 
+  // Setters.
   public void avaliarAtividade(Estudante estudante, float nota) {
     avaliacoes.add(new Avaliacao(estudante, nota));
+  }
+
+  // Estatísticas.
+  public float obterMontanteNotasAvaliacoes() {
+    float montanteNotas = 0;
+    for (Avaliacao avaliacao : avaliacoes) {
+      montanteNotas = montanteNotas + avaliacao.obterNota();
+    }
+    return montanteNotas;
   }
 
   public Avaliacao encontrarAvaliacao(Estudante estudante){
@@ -77,8 +77,9 @@ public abstract class Atividade implements Serializable {
     return null;
   }
 
-  // public void exibirAvaliacoes() {
-  // info.avaliacoesCadastradas(escrever, avaliacoes);
-  // }
+  // Extras.
+  public boolean isAvaliativa(){
+    return this.avaliativa;
+  }
 
 }

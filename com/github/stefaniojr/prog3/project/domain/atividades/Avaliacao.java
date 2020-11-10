@@ -6,7 +6,7 @@ import com.github.stefaniojr.prog3.project.domain.Estudante;
 
 public class Avaliacao implements Serializable {
     Estudante estudante;
-    float nota;
+    private float nota;
 
     public Avaliacao(Estudante estudante, float nota){
         this.estudante = estudante;
