@@ -94,12 +94,12 @@ public class Cadastro implements Serializable {
                 System.out.println("Dado invalido: " + periodoRef);
                 throw new IllegalArgumentException();
             }
-
             Periodo periodo = periodos.get(periodoRef);
             if (periodo == null) {
                 System.out.println("Referencia invalida: " + periodoRef);
                 throw new NullPointerException();
             }
+
             String codigo = dados[i + 1];
             if (!PATTERN_CODIGO.matcher(codigo).matches()) {
                 System.out.println("Dado invalido: " + codigo);
@@ -118,7 +118,6 @@ public class Cadastro implements Serializable {
                 System.out.println("Dado invalido: " + docenteRef);
                 throw new IllegalArgumentException();
             }
-
             Docente docente = docentes.get(docenteRef);
             if (docente == null) {
                 System.out.println("Referencia invalida: " + docenteRef);
@@ -147,7 +146,6 @@ public class Cadastro implements Serializable {
                 System.out.println("Dado invalido: " + estudanteRef);
                 throw new IllegalArgumentException();
             }
-
             matricula = new BigInteger(estudanteRef);
             if (estudantes.containsKey(matricula)) {
                 System.out.println("Cadastro repetido: " + matricula);
@@ -177,25 +175,23 @@ public class Cadastro implements Serializable {
                 System.out.println("Dado invalido: " + disciplinaRef);
                 throw new IllegalArgumentException();
             }
-
             Disciplina disciplina = disciplinas.get(disciplinaRef);
             if (disciplina == null) {
                 System.out.println("Referencia invalida: " + disciplinaRef);
                 throw new NullPointerException();
             }
+
             String estudanteRef = dados[i + 1];
             if (!PATTERN_MATRICULA.matcher(estudanteRef).matches()) {
                 System.out.println("Dado invalido: " + estudanteRef);
                 throw new IllegalArgumentException();
             }
-
             matricula = new BigInteger(estudanteRef);
             Estudante estudante = estudantes.get(matricula);
             if (estudante == null) {
                 System.out.println("Referencia invalida: " + estudanteRef);
                 throw new NullPointerException();
             }
-
             if (disciplina.jaMatriculado(matricula)) {
                 System.out.println("Matricula repetida: " + matricula + " em " + disciplina.obterRef() + ".");
                 throw new IllegalArgumentException();
@@ -322,9 +318,7 @@ public class Cadastro implements Serializable {
                     System.out.println("Dado invalido: " + numeroAtividadeStr);
                     throw new IllegalArgumentException();
                 }
-
                 int numeroAtividade = Integer.parseInt(numeroAtividadeStr);
-
                 Atividade atividade = disciplina.obterAtividade(numeroAtividade);
                 if (atividade == null) {
                     System.out.println("Referencia invalida: " + numeroAtividadeStr);
