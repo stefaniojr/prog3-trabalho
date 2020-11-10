@@ -54,11 +54,6 @@ public abstract class Atividade implements Serializable {
     return this.disciplina;
   }
 
-  // Setters.
-  public void avaliarAtividade(Estudante estudante, float nota) {
-    avaliacoes.add(new Avaliacao(estudante, nota));
-  }
-
   // Estatísticas.
   public float obterMontanteNotasAvaliacoes() {
     float montanteNotas = 0;
@@ -80,6 +75,10 @@ public abstract class Atividade implements Serializable {
   // Extras.
   public boolean isAvaliativa(){
     return this.avaliativa;
+  }
+
+  public void avaliarAtividade(Estudante estudante, float nota) {
+    avaliacoes.add(new Avaliacao(estudante, nota));
   }
 
 }

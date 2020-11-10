@@ -12,13 +12,13 @@ public class Estudante implements Serializable {
 
   // Estudante possui um HashMap com referências para os periodos em que ele está
   // matriculado.
-  Map<String, Periodo> periodos = new HashMap<>();
+  private Map<String, Periodo> periodos = new HashMap<>();
   // Estudante possui um HashMap com referências para as disciplinas em que ele
   // está matriculado.
-  Map<String, Disciplina> disciplinas = new HashMap<>();
+  private Map<String, Disciplina> disciplinas = new HashMap<>();
   // Estudante possui um HashMap com referências para as avaliações que ele
   // realizou.
-  Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
+  private Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
 
   public Estudante(BigInteger matricula, String nome) {
     this.matricula = matricula;

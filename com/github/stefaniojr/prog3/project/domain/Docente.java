@@ -49,20 +49,7 @@ public class Docente implements Serializable {
     return this.site;
   }
 
-  public int obterNumeroDeDisciplinas() {
-    return disciplinas.size();
-  }
-
-  public int obterNumeroDePeriodos() {
-    return periodos.size();
-  }
-
-  public Map<String, Disciplina> obterDisciplinas() {
-    return this.disciplinas;
-  }
-
-  // Setters
-
+  // Registro.
   public void adicionarDisciplina(Disciplina disciplina) {
     disciplinas.put(disciplina.obterRef(), disciplina);
   }
@@ -123,4 +110,16 @@ public class Docente implements Serializable {
 
   }
 
+  // Extras.
+  public Map<String, Disciplina> obterDisciplinas() {
+    return this.disciplinas;
+  }
+
+  public int obterNumeroDeDisciplinas() {
+    return disciplinas.size();
+  }
+
+  public int obterNumeroDePeriodos() {
+    return periodos.size();
+  }
 }

@@ -71,20 +71,7 @@ public class Disciplina implements Serializable {
     return estudantes.size();
   }
 
-  public String obterDataAvaliacoes() {
-    dataAvaliacoes.removeIf(Objects::isNull); // Uma expressãozinha lambda às vezes não vai matar ninguém, né?
-    return dataAvaliacoes.toString().replace(",", "").replace("[", "").replace("]", "");
-  }
-
-  public Atividade obterAtividade(int numeroAtividade) {
-    return atividades.get(numeroAtividade);
-  }
-
-  public Map<BigInteger, Estudante> obterEstudantes() {
-    return estudantes;
-  }
-
-  // Setters.
+  // Registro.
   public void adicionarEstudante(Estudante estudante) {
     estudantes.put(estudante.obterRef(), estudante);
   }
@@ -209,8 +196,23 @@ public class Disciplina implements Serializable {
   }
 
   // Extras.
+  public String obterDataAvaliacoes() {
+    dataAvaliacoes.removeIf(Objects::isNull); // Uma expressãozinha lambda às vezes não vai matar ninguém, né?
+    return dataAvaliacoes.toString().replace(",", "").replace("[", "").replace("]", "");
+  }
+
+  public Atividade obterAtividade(int numeroAtividade) {
+    return atividades.get(numeroAtividade);
+  }
+
+  public Map<BigInteger, Estudante> obterEstudantes() {
+    return estudantes;
+  }
+
   public boolean jaMatriculado(BigInteger matricula) {
     return estudantes.containsKey(matricula);
   }
+
+
 
 }

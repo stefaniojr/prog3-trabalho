@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.github.stefaniojr.prog3.project.domain.Estudante;
 
 public class Avaliacao implements Serializable {
-    Estudante estudante;
+    private Estudante estudante;
     private float nota;
 
     public Avaliacao(Estudante estudante, float nota){
@@ -13,6 +13,7 @@ public class Avaliacao implements Serializable {
         this.nota = nota;
       }
     
+    // Getters.
     public Estudante obterAvaliador(){
         return estudante;
     }
