@@ -35,19 +35,27 @@ public class Execucao implements Serializable {
     // Métodos responsáveis por transformar os HashMaps em Lists. Chamados durante
     // serializações.
     public List<Periodo> hashMapToListPeriodos() {
-        return new ArrayList<Periodo>(periodos.values());
+        List<Periodo> periodosList = new ArrayList<Periodo>(periodos.values());
+        Collections.sort(periodosList);
+        return periodosList;
     }
 
     public List<Docente> hashMapToListDocentes() {
-        return new ArrayList<Docente>(docentes.values());
+        List<Docente> docentesList = new ArrayList<Docente>(docentes.values());
+        Collections.sort(docentesList, Collections.reverseOrder());
+        return docentesList;
     }
 
     public List<Disciplina> hashMapToListDisciplinas() {
-        return new ArrayList<Disciplina>(disciplinas.values());
+        List<Disciplina> disciplinasList = new ArrayList<Disciplina>(disciplinas.values());
+        Collections.sort(disciplinasList);
+        return disciplinasList;
     }
 
     public List<Estudante> hashMapToListEstudantes() {
-        return new ArrayList<Estudante>(estudantes.values());
+        List<Estudante> estudantesList = new ArrayList<Estudante>(estudantes.values());
+        Collections.sort(estudantesList);
+        return estudantesList;
     }
 
     // Métodos responsáveis por transformar as Lists em HashMaps. Chamados durante
@@ -74,10 +82,10 @@ public class Execucao implements Serializable {
 
     // Método responsável por realizar chamadas aos métodos que geram relatórios.
     public void gerarRelatorios(Escrita escrever) throws IOException {
-        escrever.relatarVisaoGeral(disciplinas);
-        escrever.relatarDocentes(docentes);
-        escrever.relatarEstudantes(estudantes);
-        escrever.relatarDisciplinas(disciplinas);
+        escrever.relatarVisaoGeral(hashMapToListPeriodos());
+        escrever.relatarDocentes(hashMapToListDocentes());
+        escrever.relatarEstudantes(hashMapToListEstudantes());
+        escrever.relatarDisciplinas(hashMapToListPeriodos());
     }
 
     // Método responsável por carregar planilhas com dados de entrada em vetores de

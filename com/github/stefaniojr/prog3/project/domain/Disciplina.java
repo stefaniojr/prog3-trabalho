@@ -3,9 +3,11 @@ package com.github.stefaniojr.prog3.project.domain;
 import java.io.Serializable;
 import java.util.*;
 import java.math.BigInteger;
+import java.text.Collator;
+import java.lang.Comparable;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
-public class Disciplina implements Serializable {
+public class Disciplina implements Serializable, Comparable<Disciplina> {
   private static final long serialVersionUID = 1348633635465464580L;
   private String codigo;
   private String nome;
@@ -17,9 +19,11 @@ public class Disciplina implements Serializable {
 
   private int cargaHoraria = 0;
 
-  // Disciplina possui um HashMap com referências para os estudantes matriculados nela.
+  // Disciplina possui um HashMap com referências para os estudantes matriculados
+  // nela.
   Map<BigInteger, Estudante> estudantes = new HashMap<>();
-  // Disciplina possui um HashMap com referências para as atividades pertences a ela, em que Integer representa o número sequencial da mesma.
+  // Disciplina possui um HashMap com referências para as atividades pertences a
+  // ela, em que Integer representa o número sequencial da mesma.
   Map<Integer, Atividade> atividades = new HashMap<>();
   // Disciplina possui um ArrayList de Strings contendo as datas de avaliações.
   ArrayList<String> dataAvaliacoes = new ArrayList<>();
@@ -27,11 +31,19 @@ public class Disciplina implements Serializable {
   // Uma atividade começa com 1.
   int numeroAtividade = 1;
 
+  Locale locale = new Locale("pt", "BR");
+  Collator collator = Collator.getInstance(locale);
+
   public Disciplina(String codigo, String nome, Periodo periodo, Docente docente) {
     this.codigo = codigo;
     this.nome = nome;
     this.periodo = periodo;
     this.docente = docente;
+  }
+
+  @Override
+  public int compareTo(Disciplina o) {
+    return collator.compare(this.obterNome(), o.obterNome());
   }
 
   // Getters.
@@ -184,12 +196,14 @@ public class Disciplina implements Serializable {
 
     for (Integer chave : atividades.keySet()) {
       Atividade atividade = atividades.get(chave);
-      // Para uma atividade específica pegamos o montante de notas atribuídas a ela por alunos.
+      // Para uma atividade específica pegamos o montante de notas atribuídas a ela
+      // por alunos.
       montanteNotas = montanteNotas + atividade.obterMontanteNotasAvaliacoes();
       // Para uma atividade específica pegamos o montante de avaliadores (alunos).
       montanteAvaliadores = montanteAvaliadores + atividade.obterQtAvaliadores();
     }
-    // Com essas informações, podemos atribuir essas variáveis aos atributos de classe relacionados ao cálculo de estatísticas.
+    // Com essas informações, podemos atribuir essas variáveis aos atributos de
+    // classe relacionados ao cálculo de estatísticas.
     this.montanteAvaliacoesEmAtividades = montanteNotas;
     this.montanteAvaliadoresEmAtividades = montanteAvaliadores;
 
@@ -212,6 +226,5 @@ public class Disciplina implements Serializable {
   public boolean jaMatriculado(BigInteger matricula) {
     return estudantes.containsKey(matricula);
   }
-
 
 }

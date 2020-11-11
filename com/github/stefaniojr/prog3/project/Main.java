@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.util.*;
 import java.io.File;
 
-
 public class Main implements Serializable {
   private static final long serialVersionUID = 1345634635465464574L;
   private static final String ARQUIVO_SERIALIZACAO = "dados.dat";

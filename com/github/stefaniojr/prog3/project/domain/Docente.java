@@ -2,8 +2,10 @@ package com.github.stefaniojr.prog3.project.domain;
 
 import java.io.Serializable;
 import java.util.*;
+import java.text.Collator;
+import java.lang.Comparable;
 
-public class Docente implements Serializable {
+public class Docente implements Serializable, Comparable<Docente> {
   private static final long serialVersionUID = 1348633635465464579L;
   private String login;
   private String nome;
@@ -22,10 +24,18 @@ public class Docente implements Serializable {
   // leciona/lecionou.
   Map<String, Disciplina> disciplinas = new HashMap<>();
 
+  Locale locale = new Locale("pt", "BR");
+  Collator collator = Collator.getInstance(locale);
+
   public Docente(String login, String nome, String site) {
     this.login = login;
     this.nome = nome;
     this.site = site;
+  }
+
+  @Override
+  public int compareTo(Docente o) {
+    return collator.compare(this.obterNome(), o.obterNome());
   }
 
   // Getters.

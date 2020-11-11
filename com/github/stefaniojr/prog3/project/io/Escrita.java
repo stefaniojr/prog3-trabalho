@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.*;
-import java.math.BigInteger;
 
 import com.github.stefaniojr.prog3.project.domain.Disciplina;
 import com.github.stefaniojr.prog3.project.domain.Docente;
 import com.github.stefaniojr.prog3.project.domain.Estudante;
+import com.github.stefaniojr.prog3.project.domain.Periodo;
 
 public class Escrita implements Serializable {
     private static final long serialVersionUID = 1348633635465464574L;
@@ -43,31 +43,32 @@ public class Escrita implements Serializable {
     }
 
     // Método responsável por gerar o relatório 1-visao-geral.csv.
-    public void relatarVisaoGeral(Map<String, Disciplina> disciplinas) throws IOException {
+    public void relatarVisaoGeral(List<Periodo> periodos) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaVisaoGeral)) {
             out.printf("%s%n", CABECALHO_VISAOGERAL);
             // Itera o HashMap de disciplinas extraindo as informações requeridas através de
             // métodos específicos da classe.
-            for (String chave : disciplinas.keySet()) {
-                Disciplina disciplina = disciplinas.get(chave);
-                out.printf("%s%s%s%s%s%s%s%s%s%s%d%s%d%n", disciplina.obterPeriodo().obterRef(), SEPARADOR,
-                        disciplina.obterCodigo(), SEPARADOR, disciplina.obterNome(), SEPARADOR,
-                        disciplina.obterDocente().obterNome(), SEPARADOR, disciplina.obterDocente().obterEmail(),
-                        SEPARADOR, disciplina.obterNumeroDeAlunosMatriculados(), SEPARADOR,
-                        disciplina.obterNumeroDeAtividades());
+            for (Periodo periodo : periodos) {
+                List<Disciplina> disciplinas = periodo.obterDisciplinasPorNome();
+                for (Disciplina disciplina : disciplinas) {
+                    out.printf("%s%s%s%s%s%s%s%s%s%s%d%s%d%n", periodo.obterRef(), SEPARADOR, disciplina.obterCodigo(),
+                            SEPARADOR, disciplina.obterNome(), SEPARADOR, disciplina.obterDocente().obterNome(),
+                            SEPARADOR, disciplina.obterDocente().obterEmail(), SEPARADOR,
+                            disciplina.obterNumeroDeAlunosMatriculados(), SEPARADOR,
+                            disciplina.obterNumeroDeAtividades());
+                }
             }
 
         }
     }
 
     // Método responsável por gerar o relatório 2-docentes.csv.
-    public void relatarDocentes(Map<String, Docente> docentes) throws IOException {
+    public void relatarDocentes(List<Docente> docentes) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaDocentes)) {
             out.printf("%s%n", CABECALHO_DOCENTES);
             // Itera o HashMap de docentes extraindo as informações requeridas através de
             // métodos específicos da classe.
-            for (String chave : docentes.keySet()) {
-                Docente docente = docentes.get(chave);
+            for (Docente docente : docentes) {
                 // Método responsável por já calcular todas as estatísticas requeridas e deixar
                 // salvas em atributos da classe, prontinhas para serem chamadas pelos getters.
                 docente.calcularEstatisticasDeDocente();
@@ -82,15 +83,16 @@ public class Escrita implements Serializable {
     }
 
     // Método responsável por gerar o relatório 3-estudantes.csv.
-    public void relatarEstudantes(Map<BigInteger, Estudante> estudantes) throws IOException {
+    public void relatarEstudantes(List<Estudante> estudantes) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaEstudantes)) {
             out.printf("%s%n", CABECALHO_ESTUDANTES);
             // Itera o HashMap de estudantes extraindo as informações requeridas através de
             // métodos específicos da classe.
-            for (BigInteger chave : estudantes.keySet()) {
-                Estudante estudante = estudantes.get(chave);
-                // Nota: diferentemente da classe Docente, aqui NÃO temos um método específico que
-                // carrega estatísticas, pois as estatísticas para estudantes são pedidas em menor número.
+            for (Estudante estudante : estudantes) {
+                // Nota: diferentemente da classe Docente, aqui NÃO temos um método específico
+                // que
+                // carrega estatísticas, pois as estatísticas para estudantes são pedidas em
+                // menor número.
                 out.printf("%d%s%s%s%.1f%s%.1f%s%.1f%n", estudante.obterMatricula(), SEPARADOR, estudante.obterNome(),
                         SEPARADOR, estudante.obterMediaDeDisciplinasPorPeriodo(), SEPARADOR,
                         estudante.obterMediaDeAvaliacoesPorDisciplina(), SEPARADOR, estudante.obterMediaNotas());
@@ -100,19 +102,21 @@ public class Escrita implements Serializable {
     }
 
     // Método responsável por gerar o relatório 4-disciplinas.csv.
-    public void relatarDisciplinas(Map<String, Disciplina> disciplinas) throws IOException {
+    public void relatarDisciplinas(List<Periodo> periodos) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaDisciplinas)) {
             out.printf("%s%n", CABECALHO_DISCIPLINAS);
             // Itera o HashMap de disciplinas extraindo as informações requeridas através de
             // métodos específicos da classe.
-            for (String chave : disciplinas.keySet()) {
-                Disciplina disciplina = disciplinas.get(chave);
-                out.printf("%s%s%s%s%s%s%s%s%d%s%d%s%s%d%s%s%d%s%s%n", disciplina.obterDocente().obterRef(), SEPARADOR,
-                        disciplina.obterPeriodo().obterRef(), SEPARADOR, disciplina.obterCodigo(), SEPARADOR,
-                        disciplina.obterNome(), SEPARADOR, disciplina.obterNumeroDeAtividades(), SEPARADOR,
-                        disciplina.obterPercentualAtividadesSincronas(), "%", SEPARADOR,
-                        disciplina.obterPercentualAtividadesAssincronas(), "%", SEPARADOR,
-                        disciplina.obterCargaHorariaDisciplina(), SEPARADOR, disciplina.obterDataAvaliacoes());
+            for (Periodo periodo : periodos) {
+                List<Disciplina> disciplinas = periodo.obterDisciplinasPorCodigo();
+                for (Disciplina disciplina : disciplinas) {
+                    out.printf("%s%s%s%s%s%s%s%s%d%s%d%s%s%d%s%s%d%s%s%n", disciplina.obterDocente().obterRef(),
+                            SEPARADOR, periodo.obterRef(), SEPARADOR, disciplina.obterCodigo(), SEPARADOR,
+                            disciplina.obterNome(), SEPARADOR, disciplina.obterNumeroDeAtividades(), SEPARADOR,
+                            disciplina.obterPercentualAtividadesSincronas(), "%", SEPARADOR,
+                            disciplina.obterPercentualAtividadesAssincronas(), "%", SEPARADOR,
+                            disciplina.obterCargaHorariaDisciplina(), SEPARADOR, disciplina.obterDataAvaliacoes());
+                }
 
             }
         }

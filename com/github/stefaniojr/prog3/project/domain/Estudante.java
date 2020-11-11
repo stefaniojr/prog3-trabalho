@@ -3,9 +3,11 @@ package com.github.stefaniojr.prog3.project.domain;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.*;
+import java.text.Collator;
+import java.lang.Comparable;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
-public class Estudante implements Serializable {
+public class Estudante implements Serializable, Comparable<Estudante> {
   private static final long serialVersionUID = 1348633635465464578L;
   private BigInteger matricula;
   private String nome;
@@ -20,9 +22,21 @@ public class Estudante implements Serializable {
   // realizou.
   Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
 
+  Locale locale = new Locale("pt", "BR");
+  Collator collator = Collator.getInstance(locale);
+
   public Estudante(BigInteger matricula, String nome) {
     this.matricula = matricula;
     this.nome = nome;
+  }
+
+  @Override
+  public int compareTo(Estudante o) {
+    int cmp = o.obterQtAvaliacoes() - this.obterQtAvaliacoes();
+    if (cmp != 0)
+      return cmp;
+
+    return collator.compare(this.obterNome(), o.obterNome());
   }
 
   // Getters.
