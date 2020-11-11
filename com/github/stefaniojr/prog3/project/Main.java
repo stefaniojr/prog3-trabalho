@@ -132,10 +132,10 @@ public class Main implements Serializable {
             arqMatriculas, arqAtividades, arqNotas);
       }
 
-    } catch (IOException | ParseException | ClassNotFoundException | NoSuchElementException e) {
+    } catch (IOException | ParseException | ClassNotFoundException e) {
       System.out.println("Erro de I/O.");
     } catch (RuntimeException e) {
-      e.printStackTrace();
+      // e.printStackTrace();
       // Tudo bem! Eu já imprimi a mensagem que eu queria dentro dos métodos. Não
       // quero fazer mais nada aqui. :)
     }
