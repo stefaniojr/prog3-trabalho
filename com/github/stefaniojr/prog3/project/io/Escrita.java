@@ -43,7 +43,13 @@ public class Escrita implements Serializable {
         this.saidaDisciplinas = saidaDisciplinas;
     }
 
-    // Método responsável por gerar o relatório 1-visao-geral.csv.
+    /**
+     * Método responsável por gerar o relatório 1-visao-geral.csv.
+     * 
+     * @param List
+     * @throws IOException
+     * 
+     */
     public void relatarVisaoGeral(List<Periodo> periodos) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaVisaoGeral, "UTF-8")) {
             out.printf("%s%n", CABECALHO_VISAOGERAL);
@@ -63,7 +69,13 @@ public class Escrita implements Serializable {
         }
     }
 
-    // Método responsável por gerar o relatório 2-docentes.csv.
+    /**
+     * Método responsável por gerar o relatório 2-docentes.csv.
+     * 
+     * @param List
+     * @throws IOException
+     * 
+     */
     public void relatarDocentes(List<Docente> docentes) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaDocentes, "UTF-8")) {
             out.printf("%s%n", CABECALHO_DOCENTES);
@@ -83,7 +95,13 @@ public class Escrita implements Serializable {
         }
     }
 
-    // Método responsável por gerar o relatório 3-estudantes.csv.
+    /**
+     * Método responsável por gerar o relatório 3-estudantes.csv.
+     * 
+     * @param List
+     * @throws IOException
+     * 
+     */    
     public void relatarEstudantes(List<Estudante> estudantes) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaEstudantes, "UTF-8")) {
             out.printf("%s%n", CABECALHO_ESTUDANTES);
@@ -102,7 +120,13 @@ public class Escrita implements Serializable {
         }
     }
 
-    // Método responsável por gerar o relatório 4-disciplinas.csv.
+    /**
+     * Método responsável por gerar o relatório 4-disciplinas.csv..
+     * 
+     * @param List
+     * @throws IOException
+     * 
+     */  
     public void relatarDisciplinas(List<Periodo> periodos) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaDisciplinas, "UTF-8")) {
             out.printf("%s%n", CABECALHO_DISCIPLINAS);

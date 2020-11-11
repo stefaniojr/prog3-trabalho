@@ -152,8 +152,15 @@ public class Cadastro implements Serializable {
         }
     }
 
-    // Registro de estudantes em HashMap através de dados armazenados em vetor de
-    // String em ordem de dados conhecida.
+    /**
+     * Registro de disciplinas em HashMap através de dados armazenados em vetor de
+     * String em ordem de dados conhecida.
+     * 
+     * @param String
+     * @param HashMap
+     * @param Estudante
+     * 
+     */
     public void estudantes(String[] dados, Map<BigInteger, Estudante> estudantes) {
         BigInteger matricula;
         // Registra dados do vetor de string em HashMap de forma iterativa: primeiro
@@ -179,9 +186,19 @@ public class Cadastro implements Serializable {
 
     }
 
-    // Registro de estudantes em atributo do HashMap de disciplina previamente
-    // preenchido através de dados armazenados em vetor de String em ordem de dados
-    // conhecida.
+    /**
+     * Registro de estudantes em atributo do HashMap de disciplina previamente
+     * preenchido através de dados armazenados em vetor de String em ordem de dados
+     * conhecida.
+     * 
+     * @param String
+     * @param HashMap
+     * @param Disciplina
+     * @param HashMap
+     * @param Estudante
+     * @throws NullPointerException
+     * 
+     */
     public void estudanteEmDisciplina(String[] dados, Map<String, Disciplina> disciplinas,
             Map<BigInteger, Estudante> estudantes) throws NullPointerException {
         BigInteger matricula;
@@ -223,9 +240,16 @@ public class Cadastro implements Serializable {
         }
     }
 
-    // Registro de atividades em atributo (HashMap de atividades) do HashMap de
-    // disciplina previamente preenchido através de dados armazenados em vetor de
-    // String em ordem de dados conhecida.
+    /**
+     * Registro de atividades em atributo (HashMap de atividades) do HashMap de
+     * disciplina previamente preenchido através de dados armazenados em vetor de
+     * String em ordem de dados conhecida.
+     * 
+     * @param String
+     * @param HashMap
+     * @throws RunTimeException
+     * 
+     */
     public void atividadesEmDisciplina(String[] dados, Map<String, Disciplina> disciplinas) throws RuntimeException {
         // Registra dados do vetor de string em atributo de HashMaps de forma iterativa:
         // primeiro dado sendo a disciplina, segundo dado sendo o nome da atividade,
@@ -295,9 +319,19 @@ public class Cadastro implements Serializable {
         }
     }
 
-    // Registro de avaliações realizadas por alunos em atributo (HashMap de
-    // avaliações) do HashMap de disciplina previamente preenchido através de dados
-    // armazenados em vetor de String em ordem de dados conhecida.
+    /**
+     * Registro de avaliações realizadas por alunos em atributo (HashMap de
+     * avaliações) do HashMap de disciplina previamente preenchido através de dados
+     * armazenados em vetor de String em ordem de dados conhecida.
+     * 
+     * @param String
+     * @param HashMap
+     * @param Disciplina
+     * @param HashMap
+     * @param Estudante
+     * @throws RunTimeException
+     * 
+     */
     public void avaliacoesEmAtividade(String[] dados, Map<String, Disciplina> disciplinas,
             Map<BigInteger, Estudante> estudantes) throws RuntimeException {
         Float notaAtividade = 0F;
