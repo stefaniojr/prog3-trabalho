@@ -95,17 +95,6 @@ public class Main implements Serializable {
       // Inicia uma instância da execução da aplicação.
       Execucao exe = new Execucao();
 
-      /////////// REMOVER DEPOIS, ENQUANTO NÃO BAIXO O ANT
-      // arqPeriodos = "periodos.csv";
-      // arqDocentes = "docentes.csv";
-      // arqOferta = "disciplinas.csv";
-      // arqEstudantes = "estudantes.csv";
-      // arqMatriculas = "matriculas.csv";
-      // arqAtividades = "atividades.csv";
-      // arqNotas = "avaliacoes.csv";
-      // writeOnly = true;
-      ////////
-
       // Um erro possível é o usuário não especificar os arquivos de escrita no modo
       // de leitura:
       if (!writeOnly && (arqPeriodos == null || arqDocentes == null || arqOferta == null || arqEstudantes == null

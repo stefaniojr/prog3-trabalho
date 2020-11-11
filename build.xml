@@ -11,7 +11,7 @@
 </target>
 <!-- Compilação. -->
 <target name="compile" depends="init" description="Compila o código-fonte.">
-<javac includeantruntime="false" srcdir="${src}" destdir="${bin}" />
+<javac encoding="UTF-8" includeantruntime="false" srcdir="${src}" destdir="${bin}" />
 </target>
 <!-- Execução normal. -->
 <target name="run" depends="compile" description="Executa o programa principal, normal.">

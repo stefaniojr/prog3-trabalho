@@ -104,7 +104,7 @@ public class Escrita implements Serializable {
      */    
     public void relatarEstudantes(List<Estudante> estudantes) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaEstudantes, "UTF-8")) {
-            out.printf("%s%n", CABECALHO_ESTUDANTES);
+            out.printf("%s%n", CABECALHO_ESTUDANTES.toString());
             // Itera o HashMap de estudantes extraindo as informações requeridas através de
             // métodos específicos da classe.
             for (Estudante estudante : estudantes) {
