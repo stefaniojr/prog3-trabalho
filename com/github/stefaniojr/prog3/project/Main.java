@@ -132,9 +132,10 @@ public class Main implements Serializable {
       }
 
     } catch (IOException | ParseException | ClassNotFoundException e) {
+      //e.printStackTrace();
       System.out.println("Erro de I/O.");
     } catch (RuntimeException e) {
-      // e.printStackTrace();
+      //e.printStackTrace();
       // Tudo bem! Eu já imprimi a mensagem que eu queria dentro dos métodos. Não
       // quero fazer mais nada aqui. :)
     }

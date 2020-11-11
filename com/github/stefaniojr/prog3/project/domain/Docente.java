@@ -25,17 +25,22 @@ public class Docente implements Serializable, Comparable<Docente> {
   Map<String, Disciplina> disciplinas = new HashMap<>();
 
   Locale locale = new Locale("pt", "BR");
-  Collator collator = Collator.getInstance(locale);
+  private transient Collator collatorInstance;
 
   public Docente(String login, String nome, String site) {
     this.login = login;
     this.nome = nome;
     this.site = site;
+    initCollatorInstance();
   }
 
   @Override
   public int compareTo(Docente o) {
-    return collator.compare(this.obterNome(), o.obterNome());
+    return collatorInstance.compare(this.obterNome(), o.obterNome());
+  }
+
+  public void initCollatorInstance() {
+    collatorInstance = Collator.getInstance(locale);
   }
 
   // Getters.

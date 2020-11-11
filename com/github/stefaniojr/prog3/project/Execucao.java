@@ -61,23 +61,34 @@ public class Execucao implements Serializable {
     // Métodos responsáveis por transformar as Lists em HashMaps. Chamados durante
     // desserializações.
     public void listToHashMapPeriodos(List<Periodo> periodos) {
-        for (Periodo periodo : periodos)
+        for (Periodo periodo : periodos){
             this.periodos.put(periodo.obterRef(), periodo);
+            this.periodos.get(periodo.obterRef()).initCollatorInstance();
+        }
+            
     }
 
     public void listToHashMapDocentes(List<Docente> docentes) {
-        for (Docente docente : docentes)
+        for (Docente docente : docentes){
             this.docentes.put(docente.obterRef(), docente);
+            this.docentes.get(docente.obterRef()).initCollatorInstance();
+        }
+            
     }
 
     public void listToHashMapDisciplinas(List<Disciplina> disciplinas) {
-        for (Disciplina disciplina : disciplinas)
+        for (Disciplina disciplina : disciplinas){
             this.disciplinas.put(disciplina.obterRef(), disciplina);
+            this.disciplinas.get(disciplina.obterRef()).initCollatorInstance();
+        }
+            
     }
 
     public void listToHashMapEstudantes(List<Estudante> estudantes) {
-        for (Estudante estudante : estudantes)
+        for (Estudante estudante : estudantes){
             this.estudantes.put(estudante.obterRef(), estudante);
+            this.estudantes.get(estudante.obterRef()).initCollatorInstance();
+        }
     }
 
     // Método responsável por realizar chamadas aos métodos que geram relatórios.

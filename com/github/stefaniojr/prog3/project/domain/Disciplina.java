@@ -32,18 +32,23 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
   int numeroAtividade = 1;
 
   Locale locale = new Locale("pt", "BR");
-  Collator collator = Collator.getInstance(locale);
+  private transient Collator collatorInstance;
 
   public Disciplina(String codigo, String nome, Periodo periodo, Docente docente) {
     this.codigo = codigo;
     this.nome = nome;
     this.periodo = periodo;
     this.docente = docente;
+    initCollatorInstance();
   }
 
   @Override
   public int compareTo(Disciplina o) {
-    return collator.compare(this.obterNome(), o.obterNome());
+    return collatorInstance.compare(this.obterNome(), o.obterNome());
+  }
+
+  public void initCollatorInstance() {
+    collatorInstance = Collator.getInstance(locale);
   }
 
   // Getters.
@@ -211,6 +216,7 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
 
   // Extras.
   public String obterDataAvaliacoes() {
+    Collections.sort(dataAvaliacoes);
     dataAvaliacoes.removeIf(Objects::isNull); // Uma expressãozinha lambda às vezes não vai matar ninguém, né?
     return dataAvaliacoes.toString().replace(",", "").replace("[", "").replace("]", "");
   }

@@ -23,11 +23,12 @@ public class Estudante implements Serializable, Comparable<Estudante> {
   Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
 
   Locale locale = new Locale("pt", "BR");
-  Collator collator = Collator.getInstance(locale);
+  private transient Collator collatorInstance;
 
   public Estudante(BigInteger matricula, String nome) {
     this.matricula = matricula;
     this.nome = nome;
+    initCollatorInstance();
   }
 
   @Override
@@ -36,7 +37,11 @@ public class Estudante implements Serializable, Comparable<Estudante> {
     if (cmp != 0)
       return cmp;
 
-    return collator.compare(this.obterNome(), o.obterNome());
+    return collatorInstance.compare(this.obterNome(), o.obterNome());
+  }
+
+  public void initCollatorInstance() {
+    collatorInstance = Collator.getInstance(locale);
   }
 
   // Getters.

@@ -17,7 +17,6 @@ public class Serializar {
     public void iniciarSerializacao(Main aplicacao) throws IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(this.arquivoSerializacao))) {
             out.writeObject(aplicacao);
-            out.close();
         }
     }
 }

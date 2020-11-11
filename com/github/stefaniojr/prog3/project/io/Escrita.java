@@ -34,6 +34,7 @@ public class Escrita implements Serializable {
     private File saidaDocentes;
     private File saidaEstudantes;
     private File saidaDisciplinas;
+    
 
     public Escrita(File saidaVisaoGeral, File saidaDocentes, File saidaEstudantes, File saidaDisciplinas) {
         this.saidaVisaoGeral = saidaVisaoGeral;
@@ -44,7 +45,7 @@ public class Escrita implements Serializable {
 
     // Método responsável por gerar o relatório 1-visao-geral.csv.
     public void relatarVisaoGeral(List<Periodo> periodos) throws IOException {
-        try (PrintWriter out = new PrintWriter(saidaVisaoGeral)) {
+        try (PrintWriter out = new PrintWriter(saidaVisaoGeral, "UTF-8")) {
             out.printf("%s%n", CABECALHO_VISAOGERAL);
             // Itera o HashMap de disciplinas extraindo as informações requeridas através de
             // métodos específicos da classe.
@@ -64,7 +65,7 @@ public class Escrita implements Serializable {
 
     // Método responsável por gerar o relatório 2-docentes.csv.
     public void relatarDocentes(List<Docente> docentes) throws IOException {
-        try (PrintWriter out = new PrintWriter(saidaDocentes)) {
+        try (PrintWriter out = new PrintWriter(saidaDocentes, "UTF-8")) {
             out.printf("%s%n", CABECALHO_DOCENTES);
             // Itera o HashMap de docentes extraindo as informações requeridas através de
             // métodos específicos da classe.
@@ -84,7 +85,7 @@ public class Escrita implements Serializable {
 
     // Método responsável por gerar o relatório 3-estudantes.csv.
     public void relatarEstudantes(List<Estudante> estudantes) throws IOException {
-        try (PrintWriter out = new PrintWriter(saidaEstudantes)) {
+        try (PrintWriter out = new PrintWriter(saidaEstudantes, "UTF-8")) {
             out.printf("%s%n", CABECALHO_ESTUDANTES);
             // Itera o HashMap de estudantes extraindo as informações requeridas através de
             // métodos específicos da classe.
@@ -103,7 +104,7 @@ public class Escrita implements Serializable {
 
     // Método responsável por gerar o relatório 4-disciplinas.csv.
     public void relatarDisciplinas(List<Periodo> periodos) throws IOException {
-        try (PrintWriter out = new PrintWriter(saidaDisciplinas)) {
+        try (PrintWriter out = new PrintWriter(saidaDisciplinas, "UTF-8")) {
             out.printf("%s%n", CABECALHO_DISCIPLINAS);
             // Itera o HashMap de disciplinas extraindo as informações requeridas através de
             // métodos específicos da classe.

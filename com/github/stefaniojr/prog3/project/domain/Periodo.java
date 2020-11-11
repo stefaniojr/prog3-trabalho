@@ -10,16 +10,16 @@ public class Periodo implements Serializable, Comparable<Periodo> {
   private int ano;
   private char semestre;
 
-  // Periodo possui um HashMap com referências para as disciplinas a que ele
-  // compõe.
+  // Periodo possui uma lista com referências para as disciplinas que ele compõe.
   List<Disciplina> disciplinas = new ArrayList<>();
 
   Locale locale = new Locale("pt", "BR");
-  Collator collator = Collator.getInstance(locale);
+  private transient Collator collatorInstance;
 
   public Periodo(int ano, char semestre) {
     this.ano = ano;
     this.semestre = semestre;
+    initCollatorInstance();
   }
 
   @Override
@@ -28,7 +28,11 @@ public class Periodo implements Serializable, Comparable<Periodo> {
     if (cmp != 0)
       return cmp;
 
-    return collator.compare(Character.toString(this.semestre), Character.toString(o.obterSemestre()));
+    return collatorInstance.compare(Character.toString(this.semestre), Character.toString(o.obterSemestre()));
+  }
+
+  public void initCollatorInstance() {
+    collatorInstance = Collator.getInstance(locale);
   }
 
   // Getters.
@@ -59,7 +63,7 @@ public class Periodo implements Serializable, Comparable<Periodo> {
     Collections.sort(disciplinas, new Comparator<Disciplina>() {
       @Override
       public int compare(Disciplina a, Disciplina b) {
-        return collator.compare(a.obterCodigo(), b.obterCodigo());
+        return collatorInstance.compare(a.obterCodigo(), b.obterCodigo());
       }
     });
     return disciplinas;
