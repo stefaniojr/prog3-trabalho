@@ -12,13 +12,13 @@ public class Estudante implements Serializable {
 
   // Estudante possui um HashMap com referências para os periodos em que ele está
   // matriculado.
-  private Map<String, Periodo> periodos = new HashMap<>();
+  Map<String, Periodo> periodos = new HashMap<>();
   // Estudante possui um HashMap com referências para as disciplinas em que ele
   // está matriculado.
-  private Map<String, Disciplina> disciplinas = new HashMap<>();
+  Map<String, Disciplina> disciplinas = new HashMap<>();
   // Estudante possui um HashMap com referências para as avaliações que ele
   // realizou.
-  private Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
+  Map<Atividade, Avaliacao> avaliacoes = new HashMap<>();
 
   public Estudante(BigInteger matricula, String nome) {
     this.matricula = matricula;
@@ -46,7 +46,7 @@ public class Estudante implements Serializable {
     return avaliacoes.size();
   }
 
-  // Setters.
+  // Registro.
   public void adicionarDisciplina(Disciplina disciplina) {
     disciplinas.put(disciplina.obterRef(), disciplina);
   }

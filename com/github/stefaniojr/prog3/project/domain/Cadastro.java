@@ -69,7 +69,6 @@ public class Cadastro implements Serializable {
      * @throws RunTimeException lança a exceção para que seja tratada em uma camada
      *                          superior.
      */
-
     public void docentes(String[] dados, Map<String, Docente> docentes) throws RuntimeException {
         // Registra dados do vetor de string em HashMap de forma iterativa: primeiro
         // dado sendo o login institucional, segundo dado sendo o nome completo e
@@ -95,8 +94,15 @@ public class Cadastro implements Serializable {
 
     }
 
-    // Registro de disciplinas em HashMap através de dados armazenados em vetor de
-    // String em ordem de dados conhecida.
+    /**
+     * Registro de disciplinas em HashMap através de dados armazenados em vetor de
+     * String em ordem de dados conhecida.
+     * 
+     * @param String
+     * @param HashMap
+     * @throws RunTimeException
+     * 
+     */
     public void disciplinas(String[] dados, Map<String, Periodo> periodos, Map<String, Docente> docentes,
             Map<String, Disciplina> disciplinas) throws RuntimeException {
         // Registra dados do vetor de string em HashMaps de forma iterativa: primeiro

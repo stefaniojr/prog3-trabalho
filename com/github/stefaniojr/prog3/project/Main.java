@@ -1,5 +1,9 @@
 package com.github.stefaniojr.prog3.project;
 
+import com.github.stefaniojr.prog3.project.domain.*;
+import com.github.stefaniojr.prog3.project.io.*;
+import com.github.stefaniojr.prog3.project.serializer.*;
+
 import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.Serializable;
@@ -7,12 +11,9 @@ import java.text.ParseException;
 import java.util.*;
 import java.io.File;
 
-import com.github.stefaniojr.prog3.project.domain.*;
-import com.github.stefaniojr.prog3.project.io.*;
-import com.github.stefaniojr.prog3.project.serializer.*;
 
 public class Main implements Serializable {
-  private static final long serialVersionUID = 1345634635465464564L;
+  private static final long serialVersionUID = 1345634635465464574L;
   private static final String ARQUIVO_SERIALIZACAO = "dados.dat";
   private static final String SAIDA_VISAOGERAL = "1-visao-geral.csv";
   private static final String SAIDA_DOCENTES = "2-docentes.csv";
@@ -123,7 +124,7 @@ public class Main implements Serializable {
       }
 
       // Por outro lado, caso uma serialização esteja prestes a ser realizada ou,
-      // então, apenas os relatórios serão gerados (!readOnly && !writeOnly)
+      // então, apenas os relatórios serão gerados,
       // inicia uma instância de Main novinha em folha e executa a partir dela.
       else {
         aplicacao = new Main();
@@ -131,10 +132,10 @@ public class Main implements Serializable {
             arqMatriculas, arqAtividades, arqNotas);
       }
 
-    } catch (IOException | ParseException | ClassNotFoundException e) {
+    } catch (IOException | ParseException | ClassNotFoundException | NoSuchElementException e) {
       System.out.println("Erro de I/O.");
     } catch (RuntimeException e) {
-      // e.printStackTrace();
+      e.printStackTrace();
       // Tudo bem! Eu já imprimi a mensagem que eu queria dentro dos métodos. Não
       // quero fazer mais nada aqui. :)
     }
@@ -149,10 +150,10 @@ public class Main implements Serializable {
     // 1 - Usuário especificou writeOnly, logo desserializa e gera os relatórios
     // necessários.
     if (desserializar) {
-      exe.restaurarPeriodos(periodos);
-      exe.restaurarDocentes(docentes);
-      exe.restaurarDisciplinas(disciplinas);
-      exe.restaurarEstudantes(estudantes);
+      exe.listToHashMapPeriodos(periodos);
+      exe.listToHashMapDocentes(docentes);
+      exe.listToHashMapDisciplinas(disciplinas);
+      exe.listToHashMapEstudantes(estudantes);
       exe.gerarRelatorios(escrever);
 
       // 2 - Usuário especificou readOnly, logo carrega dados de planilhas de entrada
@@ -193,10 +194,10 @@ public class Main implements Serializable {
     docentes = null;
     disciplinas = null;
     estudantes = null;
-    periodos = exe.exportarPeriodos();
-    docentes = exe.exportarDocentes();
-    disciplinas = exe.exportarDisciplinas();
-    estudantes = exe.exportarEstudantes();
+    periodos = exe.hashMapToListPeriodos();
+    docentes = exe.hashMapToListDocentes();
+    disciplinas = exe.hashMapToListDisciplinas();
+    estudantes = exe.hashMapToListEstudantes();
 
     Serializar salvar = new Serializar(new File(ARQUIVO_SERIALIZACAO));
     salvar.iniciarSerializacao(this);

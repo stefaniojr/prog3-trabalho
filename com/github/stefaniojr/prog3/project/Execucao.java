@@ -34,41 +34,40 @@ public class Execucao implements Serializable {
 
     // Métodos responsáveis por transformar os HashMaps em Lists. Chamados durante
     // serializações.
-    public List<Periodo> exportarPeriodos() {
+    public List<Periodo> hashMapToListPeriodos() {
         return new ArrayList<Periodo>(periodos.values());
     }
 
-    public List<Docente> exportarDocentes() {
+    public List<Docente> hashMapToListDocentes() {
         return new ArrayList<Docente>(docentes.values());
     }
 
-    public List<Disciplina> exportarDisciplinas() {
+    public List<Disciplina> hashMapToListDisciplinas() {
         return new ArrayList<Disciplina>(disciplinas.values());
     }
 
-    public List<Estudante> exportarEstudantes() {
+    public List<Estudante> hashMapToListEstudantes() {
         return new ArrayList<Estudante>(estudantes.values());
     }
 
     // Métodos responsáveis por transformar as Lists em HashMaps. Chamados durante
     // desserializações.
-
-    public void restaurarPeriodos(List<Periodo> periodos) {
+    public void listToHashMapPeriodos(List<Periodo> periodos) {
         for (Periodo periodo : periodos)
             this.periodos.put(periodo.obterRef(), periodo);
     }
 
-    public void restaurarDocentes(List<Docente> docentes) {
+    public void listToHashMapDocentes(List<Docente> docentes) {
         for (Docente docente : docentes)
             this.docentes.put(docente.obterRef(), docente);
     }
 
-    public void restaurarDisciplinas(List<Disciplina> disciplinas) {
+    public void listToHashMapDisciplinas(List<Disciplina> disciplinas) {
         for (Disciplina disciplina : disciplinas)
             this.disciplinas.put(disciplina.obterRef(), disciplina);
     }
 
-    public void restaurarEstudantes(List<Estudante> estudantes) {
+    public void listToHashMapEstudantes(List<Estudante> estudantes) {
         for (Estudante estudante : estudantes)
             this.estudantes.put(estudante.obterRef(), estudante);
     }

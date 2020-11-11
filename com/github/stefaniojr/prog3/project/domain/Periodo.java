@@ -9,7 +9,7 @@ public class Periodo implements Serializable {
   private char semestre;
 
   // Periodo possui um HashMap com referências para as disciplinas a que ele compõe.
-  private Map<String, Disciplina> disciplinas = new HashMap<>();
+  Map<String, Disciplina> disciplinas = new HashMap<>();
 
   public Periodo(int ano, char semestre){
     this.ano = ano;

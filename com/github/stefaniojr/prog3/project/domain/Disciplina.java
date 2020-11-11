@@ -56,7 +56,7 @@ public class Disciplina implements Serializable {
   }
 
   public int obterNumeroDeAtividades() {
-    return numeroAtividade - 1;
+    return this.numeroAtividade - 1;
   }
 
   public int obterMontanteAvaliadoresEmAtividades() {
@@ -212,7 +212,6 @@ public class Disciplina implements Serializable {
   public boolean jaMatriculado(BigInteger matricula) {
     return estudantes.containsKey(matricula);
   }
-
 
 
 }
