@@ -142,15 +142,6 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
 
   }
 
-  // public void adicionarDataAvaliacao(String data) throws ParseException{
-  // Collections.sort(dataAvaliacoes, new Comparator<Date>() {
-  // public int compare(Date o1, Date o2) {
-  // return o1.getDateTime().compareTo(o2.getDateTime());
-  // }
-  // });
-  // dataAvaliacoes.add(df.parse(data));
-  // }
-
   // Estatísticas.
   public int obterNumeroAtividadesSincronas() {
     int nAtividadesSincronas = 0;
