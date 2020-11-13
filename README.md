@@ -35,7 +35,7 @@ A release 0.0.3 trouxe novidades relacionadas à perfomance, modularização e c
 - Nova organização de pastas e uso de packages;
 - Controle de erros: agora as entradas são checadas. O programa não é abortado nesses casos e uma tratativa é lançada.
 
-### Novidades da v1.0
+### [NOVO] Novidades da v1.0
 A versão 1.0 do Otrus Earte System traz novidades quanto à manipulação de arquivos e melhorias ne execução e exibição de informações, além disso, é a primeira versão finalizada da aplicação. Confira:
 - Relatórios ordenados;
 - Desativação do antigo menu e execução automática;
