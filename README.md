@@ -39,7 +39,7 @@ A nova release (0.0.3) traz novidades relacionadas à perfomance, modularizaçã
 A versão 1.0 do Otrus Earte System traz novidades quanto à manipulação de arquivos e melhorias ne execução e exibição de informações, além disso, é a primeira versão finalizada da aplicação. Confira:
 - Relatórios ordenados;
 - Desativação do antigo menu e execução automática;
-- Um build é fornecido para auxiliar na execução do projeto como auxílio do Ant Apache (https://ant.apache.org/bindownload.cgi);
+- Um build é fornecido para auxiliar na execução do projeto com o auxílio do Ant Apache (https://ant.apache.org/bindownload.cgi);
 - Dados de entrada são processados através de planilhas CSV e relatórios são gerados no mesmo formato;
 - Controle de erros, lançamento de exceções e abortagem da aplicação melhor definidos;
 - Código melhor documentado.
