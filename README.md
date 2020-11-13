@@ -1,5 +1,5 @@
 
-# Trabalho de Programação III: OTRUS EARTE SYSTEM v0.0.3
+# Trabalho de Programação III: OTRUS EARTE SYSTEM v1.0
 
 
 ## Sobre esse repositório
@@ -35,8 +35,14 @@ A nova release (0.0.3) traz novidades relacionadas à perfomance, modularizaçã
 - Nova organização de pastas e uso de packages;
 - Controle de erros: agora as entradas são checadas. O programa não é abortado nesses casos e uma tratativa é lançada.
 
-### O que vem por aí
-Para as próximas releases são esperadas as seguintes features:
-- Integração com leitura e escrita em arquivos;
-- Ordenação de relatórios;
-- Correção de bugs gerais.
+### Novidades da v1.0
+A versão 1.0 do Otrus Earte System traz novidades quanto à manipulação de arquivos e melhorias ne execução e exibição de informações, além disso, é a primeira versão finalizada da aplicação. Confira:
+- Relatórios ordenados;
+- Desativação do antigo menu e execução automática;
+- Um build é fornecido para auxiliar na execução do projeto como auxílio do Ant Apache (https://ant.apache.org/bindownload.cgi);
+- Dados de entrada são processados através de planilhas CSV e relatórios são gerados no mesmo formato;
+- Controle de erros, lançamento de exceções e abortagem da aplicação melhor definidos;
+- Código melhor documentado.
+
+### O que vem por aí:
+- Implementação em C++.
