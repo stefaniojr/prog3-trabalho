@@ -14,10 +14,10 @@ Mediante ao contexto pandêmico, faz-se necessário a elaboração de novas ferr
 ### Primeiros passos
 É recomendado que a aplicação seja testada em ambientes similiares aos que os programadores usaram. Sendo assim, JDK8 ou JDK11 são recomendados. No Windows 10, foram utilizados o VSCode para programação e teste, utilizando plug-ins que requerem suporte a JDK11+. Ainda no Windows 10, um terminal ubuntu integrado foi também utilizado juntamente ao JDK8.
 
-### Instruções de compilação e utilização (novas features na versão 0.0.2):
-Além da alteração do nome do projeto, a release 0.0.2 traz outras novas features. Logo após compilar o usuário é perguntado se deseja fazer um backup de dados já salvos ou se deseja iniciar uma aplicação do zero. Responda "SIM" para fazer o backup ou "NÃO" para iniciar do zero. Selecionando "SIM" digite em seguida o nome do arquivo (caso selecione "NÃO" sera necessário a inserção de dados para testar o trabalho) e em seguida será aberto o menu com os dados já carregados.
+### Instruções de compilação e utilização:
+Além da alteração do nome do projeto, a release 0.0.2 trouxe outras novas features. Logo após compilar o usuário é perguntado se deseja fazer um backup de dados já salvos ou se deseja iniciar uma aplicação do zero. Responda "SIM" para fazer o backup ou "NÃO" para iniciar do zero. Selecionando "SIM" digite em seguida o nome do arquivo (caso selecione "NÃO" sera necessário a inserção de dados para testar o trabalho) e em seguida será aberto o menu com os dados já carregados.
 
-#### Menu principal (DESATIVADO NA V1.0)
+#### Menu principal (desativado na versão 1.0)
 - As opções de 1-4 são utilizadas para realizar o cadastro de informações (PERÍODO, DOCENTE, DISCIPLINA e ESTUDANTE) importante prestar atenção no formato utilizado nos exemplos; 
 - Opção 5: é realizado a matrícula do estudante em determinada disciplina; 
 - Opção 6: o cadastro de uma atividade, selecionar o tipo de atividade, a referência da discinplina, e informações adicionais específicas de cada atividade (como hora e url do utilizado);
@@ -30,7 +30,7 @@ Além da alteração do nome do projeto, a release 0.0.2 traz outras novas featu
 - Opção 9 realizar a serialização dos dados: digita o nome do arquivo que deseja armazenar os dados.
 
 ### Novidades da v0.0.3
-A nova release (0.0.3) traz novidades relacionadas à perfomance, modularização e controle de erros:
+A release 0.0.3 trouxe novidades relacionadas à perfomance, modularização e controle de erros:
 - Aumento da performance de execução em função do número de reduzidos de buscas nos hashmaps;
 - Nova organização de pastas e uso de packages;
 - Controle de erros: agora as entradas são checadas. O programa não é abortado nesses casos e uma tratativa é lançada.
