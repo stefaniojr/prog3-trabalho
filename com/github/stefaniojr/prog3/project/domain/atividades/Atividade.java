@@ -81,7 +81,6 @@ public abstract class Atividade implements Serializable {
   }
   
   // Extras.
-
   public Avaliacao encontrarAvaliacao(Estudante estudante) {
     for (Avaliacao avaliacao : avaliacoes) {
       if (estudante.obterNome().equals(avaliacao.obterAvaliador().obterNome())) {
