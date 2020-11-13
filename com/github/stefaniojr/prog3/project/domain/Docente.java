@@ -12,10 +12,10 @@ public class Docente implements Serializable, Comparable<Docente> {
   private String site;
 
   // Atributos para auxiliar no cálculo das estatísticas.
-  private float mediaAtividadesPorDisciplina = 0F;
-  private float percentualAtividadesSincronas = 0F;
-  private float percentualAtividadesAssincronas = 0F;
-  private float mediaAvaliacoes = 0F;
+  private double mediaAtividadesPorDisciplina = 0;
+  private float percentualAtividadesSincronas = 0;
+  private float percentualAtividadesAssincronas = 0;
+  private double mediaAvaliacoes = 0;
 
   // Docente possui um HashMap com referências para os períodos em que ele
   // leciona/lecionou disciplinas.
@@ -74,7 +74,7 @@ public class Docente implements Serializable, Comparable<Docente> {
   }
 
   // Estatísticas.
-  public float obterMediaAtividadesPorDisciplina() {
+  public double obterMediaAtividadesPorDisciplina() {
     return this.mediaAtividadesPorDisciplina;
   }
 
@@ -86,7 +86,7 @@ public class Docente implements Serializable, Comparable<Docente> {
     return Math.round(this.percentualAtividadesAssincronas);
   }
 
-  public float obterMediaAvaliacoes() {
+  public double obterMediaAvaliacoes() {
     return this.mediaAvaliacoes;
   }
 
@@ -94,7 +94,7 @@ public class Docente implements Serializable, Comparable<Docente> {
     int montanteAtividades = 0;
     int montanteAtividadesSincronas = 0;
     int montanteAtividadesAssincronas = 0;
-    float montanteAvaliacoes = 0F;
+    double montanteAvaliacoes = 0;
     int montanteAvaliadores = 0;
 
     // Algumas estatísticas precisam de informações essenciais de disciplinas, logo,
@@ -113,15 +113,20 @@ public class Docente implements Serializable, Comparable<Docente> {
 
     // Calcula o valor dos atributos de classe relacionados aos cálculos de
     // estatísticas.
-    if (obterNumeroDeDisciplinas() != 0)
-      this.mediaAtividadesPorDisciplina = (float) montanteAtividades / (float) obterNumeroDeDisciplinas();
+    if (obterNumeroDeDisciplinas() != 0){
+      double resultado = (double) montanteAtividades / (double) obterNumeroDeDisciplinas();
+      this.mediaAtividadesPorDisciplina = this.mediaAvaliacoes = Math.round(resultado * 10.0)/10.0;
+    }
+      
     if (montanteAtividades != 0) {
       this.percentualAtividadesSincronas = ((float) montanteAtividadesSincronas / (float) montanteAtividades) * 100;
       this.percentualAtividadesAssincronas = ((float) montanteAtividadesAssincronas / (float) montanteAtividades) * 100;
     }
 
-    if (montanteAvaliadores != 0)
-      this.mediaAvaliacoes = montanteAvaliacoes / (float) montanteAvaliadores;
+    if (montanteAvaliadores != 0){
+      double resultado = montanteAvaliacoes / (double) montanteAvaliadores;
+      this.mediaAvaliacoes = Math.round(resultado * 10.0)/10.0;
+    }
 
   }
 

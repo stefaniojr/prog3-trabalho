@@ -34,7 +34,6 @@ public class Escrita implements Serializable {
     private File saidaDocentes;
     private File saidaEstudantes;
     private File saidaDisciplinas;
-    
 
     public Escrita(File saidaVisaoGeral, File saidaDocentes, File saidaEstudantes, File saidaDisciplinas) {
         this.saidaVisaoGeral = saidaVisaoGeral;
@@ -101,10 +100,10 @@ public class Escrita implements Serializable {
      * @param List
      * @throws IOException
      * 
-     */    
+     */
     public void relatarEstudantes(List<Estudante> estudantes) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaEstudantes, "UTF-8")) {
-            out.printf("%s%n", CABECALHO_ESTUDANTES.toString());
+            out.printf("%s%n", CABECALHO_ESTUDANTES);
             // Itera o HashMap de estudantes extraindo as informações requeridas através de
             // métodos específicos da classe.
             for (Estudante estudante : estudantes) {
@@ -126,7 +125,7 @@ public class Escrita implements Serializable {
      * @param List
      * @throws IOException
      * 
-     */  
+     */
     public void relatarDisciplinas(List<Periodo> periodos) throws IOException {
         try (PrintWriter out = new PrintWriter(saidaDisciplinas, "UTF-8")) {
             out.printf("%s%n", CABECALHO_DISCIPLINAS);

@@ -79,24 +79,26 @@ public class Estudante implements Serializable, Comparable<Estudante> {
   }
 
   // Estatísticas.
-  public float obterMediaDeDisciplinasPorPeriodo() {
+  public double obterMediaDeDisciplinasPorPeriodo() {
     if (periodos.size() != 0) {
-      return (float) disciplinas.size() / (float) periodos.size();
+      double resultado = (double) disciplinas.size() / (double) periodos.size();
+      return Math.round(resultado * 10.0)/10.0;
     } else {
-      return (float) 0;
+      return (double) 0;
     }
   }
 
-  public float obterMediaDeAvaliacoesPorDisciplina() {
+  public double obterMediaDeAvaliacoesPorDisciplina() {
     if (obterQtDisciplinas() != 0) {
-      return (float) obterQtAvaliacoes() / (float) obterQtDisciplinas();
+      double resultado = (double) obterQtAvaliacoes() / (double) obterQtDisciplinas();
+      return Math.round(resultado * 10.0)/10.0;
     } else {
-      return (float) 0;
+      return (double) 0;
     }
   }
 
-  public float obterMontanteNotas() {
-    float montante = 0F;
+  public double obterMontanteNotas() {
+    double montante = 0;
 
     for (Atividade chave : avaliacoes.keySet()) {
       montante = montante + avaliacoes.get(chave).obterNota();
@@ -105,11 +107,12 @@ public class Estudante implements Serializable, Comparable<Estudante> {
     return montante;
   }
 
-  public float obterMediaNotas() {
+  public double obterMediaNotas() {
     if (obterQtAvaliacoes() != 0) {
-      return (float) obterMontanteNotas() / (float) obterQtAvaliacoes();
+      double resultado = obterMontanteNotas()/(double)obterQtAvaliacoes();
+      return Math.round(resultado * 10.0)/10.0;
     } else {
-      return (float) 0;
+      return (double) 0;
     }
   }
 

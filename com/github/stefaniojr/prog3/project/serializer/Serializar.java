@@ -7,10 +7,10 @@ import java.io.File;
 import com.github.stefaniojr.prog3.project.Main;
 
 public class Serializar {
-    
+
     private File arquivoSerializacao;
 
-    public Serializar (File arquivoSerializacao){
+    public Serializar(File arquivoSerializacao) {
         this.arquivoSerializacao = arquivoSerializacao;
     }
 

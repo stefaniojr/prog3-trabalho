@@ -11,6 +11,18 @@ import java.text.ParseException;
 import java.util.*;
 import java.io.File;
 
+/**
+ * Classe principal do trabalho de Programação III 2020/E.
+ * 
+ * Contém o método <code>main()</code> para execução, além de métodos auxiliares para processamento dos arquivos de
+ * entrada e geração dos arquivos de saída.
+ *
+ * @author Camila Bonfatti Cremasco (ca.fatti@gmail.com)
+ * @author Lívia Barcellos Botelho (liviabbotelho@hotmail.com)
+ * @author Stefânio Soares Junior (stefaniojr@live.com)
+ * 
+ * @version 1.0
+ */
 public class Main implements Serializable {
   private static final long serialVersionUID = 1345634635465464574L;
   private static final String ARQUIVO_SERIALIZACAO = "dados.dat";
@@ -121,10 +133,10 @@ public class Main implements Serializable {
       }
 
     } catch (IOException | ParseException | ClassNotFoundException e) {
-      //e.printStackTrace();
+      // e.printStackTrace();
       System.out.println("Erro de I/O.");
     } catch (RuntimeException e) {
-      //e.printStackTrace();
+      // e.printStackTrace();
       // Tudo bem! Eu já imprimi a mensagem que eu queria dentro dos métodos. Não
       // quero fazer mais nada aqui. :)
     }

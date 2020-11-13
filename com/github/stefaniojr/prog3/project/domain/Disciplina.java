@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.*;
 import java.math.BigInteger;
 import java.text.Collator;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.lang.Comparable;
 import com.github.stefaniojr.prog3.project.domain.atividades.*;
 
@@ -14,7 +16,7 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
   private Periodo periodo;
   private Docente docente;
 
-  private float montanteAvaliacoesEmAtividades = 0;
+  private double montanteAvaliacoesEmAtividades = 0;
   private int montanteAvaliadoresEmAtividades = 0;
 
   private int cargaHoraria = 0;
@@ -26,7 +28,8 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
   // ela, em que Integer representa o número sequencial da mesma.
   Map<Integer, Atividade> atividades = new HashMap<>();
   // Disciplina possui um ArrayList de Strings contendo as datas de avaliações.
-  ArrayList<String> dataAvaliacoes = new ArrayList<>();
+  // List<String> dataAvaliacoes = new ArrayList<>();
+  SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
   // Uma atividade começa com 1.
   int numeroAtividade = 1;
@@ -80,7 +83,7 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
     return this.montanteAvaliadoresEmAtividades;
   }
 
-  public float obterMontanteAvaliacoesEmAtividades() {
+  public double obterMontanteAvaliacoesEmAtividades() {
     return this.montanteAvaliacoesEmAtividades;
   }
 
@@ -93,22 +96,24 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
     estudantes.put(estudante.obterRef(), estudante);
   }
 
-  public void adicionarAula(String nome, String sincronismo, Disciplina disciplina, String data) {
+  public void adicionarAula(String nome, String sincronismo, Disciplina disciplina, String data, char tipo)
+      throws ParseException {
 
-    atividades.put(this.numeroAtividade, new Aula(nome, sincronismo, this, this.numeroAtividade, data));
+    atividades.put(this.numeroAtividade, new Aula(nome, sincronismo, this, this.numeroAtividade, tipo, data));
     this.numeroAtividade = this.numeroAtividade + 1;
 
   }
 
-  public void adicionarEstudo(String nome, String sincronismo, Disciplina disciplina, String conteudo) {
+  public void adicionarEstudo(String nome, String sincronismo, Disciplina disciplina, String conteudo, char tipo)
+      throws ParseException {
 
-    atividades.put(this.numeroAtividade, new Estudo(nome, sincronismo, this, this.numeroAtividade, conteudo));
+    atividades.put(this.numeroAtividade, new Estudo(nome, sincronismo, this, this.numeroAtividade, conteudo, tipo));
     this.numeroAtividade = this.numeroAtividade + 1;
 
   }
 
   public void adicionarTrabalho(String nome, String sincronismo, Disciplina disciplina, String prazo,
-      String nIntegrantesStr, String cargaHorariaStr) {
+      String nIntegrantesStr, String cargaHorariaStr, char tipo) throws ParseException {
     int nIntegrantes = 0;
     int cargaHoraria = 0;
     int nAux = 0;
@@ -119,27 +124,32 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
       nAux = Integer.parseInt(cargaHorariaStr);
       cargaHoraria = nAux;
       atividades.put(this.numeroAtividade,
-          new Trabalho(nome, sincronismo, this, this.numeroAtividade, prazo, nIntegrantes, cargaHoraria));
+          new Trabalho(nome, sincronismo, this, this.numeroAtividade, prazo, nIntegrantes, cargaHoraria, tipo));
       this.numeroAtividade = this.numeroAtividade + 1;
     } catch (NumberFormatException e) {
-      System.out.println("Dado invalido: " + nAux);
+      System.out.println("Dado inválido: " + nAux + ".");
       nAux = 0;
     }
 
   }
 
   public void adicionarProva(String nome, String sincronismo, Disciplina disciplina, String data, String hora,
-      String conteudo) {
+      String conteudo, char tipo) throws ParseException {
 
     atividades.put(this.numeroAtividade,
-        new Prova(nome, sincronismo, this, this.numeroAtividade, data, hora, conteudo));
+        new Prova(nome, sincronismo, this, this.numeroAtividade, data, hora, conteudo, tipo));
     this.numeroAtividade = this.numeroAtividade + 1;
 
   }
 
-  public void adicionarDataAvaliacao(String data) {
-    dataAvaliacoes.add(data);
-  }
+  // public void adicionarDataAvaliacao(String data) throws ParseException{
+  // Collections.sort(dataAvaliacoes, new Comparator<Date>() {
+  // public int compare(Date o1, Date o2) {
+  // return o1.getDateTime().compareTo(o2.getDateTime());
+  // }
+  // });
+  // dataAvaliacoes.add(df.parse(data));
+  // }
 
   // Estatísticas.
   public int obterNumeroAtividadesSincronas() {
@@ -196,7 +206,7 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
   }
 
   public void calcularEstatisticasAtividadesDeDisciplina() {
-    float montanteNotas = 0;
+    double montanteNotas = 0;
     int montanteAvaliadores = 0;
 
     for (Integer chave : atividades.keySet()) {
@@ -216,9 +226,18 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
 
   // Extras.
   public String obterDataAvaliacoes() {
-    Collections.sort(dataAvaliacoes);
-    dataAvaliacoes.removeIf(Objects::isNull); // Uma expressãozinha lambda às vezes não vai matar ninguém, né?
-    return dataAvaliacoes.toString().replace(",", "").replace("[", "").replace("]", "");
+    List<Date> data = new ArrayList<Date>();
+    for (Integer chave : atividades.keySet()) {
+      Atividade atividade = atividades.get(chave);
+      data.addAll(atividade.obterDataAvaliacoes());
+    }
+    Collections.sort(data);
+    List<String> dataStr = new ArrayList<String>();
+
+    for (Date d : data)
+      dataStr.add(df.format(d));
+
+    return dataStr.toString().replace(",", "").replace("[", "").replace("]", "");
   }
 
   public Atividade obterAtividade(int numeroAtividade) {

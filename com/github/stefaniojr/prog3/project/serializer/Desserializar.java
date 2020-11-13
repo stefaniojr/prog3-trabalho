@@ -10,12 +10,13 @@ public class Desserializar {
 
     private File arquivoSerializacao;
 
-    public Desserializar (File arquivoSerializacao){
+    public Desserializar(File arquivoSerializacao) {
         this.arquivoSerializacao = arquivoSerializacao;
     }
+
     public Main iniciarDesserializacao() throws IOException, ClassNotFoundException {
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoSerializacao))){
-            return (Main) in.readObject(); 
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoSerializacao))) {
+            return (Main) in.readObject();
         }
     }
 }
