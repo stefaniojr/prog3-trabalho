@@ -79,6 +79,8 @@ public abstract class Atividade implements Serializable {
     }
     return montanteNotas;
   }
+  
+  // Extras.
 
   public Avaliacao encontrarAvaliacao(Estudante estudante) {
     for (Avaliacao avaliacao : avaliacoes) {
@@ -89,7 +91,6 @@ public abstract class Atividade implements Serializable {
     return null;
   }
 
-  // Extras.
   public boolean isAvaliativa() {
     return this.avaliativa;
   }
