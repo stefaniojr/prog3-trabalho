@@ -54,7 +54,7 @@ public class Estudante implements Serializable, Comparable<Estudante> {
   }
 
   public String obterNome() {
-    return nome;
+    return nome.trim();
   }
 
   public int obterQtDisciplinas() {

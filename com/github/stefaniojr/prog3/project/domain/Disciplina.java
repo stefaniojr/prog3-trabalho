@@ -64,7 +64,7 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
   }
 
   public String obterNome() {
-    return nome;
+    return nome.trim();
   }
 
   public Periodo obterPeriodo() {
