@@ -2,7 +2,7 @@
 
 
 ## Sobre esse repositório
-Repositório criado com o intuito de facilitar o acompanhamento do trabalho prático da disciplina de Programação III (INF09331), ministrada pelo professor Vítor Souza na Universidade Federal do Espírito santo em um semestre especial de ensino remoto.
+Repositório criado com o intuito de facilitar o acompanhamento do trabalho prático da disciplina de Programação III (INF09331), ministrada pelo professor Vítor Souza na Universidade Federal do Espírito Santo em um semestre especial de ensino remoto.
 
 ## OTRUS EARTE SYSTEM
 Proposta de sistema a ser implementada utilizando conceitos de orientação a objetos, em JAVA. 
