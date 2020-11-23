@@ -1,4 +1,3 @@
-
 # Trabalho de Programação III: OTRUS EARTE SYSTEM v1.0
 
 
